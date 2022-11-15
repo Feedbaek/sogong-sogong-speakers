@@ -17,7 +17,7 @@
 --%>
 <%@ include file="../common/IncludeTop.jsp"%>
 
-<div id="Welcome!!!!!!!!!!!!!">
+<div id="Welcome">
 <div id="WelcomeContent"><c:if
 	test="${sessionScope.accountBean != null }">
 	<c:if test="${sessionScope.accountBean.authenticated}">
