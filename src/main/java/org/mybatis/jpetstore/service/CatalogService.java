@@ -15,6 +15,7 @@
  */
 package org.mybatis.jpetstore.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,9 +45,32 @@ public class CatalogService {
     this.productMapper = productMapper;
   }
 
+  // LIST
   public List<Category> getCategoryList() {
     return categoryMapper.getCategoryList();
   }
+
+  public List<Product> getProductListByCategory(String categoryId) {
+    return productMapper.getProductListByCategory(categoryId);
+  }
+  public List<Product> searchProductList(String keywords) {
+    List<Product> products = new ArrayList<>();
+    for (String keyword : keywords.split("\\s+")) {
+      products.addAll(productMapper.searchProductList("%" + keyword.toLowerCase() + "%"));
+    }
+    return products;
+  }
+  public List<Item> getItemListByProduct(String productId)
+  {
+    return itemMapper.getItemListByProduct(productId);
+  }
+
+  public List<Product> getProductList() {
+    return itemMapper.getProductList();
+  }
+
+
+  // OBJ
 
   public Category getCategory(String categoryId) {
     return categoryMapper.getCategory(categoryId);
@@ -55,36 +79,36 @@ public class CatalogService {
   public Product getProduct(String productId) {
     return productMapper.getProduct(productId);
   }
-
-  public List<Product> getProductListByCategory(String categoryId) {
-    return productMapper.getProductListByCategory(categoryId);
-  }
-
-  /**
-   * Search product list.
-   *
-   * @param keywords
-   *          the keywords
-   *
-   * @return the list
-   */
-  public List<Product> searchProductList(String keywords) {
-    List<Product> products = new ArrayList<>();
-    for (String keyword : keywords.split("\\s+")) {
-      products.addAll(productMapper.searchProductList("%" + keyword.toLowerCase() + "%"));
-    }
-    return products;
-  }
-
-  public List<Item> getItemListByProduct(String productId) {
-    return itemMapper.getItemListByProduct(productId);
-  }
-
   public Item getItem(String itemId) {
     return itemMapper.getItem(itemId);
   }
 
+  public String getCategoryName(String productId)
+  {
+    return itemMapper.getCategoryName(productId);
+  }
+
   public boolean isItemInStock(String itemId) {
     return itemMapper.getInventoryQuantity(itemId) > 0;
+  }
+
+
+  // VOID
+  public void UpdateItem(String itemId, String arg1 , BigDecimal listprice,int quantity)
+  {
+    itemMapper.UpdateItem(itemId,arg1, listprice);
+    itemMapper.UpdateQTY( itemId,quantity);
+  }
+
+  public void DeleteItem(String productId, String itemId)
+  {
+    itemMapper.DeleteItem(productId,itemId);
+  }
+
+
+  public void AddItem(String itemId, String productId, BigDecimal listprice, String attri ,int qty) {
+
+    itemMapper.AddItem( itemId,  productId,  listprice,  attri);
+    itemMapper.AddInventory(itemId,qty);
   }
 }

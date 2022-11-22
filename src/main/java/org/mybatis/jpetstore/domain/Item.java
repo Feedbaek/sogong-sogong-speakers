@@ -142,4 +142,11 @@ public class Item implements Serializable {
     return "(" + getItemId() + "-" + getProduct().getProductId() + ")";
   }
 
+  public String getProductId() {
+    return productId;
+  }
+
+  public void setProductId(String productId) {
+    this.productId = productId;
+  }
 }

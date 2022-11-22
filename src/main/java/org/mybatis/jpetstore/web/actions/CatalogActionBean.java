@@ -15,6 +15,7 @@
  */
 package org.mybatis.jpetstore.web.actions;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -59,6 +60,11 @@ public class CatalogActionBean extends AbstractActionBean {
   private String itemId;
   private Item item;
   private List<Item> itemList;
+  private boolean admin;
+
+
+  private int quantity;
+
 
   public String getKeyword() {
     return keyword;
@@ -92,6 +98,30 @@ public class CatalogActionBean extends AbstractActionBean {
     this.itemId = itemId;
   }
 
+  public BigDecimal getListPrice() {
+    return item.getListPrice();
+  }
+
+  public void setListPrice(BigDecimal price) {
+    this.item.setListPrice(price);
+  }
+
+  public String getAttribute1() {
+    return item.getAttribute1();
+  }
+
+  public void setAttribute1(String attribute1) {
+    item.setAttribute1(attribute1);
+  }
+
+  public int getQuantity() {
+    return item.getQuantity();
+  }
+
+  public void setQuantity(int quantity) {
+    this.item.setQuantity(quantity);
+  }
+
   public Category getCategory() {
     return category;
   }
@@ -114,6 +144,14 @@ public class CatalogActionBean extends AbstractActionBean {
 
   public void setItem(Item item) {
     this.item = item;
+  }
+
+  public void setAdmin(boolean admin) {
+    this.admin = admin;
+  }
+
+  public boolean getAdmin() {
+    return admin;
   }
 
   public List<Category> getCategoryList() {
@@ -150,6 +188,8 @@ public class CatalogActionBean extends AbstractActionBean {
    *
    * @return the forward resolution
    */
+
+  // =========================================================================================
   public ForwardResolution viewCategory() {
     if (categoryId != null) {
       productList = catalogService.getProductListByCategory(categoryId);
@@ -158,35 +198,18 @@ public class CatalogActionBean extends AbstractActionBean {
     return new ForwardResolution(VIEW_CATEGORY);
   }
 
-  /**
-   * View product.
-   *
-   * @return the forward resolution
-   */
-  public ForwardResolution viewProduct() {
-    if (productId != null) {
-      itemList = catalogService.getItemListByProduct(productId);
-      product = catalogService.getProduct(productId);
-    }
+  public ForwardResolution viewProduct() { // TO CATEGORY.JSP
+    itemList = catalogService.getItemListByProduct(productId);
+    product = catalogService.getProduct(productId);
     return new ForwardResolution(VIEW_PRODUCT);
   }
 
-  /**
-   * View item.
-   *
-   * @return the forward resolution
-   */
   public ForwardResolution viewItem() {
     item = catalogService.getItem(itemId);
     product = item.getProduct();
     return new ForwardResolution(VIEW_ITEM);
   }
 
-  /**
-   * Search products.
-   *
-   * @return the forward resolution
-   */
   public ForwardResolution searchProducts() {
     if (keyword == null || keyword.length() < 1) {
       setMessage("Please enter a keyword to search for, then press the search button.");
@@ -196,6 +219,72 @@ public class CatalogActionBean extends AbstractActionBean {
       return new ForwardResolution(SEARCH_PRODUCTS);
     }
   }
+
+  // =========================================================================================
+  public ForwardResolution viewProductlist() { // IN : INCLUDETOP.JSP , OUT : Productlist.JSP
+    productList = catalogService.getProductList();
+    return new ForwardResolution("/WEB-INF/jsp/catalog/Productlist.jsp");
+  }
+
+  public ForwardResolution viewItemlist() { // IN : Productlist.JSP , OUT : Itemlist.JSP
+    itemList = catalogService.getItemListByProduct(productId);
+    product = catalogService.getProduct(productId);
+    return new ForwardResolution("/WEB-INF/jsp/catalog/Itemlist.jsp");
+  }
+
+  ////////////////////////// ITEMUPDATE
+  public ForwardResolution ItemUpdatePage() { // IN : Itemlist.JSP , OUT : Itemupdate.JSP
+    item = catalogService.getItem(itemId);
+    return new ForwardResolution("/WEB-INF/jsp/catalog/ItemUpdate.jsp");
+  }
+
+  public ForwardResolution DBItemUpdate() { // IN : Itemupdate.JSP , OUT : Itemlist.JSP
+    if (itemId != null && item != null) {
+      catalogService.UpdateItem(itemId, getAttribute1(), getListPrice(), getQuantity());
+    } else {
+      String error = "item is null";
+      if (itemId == null)
+        error = "itemId is null";
+      setMessage(error + "Fill all blank");
+      return new ForwardResolution(ERROR);
+    }
+    itemList = catalogService.getItemListByProduct(productId);
+    product = catalogService.getProduct(productId);
+    return new ForwardResolution("/WEB-INF/jsp/catalog/Itemlist.jsp");
+  }
+
+  /////////////////////////// ITEMADD
+  public ForwardResolution ItemAddPage() {// IN : Itemlist.JSP , OUT : Itemadd.JSP
+    item = new Item();
+    item.setProductId(productId);
+    return new ForwardResolution("/WEB-INF/jsp/catalog/ItemAdd.jsp");
+  }
+
+  public ForwardResolution DBItemAdd() {// IN : itemadd.JSP , OUT : Itemlist.JSP
+    if (itemId != null && item != null) {
+      catalogService.AddItem(itemId, getProductId(), getListPrice(), getAttribute1(), getQuantity());
+    }
+    else {
+      String error = "item is null";
+      if (itemId == null)
+        error = "itemId is null";
+      setMessage(error + "Fill all blank");
+      return new ForwardResolution(ERROR);
+    }
+
+    itemList = catalogService.getItemListByProduct(productId);
+    product = catalogService.getProduct(productId);
+    return new ForwardResolution("/WEB-INF/jsp/catalog/Itemlist.jsp");
+  }
+
+  /////////////////////// // ITEM DELETE
+  public ForwardResolution ItemDelete() {
+    catalogService.DeleteItem(itemId, productId);
+    itemList = catalogService.getItemListByProduct(productId);
+    product = catalogService.getProduct(productId);
+    return new ForwardResolution("/WEB-INF/jsp/catalog/Itemlist.jsp");
+  }
+
 
   /**
    * Clear.
@@ -214,6 +303,9 @@ public class CatalogActionBean extends AbstractActionBean {
     itemId = null;
     item = null;
     itemList = null;
+
+    quantity = 0;
   }
+
 
 }
