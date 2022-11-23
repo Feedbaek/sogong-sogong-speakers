@@ -71,6 +71,7 @@ public class Cart implements Serializable {
       cartItem.setItem(item);
       cartItem.setQuantity(0);
       cartItem.setInStock(isInStock);
+	  cartItem.setPetManager(false);
       itemMap.put(item.getItemId(), cartItem);
       itemList.add(cartItem);
     }
@@ -111,15 +112,29 @@ public class Cart implements Serializable {
     cartItem.setQuantity(quantity);
   }
 
+   public void setPetManagerByItemId(String itemId, boolean isChecked) {
+    CartItem cartItem = itemMap.get(itemId);
+    cartItem.setPetManager(isChecked);
+  }
+
   /**
    * Gets the sub total.
    *
    * @return the sub total
    */
+
   public BigDecimal getSubTotal() {
-    return itemList.stream()
-        .map(cartItem -> cartItem.getItem().getListPrice().multiply(new BigDecimal(cartItem.getQuantity())))
-        .reduce(BigDecimal.ZERO, BigDecimal::add);
+    BigDecimal cost;
+    BigDecimal total = itemList.stream()
+            .map(cartItem -> cartItem.getItem().getListPrice().multiply(new BigDecimal(cartItem.getQuantity())))
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+    for(CartItem cartItem : getCartItemList()){
+      if (cartItem.getPetManager()) {
+        cost = new BigDecimal("30");
+        total = total.add(cost);
+      }
+    }
+    return total;
   }
 
 }
