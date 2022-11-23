@@ -17,7 +17,7 @@
 
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.mybatis.jpetstore.mapper.ItemMapper">
 
@@ -41,7 +41,21 @@
       ATTR5 AS attribute5
     FROM ITEM I, PRODUCT P
     WHERE P.PRODUCTID = I.PRODUCTID
-    AND I.PRODUCTID = #{value}
+      AND I.PRODUCTID = #{value}
+  </select>
+
+  <select id="getItemListByProducts" resultType="Item">
+    SELECT
+      PRODUCTID AS "product.productId",
+      NAME AS "product.name",
+    FROM ITEM
+  </select>
+
+  <select id="getCategoryName" resultType="String">
+    select
+      category
+    from  PRODUCT P
+    where P.PRODUCTID =  #{arg0}
   </select>
 
   <select id="getItem" resultType="Item">
@@ -79,4 +93,47 @@
     WHERE ITEMID = #{itemId}
   </update>
 
+  <select id="getItemList" resultType="Item">
+    SELECT DISTINCT
+      I.PRODUCTID AS "product.productId",
+      NAME AS "product.name"
+    FROM ITEM I, PRODUCT P
+  </select>
+
+
+  <update id="UpdateItem">
+    UPDATE ITEM SET
+                  attr1 =  #{arg1},
+                  listprice =  #{arg2}
+    WHERE ITEMID = #{arg0};
+
+
+  </update>
+
+  <update id="UpdateQTY">
+    UPDATE INVENTORY SET
+      QTY =  #{arg1}
+    WHERE ITEMID = #{arg0};
+  </update>
+
+
+
+
+  <insert id="AddItem">
+    INSERT INTO
+      item (itemid, productid, listprice, unitcost, supplier, status, attr1)
+    VALUES
+      (#{arg0},#{arg1},#{arg2},0.00,1,'P',#{arg3});
+  </insert>
+
+  <insert id="AddInventory">
+    INSERT
+    INTO inventory
+      (itemid, qty)
+    VALUES (#{arg0}, #{arg1});
+  </insert>
+
+  <delete id="DeleteItem">
+    DELETE FROM item WHERE itemid = #{arg0} and ProductId = #{arg1};
+  </delete>
 </mapper>

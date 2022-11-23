@@ -23,12 +23,19 @@
 
 <div id="Catalog">
 
-<h2>${actionBean.category.name}</h2>
+	<c:if test="${actionBean.isadmin == false}">
+
+		<h2> ${actionBean.category.name} </h2>
+
+	</c:if>
 
 <table>
 	<tr>
 		<th>Product ID</th>
 		<th>Name</th>
+		<c:if test="${actionBean.isadmin == true}">
+			<th></th>
+		</c:if>
 	</tr>
 	<c:forEach var="product" items="${actionBean.productList}">
 		<tr>
@@ -39,6 +46,14 @@
 				${product.productId}
 			</stripes:link></td>
 			<td>${product.name}</td>
+			<c:if test="${actionBean.isadmin == true}">
+				<td><stripes:link class="Button"
+								  beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
+								  event="viewItemlist">
+					<stripes:param name="productId" value="${product.productId}" />
+					EDIT ITEM
+				</stripes:link></td>
+			</c:if>
 		</tr>
 	</c:forEach>
 </table>
