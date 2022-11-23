@@ -116,12 +116,7 @@
     WHERE ITEMID = #{arg0};
   </update>
 
-  <select id="getProductList" resultType="Item">
-    SELECT DISTINCT
-      PRODUCTID AS "product.productId",
-      NAME AS "product.name"
-    FROM  PRODUCT P
-  </select>
+
 
 
   <insert id="AddItem">

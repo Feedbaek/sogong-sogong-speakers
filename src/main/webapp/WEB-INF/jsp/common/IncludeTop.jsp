@@ -94,7 +94,8 @@
 
 			<stripes:link
 					beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
-					event="viewProductlist">
+					event="viewCategory">
+				<stripes:param name="categoryId" value= "" />
 				Admin Dashboard
 			</stripes:link>
 		</div>

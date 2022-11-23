@@ -60,8 +60,6 @@ public class CatalogActionBean extends AbstractActionBean {
   private String itemId;
   private Item item;
   private List<Item> itemList;
-  private boolean admin;
-
 
   private int quantity;
 
@@ -146,14 +144,6 @@ public class CatalogActionBean extends AbstractActionBean {
     this.item = item;
   }
 
-  public void setAdmin(boolean admin) {
-    this.admin = admin;
-  }
-
-  public boolean getAdmin() {
-    return admin;
-  }
-
   public List<Category> getCategoryList() {
     return categoryList;
   }
@@ -183,6 +173,17 @@ public class CatalogActionBean extends AbstractActionBean {
     return new ForwardResolution(MAIN);
   }
 
+
+  public boolean isIsadmin() {
+    return isadmin;
+  }
+
+  public void setIsadmin(boolean isadmin) {
+    this.isadmin = isadmin;
+  }
+
+  private  boolean isadmin;
+
   /**
    * View category.
    *
@@ -190,14 +191,6 @@ public class CatalogActionBean extends AbstractActionBean {
    */
 
   // =========================================================================================
-  public ForwardResolution viewCategory() {
-    if (categoryId != null) {
-      productList = catalogService.getProductListByCategory(categoryId);
-      category = catalogService.getCategory(categoryId);
-    }
-    return new ForwardResolution(VIEW_CATEGORY);
-  }
-
   public ForwardResolution viewProduct() { // TO CATEGORY.JSP
     itemList = catalogService.getItemListByProduct(productId);
     product = catalogService.getProduct(productId);
@@ -221,11 +214,19 @@ public class CatalogActionBean extends AbstractActionBean {
   }
 
   // =========================================================================================
-  public ForwardResolution viewProductlist() { // IN : INCLUDETOP.JSP , OUT : Productlist.JSP
-    productList = catalogService.getProductList();
-    return new ForwardResolution("/WEB-INF/jsp/catalog/Productlist.jsp");
+  public ForwardResolution viewCategory() {
+    if (categoryId != null) {
+      isadmin = false;
+      productList = catalogService.getProductListByCategory(categoryId);
+      category = catalogService.getCategory(categoryId);
+    }
+    if (categoryId == null)
+    {
+      isadmin = true;
+      productList = catalogService.getProductList();
+    }
+    return new ForwardResolution(VIEW_CATEGORY);
   }
-
   public ForwardResolution viewItemlist() { // IN : Productlist.JSP , OUT : Itemlist.JSP
     itemList = catalogService.getItemListByProduct(productId);
     product = catalogService.getProduct(productId);
@@ -241,7 +242,8 @@ public class CatalogActionBean extends AbstractActionBean {
   public ForwardResolution DBItemUpdate() { // IN : Itemupdate.JSP , OUT : Itemlist.JSP
     if (itemId != null && item != null) {
       catalogService.UpdateItem(itemId, getAttribute1(), getListPrice(), getQuantity());
-    } else {
+    }
+    else {
       String error = "item is null";
       if (itemId == null)
         error = "itemId is null";

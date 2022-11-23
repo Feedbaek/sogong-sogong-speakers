@@ -35,7 +35,6 @@ public interface ItemMapper {
 
   List<Item> getItemListByProduct(String productId);
 
-  List<Product> getProductList();
 
   Item getItem(String itemId);
   void DeleteItem(String ProductId, String itemId);

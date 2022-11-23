@@ -45,7 +45,7 @@ public class CatalogService {
     this.productMapper = productMapper;
   }
 
-  // LIST
+  // out : product list
   public List<Category> getCategoryList() {
     return categoryMapper.getCategoryList();
   }
@@ -53,6 +53,10 @@ public class CatalogService {
   public List<Product> getProductListByCategory(String categoryId) {
     return productMapper.getProductListByCategory(categoryId);
   }
+  public List<Product> getProductList() {
+    return productMapper.getProductList();
+  }
+
   public List<Product> searchProductList(String keywords) {
     List<Product> products = new ArrayList<>();
     for (String keyword : keywords.split("\\s+")) {
@@ -60,15 +64,15 @@ public class CatalogService {
     }
     return products;
   }
+
+
+
+
+
   public List<Item> getItemListByProduct(String productId)
   {
     return itemMapper.getItemListByProduct(productId);
   }
-
-  public List<Product> getProductList() {
-    return itemMapper.getProductList();
-  }
-
 
   // OBJ
 
