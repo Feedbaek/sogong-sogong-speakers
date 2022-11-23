@@ -44,6 +44,7 @@ public class CartActionBean extends AbstractActionBean {
 
   @SpringBean
   private transient CatalogService catalogService;
+  //추가
 
   private Cart cart = new Cart();
   private String workingItemId;
@@ -112,6 +113,10 @@ public class CartActionBean extends AbstractActionBean {
       try {
         int quantity = Integer.parseInt(request.getParameter(itemId));
         getCart().setQuantityByItemId(itemId, quantity);
+		if (request.getParameter(itemId + "a") != null) 
+          getCart().setPetManagerByItemId(itemId, true);
+		else
+          getCart().setPetManagerByItemId(itemId, false);
         if (quantity < 1) {
           cartItems.remove();
         }

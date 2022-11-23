@@ -31,6 +31,7 @@ public class LineItem implements Serializable {
   private int orderId;
   private int lineNumber;
   private int quantity;
+  private boolean petManager;
   private String itemId;
   private BigDecimal unitPrice;
   private Item item;
@@ -50,6 +51,7 @@ public class LineItem implements Serializable {
   public LineItem(int lineNumber, CartItem cartItem) {
     this.lineNumber = lineNumber;
     this.quantity = cartItem.getQuantity();
+    this.petManager = cartItem.getPetManager();
     this.itemId = cartItem.getItem().getItemId();
     this.unitPrice = cartItem.getItem().getListPrice();
     this.item = cartItem.getItem();
@@ -110,9 +112,21 @@ public class LineItem implements Serializable {
     calculateTotal();
   }
 
+  public boolean getPetManager() {
+    return petManager;
+  }
+
+  public void setPetManager(boolean petManager) {
+    this.petManager = petManager;
+  }
+
   private void calculateTotal() {
     total = Optional.ofNullable(item).map(Item::getListPrice).map(v -> v.multiply(new BigDecimal(quantity)))
         .orElse(null);
+    if (petManager) {
+      BigDecimal cost = new BigDecimal("30");
+      total = total.add(cost);
+    }
   }
 
 }

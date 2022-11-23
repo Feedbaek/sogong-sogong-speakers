@@ -35,6 +35,7 @@
 			<th><b>Description</b></th>
 			<th><b>In Stock?</b></th>
 			<th><b>Quantity</b></th>
+			<th><b>Pet Manager</b></th>
 			<th><b>List Price</b></th>
 			<th><b>Total Cost</b></th>
 			<th>&nbsp;</th>
@@ -61,6 +62,8 @@
 				<td>${cartItem.inStock}</td>
 				<td><stripes:text size="3" name="${cartItem.item.itemId}"
 					value="${cartItem.quantity}" /></td>
+				<%--버튼추가--%>
+				<td><stripes:checkbox name="${cartItem.item.itemId}a"/></td>
 				<td>$<fmt:formatNumber value="${cartItem.item.listPrice}"
 					pattern="#,##0.00" /></td>
 				<td>$<fmt:formatNumber value="${cartItem.total}"

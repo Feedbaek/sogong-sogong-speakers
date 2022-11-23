@@ -320,7 +320,6 @@ public class Order implements Serializable {
       CartItem cartItem = i.next();
       addLineItem(cartItem);
     }
-
   }
 
   public void addLineItem(CartItem cartItem) {

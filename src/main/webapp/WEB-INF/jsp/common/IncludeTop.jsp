@@ -58,8 +58,8 @@
 	beanclass="org.mybatis.jpetstore.web.actions.CartActionBean"
 	event="viewCart">
 	<img align="middle" name="img_cart" src="../images/cart.gif" />
-</stripes:link> <img align="middle" src="../images/separator.gif" /> <c:if
-	test="${sessionScope.accountBean == null}">
+</stripes:link> <img align="middle" src="../images/separator.gif" />
+	<c:if test="${sessionScope.accountBean == null}">
 	<stripes:link
 		beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
 		event="signonForm">
@@ -79,16 +79,22 @@
 			beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
 			event="signoff">
             Sign Out
-	      </stripes:link>
+		</stripes:link>
 		<img align="middle" src="../images/separator.gif" />
 		<stripes:link
 			beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
 			event="editAccountForm">
             My Account
-	      </stripes:link>
+		</stripes:link>
+		<img align="middle" src="../images/separator.gif" />
+		<stripes:link
+				beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
+				event="editAccountForm">
+			My Pet Manager
+		</stripes:link>
 	</c:if>
-</c:if> <img align="middle" src="../images/separator.gif" /> <a
-	href="../help.html">?</a></div>
+</c:if> <img align="middle" src="../images/separator.gif" />
+	<a href="../help.html">?</a></div>
 </div>
 
 <div id="Search">
