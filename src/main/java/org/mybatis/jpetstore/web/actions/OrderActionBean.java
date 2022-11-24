@@ -174,7 +174,7 @@ public class OrderActionBean extends AbstractActionBean {
     AccountActionBean accountBean = (AccountActionBean) session.getAttribute("accountBean");
 
     order = orderService.getOrder(order.getOrderId());
-
+    System.out.println(order.getCatDog());
     if (accountBean.getAccount().getUsername().equals(order.getUsername())) {
       return new ForwardResolution(VIEW_ORDER);
     } else {

@@ -52,6 +52,29 @@ public class Cart implements Serializable {
     return itemList.iterator();
   }
 
+  private boolean catDog;
+  private boolean repFish;
+  private boolean bird;
+
+  public boolean getCatDog() { return catDog; }
+  public void setCatDog(boolean catDog) {
+    this.catDog = catDog;
+  }
+
+
+  public boolean getRepFish() { return repFish; }
+
+  public void setRepFish(boolean repFish) {
+    this.repFish = repFish;
+  }
+
+  public boolean getBird() { return bird; }
+
+  public void setBird(boolean bird) {
+    this.bird = bird;
+  }
+
+
   public boolean containsItemId(String itemId) {
     return itemMap.containsKey(itemId);
   }
@@ -71,7 +94,6 @@ public class Cart implements Serializable {
       cartItem.setItem(item);
       cartItem.setQuantity(0);
       cartItem.setInStock(isInStock);
-	  cartItem.setPetManager(false);
       itemMap.put(item.getItemId(), cartItem);
       itemList.add(cartItem);
     }
@@ -112,11 +134,6 @@ public class Cart implements Serializable {
     cartItem.setQuantity(quantity);
   }
 
-   public void setPetManagerByItemId(String itemId, boolean isChecked) {
-    CartItem cartItem = itemMap.get(itemId);
-    cartItem.setPetManager(isChecked);
-  }
-
   /**
    * Gets the sub total.
    *
@@ -128,13 +145,18 @@ public class Cart implements Serializable {
     BigDecimal total = itemList.stream()
             .map(cartItem -> cartItem.getItem().getListPrice().multiply(new BigDecimal(cartItem.getQuantity())))
             .reduce(BigDecimal.ZERO, BigDecimal::add);
-    for(CartItem cartItem : getCartItemList()){
-      if (cartItem.getPetManager()) {
+      if (catDog) {
         cost = new BigDecimal("30");
         total = total.add(cost);
       }
-    }
+      if (repFish) {
+        cost = new BigDecimal("30");
+        total = total.add(cost);
+      }
+      if (bird) {
+        cost = new BigDecimal("30");
+        total = total.add(cost);
+      }
     return total;
   }
-
 }

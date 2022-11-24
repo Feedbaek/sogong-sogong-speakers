@@ -87,8 +87,8 @@ public class OrderService {
   @Transactional
   public Order getOrder(int orderId) {
     Order order = orderMapper.getOrder(orderId);
+    System.out.println(order.getCatDog());
     order.setLineItems(lineItemMapper.getLineItemsByOrderId(orderId));
-
     order.getLineItems().forEach(lineItem -> {
       Item item = itemMapper.getItem(lineItem.getItemId());
       item.setQuantity(itemMapper.getInventoryQuantity(lineItem.getItemId()));
