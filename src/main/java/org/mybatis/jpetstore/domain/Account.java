@@ -30,6 +30,7 @@ public class Account implements Serializable {
 
   private String username;
   private String password;
+  private String permission;
   private String email;
   private String firstName;
   private String lastName;
@@ -47,6 +48,7 @@ public class Account implements Serializable {
   private boolean bannerOption;
   private String bannerName;
 
+
   public String getUsername() {
     return username;
   }
@@ -61,6 +63,12 @@ public class Account implements Serializable {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+  public String getPermission() {
+    return permission;
+  }
+  public void setPermission(String permission) {
+    this.permission = permission;
   }
 
   public String getEmail() {

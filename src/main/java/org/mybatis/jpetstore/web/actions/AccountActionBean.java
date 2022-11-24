@@ -172,6 +172,7 @@ public class AccountActionBean extends AbstractActionBean {
       HttpSession s = context.getRequest().getSession();
       // this bean is already registered as /actions/Account.action
       s.setAttribute("accountBean", this);
+      s.setAttribute("permission", account.getPermission());
       return new RedirectResolution(CatalogActionBean.class);
     }
   }

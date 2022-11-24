@@ -20,6 +20,7 @@ import java.util.List;
 
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
+import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SessionScope;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 
@@ -27,6 +28,10 @@ import org.mybatis.jpetstore.domain.Category;
 import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.domain.Product;
 import org.mybatis.jpetstore.service.CatalogService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * The Class CatalogActionBean.
@@ -170,6 +175,7 @@ public class CatalogActionBean extends AbstractActionBean {
 
   @DefaultHandler
   public ForwardResolution viewMain() {
+    HttpSession session = context.getRequest().getSession();
     return new ForwardResolution(MAIN);
   }
 
