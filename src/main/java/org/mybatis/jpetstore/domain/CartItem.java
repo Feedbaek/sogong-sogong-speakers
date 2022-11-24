@@ -33,16 +33,6 @@ public class CartItem implements Serializable {
   private boolean inStock;
   private BigDecimal total;
 
-/* 펫매니저 체크박스 추가하엿읍*/
-  private boolean petManager;
-
-  public boolean getPetManager() { return petManager; }
-
-  public void setPetManager(boolean isChecked) {
-	petManager = isChecked;
-    calculateTotal();
-	}
-
   public boolean isInStock() {
     return inStock;
   } 
@@ -78,13 +68,8 @@ public class CartItem implements Serializable {
     calculateTotal();
   }
 
-//이게먼데
   private void calculateTotal() {
     total = Optional.ofNullable(item).map(Item::getListPrice).map(v -> v.multiply(new BigDecimal(quantity)))
         .orElse(null);
-    if (petManager) {
-      BigDecimal cost = new BigDecimal("30");
-      total = total.add(cost);
-    }
   }
 }

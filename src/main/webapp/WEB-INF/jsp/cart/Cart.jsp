@@ -35,7 +35,6 @@
 			<th><b>Description</b></th>
 			<th><b>In Stock?</b></th>
 			<th><b>Quantity</b></th>
-			<th><b>Pet Manager</b></th>
 			<th><b>List Price</b></th>
 			<th><b>Total Cost</b></th>
 			<th>&nbsp;</th>
@@ -62,8 +61,7 @@
 				<td>${cartItem.inStock}</td>
 				<td><stripes:text size="3" name="${cartItem.item.itemId}"
 					value="${cartItem.quantity}" /></td>
-				<%--버튼추가--%>
-				<td><stripes:checkbox name="${cartItem.item.itemId}a"/></td>
+<%--				<td><stripes:checkbox name="${cartItem.item.itemId}a"/> $30.00</td>--%>
 				<td>$<fmt:formatNumber value="${cartItem.item.listPrice}"
 					pattern="#,##0.00" /></td>
 				<td>$<fmt:formatNumber value="${cartItem.total}"
@@ -76,6 +74,22 @@
             </stripes:link></td>
 			</tr>
 		</c:forEach>
+		<c:if test="${actionBean.cart.numberOfItems != 0}">
+			<th colspan="7"><b>PET MANAGER SERVICE</b></th>
+			<th></th>
+			<tr>
+				<th colspan="2"> CAT / DOG </th>
+				<th colspan="2"> REPTILES / FISH </th>
+				<th colspan="3"> BIRD </th>
+				<th></th>
+			</tr>
+			<tr>
+				<td colspan="2"><stripes:checkbox name="catDog"/> $30.00</td>
+				<td colspan="2"><stripes:checkbox name="repFish"/> $30.00</td>
+				<td colspan="3"><stripes:checkbox name="bird"/> $30.00</td>
+				<td>&nbsp;</td>
+			</tr>
+		</c:if>
 		<tr>
 			<td colspan="7">Sub Total: $<fmt:formatNumber
 				value="${actionBean.cart.subTotal}" pattern="#,##0.00" /> <stripes:submit

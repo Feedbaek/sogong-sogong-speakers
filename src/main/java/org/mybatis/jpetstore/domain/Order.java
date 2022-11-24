@@ -59,6 +59,24 @@ public class Order implements Serializable {
   private String status;
   private List<LineItem> lineItems = new ArrayList<>();
 
+  private boolean catDog;
+  private boolean repFish;
+  private boolean bird;
+
+  public boolean getCatDog() { return catDog; }
+  public void setCatDog(boolean catDog) {
+    this.catDog = catDog;
+  }
+  public boolean getRepFish() { return repFish; }
+  public void setRepFish(boolean repFish) {
+    this.repFish = repFish;
+  }
+  public boolean getBird() { return bird; }
+  public void setBird(boolean bird) {
+    this.bird = bird;
+  }
+
+
   public int getOrderId() {
     return orderId;
   }
@@ -307,6 +325,10 @@ public class Order implements Serializable {
     billCountry = account.getCountry();
 
     totalPrice = cart.getSubTotal();
+
+    catDog = cart.getCatDog();
+    repFish = cart.getRepFish();
+    bird = cart.getBird();
 
     creditCard = "999 9999 9999 9999";
     expiryDate = "12/03";

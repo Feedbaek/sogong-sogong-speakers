@@ -107,16 +107,24 @@ public class CartActionBean extends AbstractActionBean {
     HttpServletRequest request = context.getRequest();
 
     Iterator<CartItem> cartItems = getCart().getAllCartItems();
+    if(request.getParameter("catDog") != null)
+      getCart().setCatDog(true);
+    else
+      getCart().setCatDog(false);
+    if(request.getParameter("repFish") != null)
+      getCart().setRepFish(true);
+    else
+      getCart().setRepFish(false);
+    if(request.getParameter("bird") != null)
+      getCart().setBird(true);
+    else
+      getCart().setBird(false);
     while (cartItems.hasNext()) {
       CartItem cartItem = cartItems.next();
       String itemId = cartItem.getItem().getItemId();
       try {
         int quantity = Integer.parseInt(request.getParameter(itemId));
         getCart().setQuantityByItemId(itemId, quantity);
-		if (request.getParameter(itemId + "a") != null) 
-          getCart().setPetManagerByItemId(itemId, true);
-		else
-          getCart().setPetManagerByItemId(itemId, false);
         if (quantity < 1) {
           cartItems.remove();
         }
@@ -124,8 +132,7 @@ public class CartActionBean extends AbstractActionBean {
         // ignore parse exceptions on purpose
       }
     }
-
-    return new ForwardResolution(VIEW_CART);
+      return new ForwardResolution(VIEW_CART);
   }
 
   public ForwardResolution viewCart() {

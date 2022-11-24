@@ -130,6 +130,7 @@
 				<th>Description</th>
 				<th>Quantity</th>
 				<th>Price</th>
+<%--				<th>PetManage</th>--%>
 				<th>Total Cost</th>
 			</tr>
 			<c:forEach var="lineItem" items="${actionBean.order.lineItems}">
@@ -150,7 +151,6 @@
 					</c:if> <c:if test="${lineItem.item == null}">
 						<i>{description unavailable}</i>
 					</c:if></td>
-
 					<td>${lineItem.quantity}</td>
 					<td>$<fmt:formatNumber value="${lineItem.unitPrice}"
 						pattern="#,##0.00" /></td>
@@ -158,8 +158,28 @@
 						pattern="#,##0.00" /></td>
 				</tr>
 			</c:forEach>
+			<tr><th colspan="5">Pet Manage Service</th>
+				<c:if test="${actionBean.order.catDog eq true}">
+					<tr><td>Cat / Dog : $30.00</td></tr>
+				</c:if>
+				<c:if test="${actionBean.order.catDog ne true}">
+					<tr><td>Cat / Dog : $0.00</td></tr>
+				</c:if>
+				<c:if test="${actionBean.order.repFish eq true}">
+					<tr><td>Reptiles / Fish : $30.00</td></tr>
+				</c:if>
+				<c:if test="${actionBean.order.repFish ne true}">
+					<tr><td>Reptiles / Fish : $0.00</td></tr>
+				</c:if>
+				<c:if test="${actionBean.order.bird eq true}">
+					<tr><td>Bird: $30.00</td></tr>
+				</c:if>
+				<c:if test="${actionBean.order.bird ne true}">
+					<tr><td>Bird : $0.00</td></tr>
+				</c:if>
+			</tr>
 			<tr>
-				<th colspan="5">Total: $<fmt:formatNumber
+				<th colspan="5">Total : $<fmt:formatNumber
 					value="${actionBean.order.totalPrice}" pattern="#,##0.00" /></th>
 			</tr>
 		</table>
