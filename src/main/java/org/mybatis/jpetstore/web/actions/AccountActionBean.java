@@ -21,6 +21,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.mysql.cj.Session;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.RedirectResolution;

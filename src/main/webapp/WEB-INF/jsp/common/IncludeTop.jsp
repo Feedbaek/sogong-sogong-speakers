@@ -87,11 +87,26 @@
             My Account
 		</stripes:link>
 		<img align="middle" src="../images/separator.gif" />
-		<stripes:link
-				beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
-				event="editAccountForm">
-			My Pet Manager
-		</stripes:link>
+		<c:choose>
+			<c:when test="${sessionScope.permission eq 'user'}">
+				<stripes:link
+						beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
+						event="editAccountForm">
+					My Pet Manager
+				</stripes:link>
+			</c:when>
+			<c:when test="${sessionScope.permission eq 'admin'}">
+				<stripes:link
+						beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
+						event="viewCategory">
+					<stripes:param name="categoryId" value= "" />
+					Admin Dashboard
+				</stripes:link>
+			</c:when>
+			<c:otherwise>
+				<!--펫 매니저 채팅방-->
+			</c:otherwise>
+		</c:choose>
 	</c:if>
 </c:if> <img align="middle" src="../images/separator.gif" />
 	<a href="../help.html">?</a></div>

@@ -200,5 +200,4 @@ public class Account implements Serializable {
   public void setBannerName(String bannerName) {
     this.bannerName = bannerName;
   }
-
 }
