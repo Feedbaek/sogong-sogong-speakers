@@ -20,8 +20,8 @@ public class ChattingService {
         return chattingMapper.getChatRoomByIdForManager(managerId);
     }
 
-    public List<ChattingRoom> getChatRoomListForUser(String userId) {
-        return chattingMapper.getChatRoomByIdForUser(userId);
+    public List<ChattingRoom> getChatRoomListForUser(String costumerId) {
+        return chattingMapper.getChatRoomByIdForUser(costumerId);
     }
 
     public List<ChattingRoom> getAllChatRoom() {

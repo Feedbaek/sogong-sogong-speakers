@@ -11,9 +11,9 @@ public interface ChattingMapper {
 
     List<ChattingRoom> getChatRoomByIdForManager(String managerId);
 
-    List<ChattingRoom> getChatRoomByIdForUser(String userId);
+    List<ChattingRoom> getChatRoomByIdForUser(String costumerId);
 
-    List<Chatting> getChatLogById(String userId,String managerId);
+    List<Chatting> getChatLogById(String costumerId,String managerId);
 
     void insertChattingRoom(ChattingRoom chattingRoom);
 

@@ -1,7 +1,6 @@
 package org.mybatis.jpetstore.web.actions;
 
 import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import org.mybatis.jpetstore.domain.Chatting;
 import org.mybatis.jpetstore.domain.ChattingRoom;
@@ -20,7 +19,7 @@ public class ChattingActionBean extends AbstractActionBean {
     private Chatting chatting;
 
     private ChattingRoom chattingRoom;
-    private String userId;
+    private String costumerId;
 
     private String managerId;
 
@@ -42,8 +41,8 @@ public class ChattingActionBean extends AbstractActionBean {
     public ChattingRoom getChattingRoom() {return chattingRoom;}
     public void setChattingRoom(ChattingRoom chattingRoom) {this.chattingRoom = chattingRoom;}
 
-    public String getUserId() {return userId;}
-    public void setUserId(String userId) {this.userId = userId;}
+    public String getCostumerId() {return costumerId;}
+    public void setCostumerId(String costumerId) {this.costumerId = costumerId;}
 
     public String getManagerId() {return managerId;}
     public void setManagerId(String managerId) {this.managerId = managerId;}

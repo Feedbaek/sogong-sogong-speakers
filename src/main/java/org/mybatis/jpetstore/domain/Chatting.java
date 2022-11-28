@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 public class Chatting implements Serializable {
 
-    private String userId;
+    private String costumerId;
 
     private String managerId;
 
@@ -19,11 +19,11 @@ public class Chatting implements Serializable {
 
     //-------------------------getter & setter------------------------------------//
 
-    public String getUserId() {
-        return userId;
+    public String getCostumerId() {
+        return costumerId;
     }
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setCostumerId(String costumerId) {
+        this.costumerId = costumerId;
     }
 
     public String getManagerId() {return managerId;}
