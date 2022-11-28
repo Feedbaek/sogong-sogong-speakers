@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+<taglib xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+        version="2.1">
+    <tlib-version>1.0</tlib-version>
+    <short-name>myshortname</short-name>
+    <uri>http://mycompany.com</uri>
+    &lt;!&ndash; Invoke 'Generate' action to add tags or functions &ndash;&gt;
+</taglib>
+-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.mybatis.jpetstore.mapper.ChattingMapper">
+
+    <cache />
+
+    <select id="getAllChatRoom" resultType="ChattingRoom">
+        SELECT *
+        FROM ChattingRoom
+    </select>
+
+    <select id="getChatRoomByIdForManager" resultType="ChattingRoom">
+        SELECT c.userid as userid,
+               c.managerid as managerid,
+        FROM chattingRoom c
+        WHERE c.managerId=#{managerId}
+    </select>
+
+    <select id="getChatRoomByIdForUser" resultType="ChattingRoom">
+        SELECT userid,
+               managerid
+        FROM ChattingRoom
+        WHERE userId=#{userId}
+    </select>
+
+    <select id="getChatLogByID" resultType="Chatting">
+        SELECT userid,
+               managerid,
+               ChattingLog
+        FROM ChattingLog
+        WHERE userid=#{userId} AND managerid=#{managerId}
+    </select>
+
+    <insert id="insertChattingRoom" parameterType="ChattingRoom">
+        INSERT INTO ChattingRoom
+          (userid,managerid)
+        VALUES
+          (#{userId},#{managerId})
+    </insert>
+
+    <insert id="insertChatting" parameterType="Chatting">
+        INSERT INTO ChattingLog
+          (userid,managerid,ChattingLog)
+        VALUES
+          (#{userId},#{managerId},#{ChattingLog})
+    </insert>
+
+    <delete id="deleteChattingRoom" parameterType="chattingRoom">
+        DELETE FROM ChattingRoom
+        WHERE userid=#{userId} AND managerid=#{managerId}
+    </delete>
+
+</mapper>
