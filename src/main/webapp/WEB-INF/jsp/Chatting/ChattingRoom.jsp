@@ -5,7 +5,7 @@
   Time: 오후 9:42
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html; charset=utf-8"%>
+<%--<%@ page contentType="text/html; charset=utf-8"%>--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ include file="../common/IncludeTop.jsp"%>
@@ -23,11 +23,13 @@
 
 <table>
     <tr>
+        <th>User ID</th>
         <th>Manager ID</th>
     </tr>
     <c:forEach var="ChattingRoom" items="${actionBean.chattingRoomList}">
         <tr>
-            <td>${ChattingRoom.}</td>
+            <td>${ChattingRoom.customerId}</td>
+            <td>${ChattingRoom.managerId}</td>
         </tr>
     </c:forEach>
 </table>

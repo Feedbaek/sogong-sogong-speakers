@@ -25,44 +25,44 @@
     </select>
 
     <select id="getChatRoomByIdForManager" resultType="ChattingRoom">
-        SELECT c.userid as userid,
-               c.managerid as managerid,
+        SELECT c.customerid as customerid,
+               c.managerid as managerid
         FROM chattingRoom c
         WHERE c.managerId=#{managerId}
     </select>
 
     <select id="getChatRoomByIdForUser" resultType="ChattingRoom">
-        SELECT userid,
+        SELECT customerid,
                managerid
         FROM ChattingRoom
-        WHERE userId=#{userId}
+        WHERE customerid=#{customerId}
     </select>
 
     <select id="getChatLogByID" resultType="Chatting">
-        SELECT userid,
+        SELECT customerid,
                managerid,
                ChattingLog
         FROM ChattingLog
-        WHERE userid=#{userId} AND managerid=#{managerId}
+        WHERE customerid=#{customerId} AND managerid=#{managerId}
     </select>
 
     <insert id="insertChattingRoom" parameterType="ChattingRoom">
         INSERT INTO ChattingRoom
-          (userid,managerid)
+          (customerid,managerid)
         VALUES
-          (#{userId},#{managerId})
+          (#{customerId},#{managerId})
     </insert>
 
     <insert id="insertChatting" parameterType="Chatting">
         INSERT INTO ChattingLog
-          (userid,managerid,ChattingLog)
+          (customerid,managerid,ChattingLog)
         VALUES
-          (#{userId},#{managerId},#{ChattingLog})
+          (#{customerId},#{managerId},#{ChattingLog})
     </insert>
 
     <delete id="deleteChattingRoom" parameterType="chattingRoom">
         DELETE FROM ChattingRoom
-        WHERE userid=#{userId} AND managerid=#{managerId}
+        WHERE customerid=#{customerId} AND managerid=#{managerId}
     </delete>
 
 </mapper>

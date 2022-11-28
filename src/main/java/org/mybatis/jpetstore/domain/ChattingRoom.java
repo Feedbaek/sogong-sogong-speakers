@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class ChattingRoom implements Serializable {
 
-    private String costumerId;
+    private String customerId;
 
     private String managerId;
 
@@ -12,11 +12,11 @@ public class ChattingRoom implements Serializable {
 
     //------------------------------------getter&setter-----------------------------------------//
 
-    public String getCostumerId() {
-        return costumerId;
+    public String getCustomerId() {
+        return customerId;
     }
     public void setCostumerId(String costumerId) {
-        this.costumerId = costumerId;
+        this.customerId = customerId;
     }
 
 

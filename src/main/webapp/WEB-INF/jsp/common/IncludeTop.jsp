@@ -105,6 +105,11 @@
 			</c:when>
 			<c:otherwise>
 				<!--펫 매니저 채팅방-->
+				<stripes:link
+						beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
+						event="viewChattingRoomForManager">
+					Pet Manager
+				</stripes:link>
 			</c:otherwise>
 		</c:choose>
 	</c:if>
