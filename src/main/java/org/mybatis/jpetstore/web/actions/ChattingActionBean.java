@@ -24,49 +24,64 @@ public class ChattingActionBean extends AbstractActionBean {
     private Chatting chatting;
 
     private ChattingRoom chattingRoom;
-    private String costumerId;
+
+    private String customerId;
 
     private String managerId;
 
-    //-------------------------------------------------------------------------//
 
+    //-------------------------------------------------------------------------//
     private static final String VIEW_CHATTING_ROOM = "/WEB-INF/jsp/Chatting/ChattingRoom.jsp";
 
+
     //------------------------getter & setter ---------------------------------//
-
     public List<ChattingRoom> getChattingRoomList() {return chattingRoomList;}
+
     public void setChattingRoomList(List<ChattingRoom> chattingRoomList) {this.chattingRoomList = chattingRoomList;}
-
     public List<Chatting> getChattingLog() {return chattingLog;}
+
     public void setChattingLog(List<Chatting> chattingLog) {this.chattingLog = chattingLog;}
-
     public Chatting getChatting() {return chatting;}
+
     public void setChatting(Chatting chatting) {this.chatting = chatting;}
-
     public ChattingRoom getChattingRoom() {return chattingRoom;}
+
     public void setChattingRoom(ChattingRoom chattingRoom) {this.chattingRoom = chattingRoom;}
+    public String getManagerId() {
+        return managerId;
+    }
 
-    public String getCostumerId() {return costumerId;}
-    public void setCostumerId(String costumerId) {this.costumerId = costumerId;}
+    public void setManagerId(String managerId) {
+        this.managerId = managerId;
+    }
 
-    public String getManagerId() {return managerId;}
-    public void setManagerId(String managerId) {this.managerId = managerId;}
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
 
 
     //============================================================================================
 
     @DefaultHandler
-    public ForwardResolution viewChattingRoomForManager(){
+    public ForwardResolution viewChattingRoom(){
         HttpSession session = context.getRequest().getSession();
         String permission = (String) session.getAttribute("permission");
-        if (permission == null || permission.equals("petmanager") == false) {
-            setMessage("펫 매니저가 아닙니다.");
+        if (permission == null || permission.isEmpty()) {
+            setMessage("접근 권한이 없습니다.");
             return new ForwardResolution(ERROR);
         }
         AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
-        managerId = accountBean.getUsername();
-        chattingRoomList = chattingService.getChatRoomListForManager(managerId);
+        String userId =  accountBean.getUsername();
+		if (permission.equals("petmanager"))
+            chattingRoomList = chattingService.getChatRoomListForManager(userId);
+		else if (permission.equals("user"))
+			chattingRoomList = chattingService.getChatRoomListForUser(userId);
+		else if (permission.equals("admin"))
+			chattingRoomList = chattingService.getAllChatRoom();
         return new ForwardResolution(VIEW_CHATTING_ROOM);
     }
-
 }

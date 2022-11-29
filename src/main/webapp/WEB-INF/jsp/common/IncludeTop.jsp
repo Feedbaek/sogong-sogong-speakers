@@ -88,10 +88,11 @@
 		</stripes:link>
 		<img align="middle" src="../images/separator.gif" />
 		<c:choose>
+<%--			사용자 채팅방--%>
 			<c:when test="${sessionScope.permission eq 'user'}">
 				<stripes:link
-						beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
-						event="editAccountForm">
+						beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
+						event="viewChattingRoomForManager">
 					My Pet Manager
 				</stripes:link>
 			</c:when>
@@ -101,6 +102,13 @@
 						event="viewCategory">
 					<stripes:param name="categoryId" value= "" />
 					Admin Dashboard
+				</stripes:link>
+				<img align="middle" src="../images/separator.gif" />
+<%--				관리자 채팅방--%>
+				<stripes:link
+						beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
+						event="viewChattingRoomForManager">
+					Pet Management
 				</stripes:link>
 			</c:when>
 			<c:otherwise>
