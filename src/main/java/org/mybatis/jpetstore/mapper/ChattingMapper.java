@@ -3,11 +3,10 @@ package org.mybatis.jpetstore.mapper;
 import org.mybatis.jpetstore.domain.Chatting;
 import org.mybatis.jpetstore.domain.ChattingRoom;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ChattingMapper {
-
-    List<ChattingRoom> getAllChatRoom();
 
     List<ChattingRoom> getChatRoomByIdForManager(String managerId);
 

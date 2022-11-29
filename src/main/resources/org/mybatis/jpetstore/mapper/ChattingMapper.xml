@@ -19,12 +19,6 @@
 
     <cache />
 
-    <select id="getAllChatRoom" resultType="ChattingRoom">
-        SELECT *
-        FROM ChattingRoom c
-        ORDER BY c.managerId;
-    </select>
-
     <select id="getChatRoomByIdForManager" resultType="ChattingRoom">
         SELECT c.customerid as customerid,
                c.managerid as managerid

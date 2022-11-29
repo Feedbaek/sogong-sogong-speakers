@@ -10,6 +10,7 @@ import org.mybatis.jpetstore.domain.ChattingRoom;
 import org.mybatis.jpetstore.service.ChattingService;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @SessionScope
@@ -20,6 +21,12 @@ public class ChattingActionBean extends AbstractActionBean {
 
     private List<ChattingRoom> chattingRoomList;
 
+    private List<ChattingRoom> adminChatList1;
+
+    private List<ChattingRoom> adminChatList2;
+
+    private List<ChattingRoom> adminChatList3;
+
     private List<Chatting> chattingLog;
     private Chatting chatting;
 
@@ -28,6 +35,7 @@ public class ChattingActionBean extends AbstractActionBean {
 
     //-------------------------------------------------------------------------//
     private static final String VIEW_CHATTING_ROOM = "/WEB-INF/jsp/Chatting/ChattingRoom.jsp";
+    private static final String VIEW_ALL_CHATTING_ROOM = "/WEB-INF/jsp/Chatting/AllChattingRoom.jsp";
 
 
     //------------------------getter & setter ---------------------------------//
@@ -40,9 +48,35 @@ public class ChattingActionBean extends AbstractActionBean {
     public Chatting getChatting() {return chatting;}
 
     public void setChatting(Chatting chatting) {this.chatting = chatting;}
+
     public ChattingRoom getChattingRoom() {return chattingRoom;}
 
     public void setChattingRoom(ChattingRoom chattingRoom) {this.chattingRoom = chattingRoom;}
+
+    public List<ChattingRoom> getAdminChatList1() {
+        return adminChatList1;
+    }
+
+    public void setAdminChatList1(List<ChattingRoom> adminChatList1) {
+        this.adminChatList1 = adminChatList1;
+    }
+
+    public List<ChattingRoom> getAdminChatList2() {
+        return adminChatList2;
+    }
+
+    public void setAdminChatList2(List<ChattingRoom> adminChatList2) {
+        this.adminChatList2 = adminChatList2;
+    }
+
+    public List<ChattingRoom> getAdminChatList3() {
+        return adminChatList3;
+    }
+
+    public void setAdminChatList3(List<ChattingRoom> adminChatList3) {
+        this.adminChatList3 = adminChatList3;
+    }
+
 
     //============================================================================================
 
@@ -60,8 +94,12 @@ public class ChattingActionBean extends AbstractActionBean {
             chattingRoomList = chattingService.getChatRoomListForManager(userId);
 		else if (permission.equals("user"))
 			chattingRoomList = chattingService.getChatRoomListForUser(userId);
-		else if (permission.equals("admin"))
-			chattingRoomList = chattingService.getAllChatRoom();
+		else if (permission.equals("admin")) {
+            adminChatList1 = chattingService.getChatRoomListForManager("manager1");
+            adminChatList2 = chattingService.getChatRoomListForManager("manager2");
+            adminChatList3 = chattingService.getChatRoomListForManager("manager3");
+            return new ForwardResolution(VIEW_ALL_CHATTING_ROOM);
+        }
         return new ForwardResolution(VIEW_CHATTING_ROOM);
     }
 }
