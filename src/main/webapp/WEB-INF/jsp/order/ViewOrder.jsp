@@ -162,20 +162,11 @@
 				<c:if test="${actionBean.order.catDog eq true}">
 					<tr><td>Cat / Dog : $30.00</td></tr>
 				</c:if>
-				<c:if test="${actionBean.order.catDog ne true}">
-					<tr><td>Cat / Dog : $0.00</td></tr>
-				</c:if>
 				<c:if test="${actionBean.order.repFish eq true}">
 					<tr><td>Reptiles / Fish : $30.00</td></tr>
 				</c:if>
-				<c:if test="${actionBean.order.repFish ne true}">
-					<tr><td>Reptiles / Fish : $0.00</td></tr>
-				</c:if>
 				<c:if test="${actionBean.order.bird eq true}">
 					<tr><td>Bird: $30.00</td></tr>
-				</c:if>
-				<c:if test="${actionBean.order.bird ne true}">
-					<tr><td>Bird : $0.00</td></tr>
 				</c:if>
 			</tr>
 			<tr>

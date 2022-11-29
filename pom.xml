@@ -136,6 +136,25 @@
       <version>8.0.30</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-websocket</artifactId>
+      <version>6.0.1</version>
+    </dependency>
+
+    <!-- javax websocket -->
+    <!-- https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api -->
+    <dependency>
+      <groupId>javax.websocket</groupId>
+      <artifactId>javax.websocket-api</artifactId>
+      <version>1.1</version>
+      <scope>provided</scope>
+    </dependency>
+
+
+
+
     <dependency>
       <groupId>commons-dbcp</groupId>
       <artifactId>commons-dbcp</artifactId>

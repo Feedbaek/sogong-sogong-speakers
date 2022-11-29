@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+<taglib xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+        version="2.1">
+    <tlib-version>1.0</tlib-version>
+    <short-name>myshortname</short-name>
+    <uri>http://mycompany.com</uri>
+    &lt;!&ndash; Invoke 'Generate' action to add tags or functions &ndash;&gt;
+</taglib>
+-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.mybatis.jpetstore.mapper.ChattingMapper">
+
+    <cache />
+
+    <select id="getChatRoomByIdForManager" resultType="ChattingRoom">
+        SELECT c.customerid as customerid,
+               c.managerid as managerid
+        FROM chattingRoom c
+        WHERE c.managerId=#{managerId}
+        ORDER BY c.customerId;
+    </select>
+
+    <select id="getChatRoomByIdForUser" resultType="ChattingRoom">
+        SELECT customerid,
+               managerid
+        FROM ChattingRoom c
+        WHERE c.customerid=#{customerId}
+        ORDER BY c.managerId;
+    </select>
+
+    <select id="getChatLogByID" resultType="Chatting">
+        SELECT customerid,
+               managerid,
+               ChattingLog
+        FROM ChattingLog
+        WHERE customerid=#{customerId} AND managerid=#{managerId}
+    </select>
+
+    <insert id="insertChattingRoom" parameterType="ChattingRoom">
+        INSERT INTO ChattingRoom
+          (customerid,managerid)
+        VALUES
+          (#{customerId},#{managerId})
+    </insert>
+
+    <insert id="insertChatting" parameterType="Chatting">
+        INSERT INTO ChattingLog
+          (customerid,managerid,ChattingLog)
+        VALUES
+          (#{customerId},#{managerId},#{ChattingLog})
+    </insert>
+
+    <delete id="deleteChattingRoom" parameterType="chattingRoom">
+        DELETE FROM ChattingRoom
+        WHERE customerid=#{customerId} AND managerid=#{managerId}
+    </delete>
+
+</mapper>
