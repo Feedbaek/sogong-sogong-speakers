@@ -65,10 +65,6 @@ public class CatalogService {
     return products;
   }
 
-
-
-
-
   public List<Item> getItemListByProduct(String productId)
   {
     return itemMapper.getItemListByProduct(productId);
@@ -87,10 +83,6 @@ public class CatalogService {
     return itemMapper.getItem(itemId);
   }
 
-  public String getCategoryName(String productId)
-  {
-    return itemMapper.getCategoryName(productId);
-  }
 
   public boolean isItemInStock(String itemId) {
     return itemMapper.getInventoryQuantity(itemId) > 0;
@@ -104,15 +96,15 @@ public class CatalogService {
     itemMapper.UpdateQTY( itemId,quantity);
   }
 
+  public void AddItem(String itemId, String productId, BigDecimal listprice, String attri ,int qty) {
+      itemMapper.AddItem( itemId,  productId,  listprice,  attri);
+      itemMapper.AddInventory(itemId,qty);
+  }
+
   public void DeleteItem(String productId, String itemId)
   {
     itemMapper.DeleteItem(productId,itemId);
+    itemMapper.DeleteInventory(itemId);
   }
 
-
-  public void AddItem(String itemId, String productId, BigDecimal listprice, String attri ,int qty) {
-
-    itemMapper.AddItem( itemId,  productId,  listprice,  attri);
-    itemMapper.AddInventory(itemId,qty);
-  }
 }

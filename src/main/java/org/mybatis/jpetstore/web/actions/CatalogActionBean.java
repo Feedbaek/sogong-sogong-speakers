@@ -189,7 +189,7 @@ public class CatalogActionBean extends AbstractActionBean {
     this.isadmin = isadmin;
   }
 
-  private  boolean isadmin;
+  private boolean isadmin;
 
   /**
    * View category.
@@ -198,12 +198,6 @@ public class CatalogActionBean extends AbstractActionBean {
    */
 
   // =========================================================================================
-  public ForwardResolution viewProduct() { // TO CATEGORY.JSP
-    itemList = catalogService.getItemListByProduct(productId);
-    product = catalogService.getProduct(productId);
-    return new ForwardResolution(VIEW_PRODUCT);
-  }
-
   public ForwardResolution viewItem() {
     item = catalogService.getItem(itemId);
     product = item.getProduct();
@@ -222,96 +216,126 @@ public class CatalogActionBean extends AbstractActionBean {
 
   // =========================================================================================
   public ForwardResolution viewCategory() {
-    String permission = (String)context.getRequest().getSession().getAttribute("permission");
+    String permission = (String) context.getRequest().getSession().getAttribute("permission");
     if (categoryId != null) {
       isadmin = false;
       productList = catalogService.getProductListByCategory(categoryId);
       category = catalogService.getCategory(categoryId);
     }
     if (categoryId == null) {
-      if (permission == null || permission.equals("admin") == false)
+      if (permission == null || permission.equals("admin") == false) {
+        setMessage("You do not have permission.");
         return new ForwardResolution(ERROR);
+      }
       isadmin = true;
       productList = catalogService.getProductList();
     }
     return new ForwardResolution(VIEW_CATEGORY);
   }
-  public ForwardResolution viewItemlist() { // IN : Productlist.JSP , OUT : Itemlist.JSP
-    String permission = (String)context.getRequest().getSession().getAttribute("permission");
-    if (permission == null || permission.equals("admin") == false)
-      return new ForwardResolution(ERROR);
+
+  public ForwardResolution viewProduct() {
+    String permission = (String) context.getRequest().getSession().getAttribute("permission");
+    if (isadmin == true)
+      if (permission == null || permission.equals("admin") == false) {
+        setMessage("You do not have permission.");
+        return new ForwardResolution(ERROR);
+      }
     itemList = catalogService.getItemListByProduct(productId);
     product = catalogService.getProduct(productId);
-    return new ForwardResolution("/WEB-INF/jsp/catalog/Itemlist.jsp");
+    return new ForwardResolution(VIEW_PRODUCT);
   }
 
   ////////////////////////// ITEMUPDATE
   public ForwardResolution ItemUpdatePage() { // IN : Itemlist.JSP , OUT : Itemupdate.JSP
-    String permission = (String)context.getRequest().getSession().getAttribute("permission");
-    if (permission == null || permission.equals("admin") == false)
+    String permission = (String) context.getRequest().getSession().getAttribute("permission");
+    if (permission == null || permission.equals("admin") == false) {
+      setMessage("You do not have permission.");
       return new ForwardResolution(ERROR);
+    }
     item = catalogService.getItem(itemId);
     return new ForwardResolution("/WEB-INF/jsp/catalog/ItemUpdate.jsp");
   }
 
   public ForwardResolution DBItemUpdate() { // IN : Itemupdate.JSP , OUT : Itemlist.JSP
-    String permission = (String)context.getRequest().getSession().getAttribute("permission");
-    if (permission == null || permission.equals("admin") == false)
-      return new ForwardResolution(ERROR);
-    if (itemId != null && item != null) {
-      catalogService.UpdateItem(itemId, getAttribute1(), getListPrice(), getQuantity());
+//    String permission = (String) context.getRequest().getSession().getAttribute("permission");
+//    if (permission == null || permission.equals("admin") == false)
+//      setMessage("권한이 없습니다.");
+//    else
+    String resulturl = ERROR;
+
+    if (item == null)
+      setMessage("item ERROR");
+    else if (item != null) {
+      if (getAttribute1() == null)
+        setMessage("No Description. Please fill in the description");
+      else if (getListPrice() == null)
+        setMessage("No ListPrice. Please fill in the ListPrice");
+      else if (getQuantity() < 0)
+        setMessage("Quantity is negative. Please re-enter Quantity");
+      else {
+        catalogService.UpdateItem(itemId, getAttribute1(), getListPrice(), getQuantity());
+        itemList = catalogService.getItemListByProduct(productId);
+        product = catalogService.getProduct(productId);
+        resulturl = VIEW_PRODUCT;
+      }
     }
-    else {
-      String error = "item is null";
-      if (itemId == null)
-        error = "itemId is null";
-      setMessage(error + "Fill all blank");
-      return new ForwardResolution(ERROR);
-    }
-    itemList = catalogService.getItemListByProduct(productId);
-    product = catalogService.getProduct(productId);
-    return new ForwardResolution("/WEB-INF/jsp/catalog/Itemlist.jsp");
+    return new ForwardResolution(resulturl);
   }
 
   /////////////////////////// ITEMADD
   public ForwardResolution ItemAddPage() {// IN : Itemlist.JSP , OUT : Itemadd.JSP
-    String permission = (String)context.getRequest().getSession().getAttribute("permission");
-    if (permission == null || permission.equals("admin") == false)
+    String permission = (String) context.getRequest().getSession().getAttribute("permission");
+    if (permission == null || permission.equals("admin") == false) {
+      setMessage("You do not have permission.");
       return new ForwardResolution(ERROR);
+    }
     item = new Item();
     item.setProductId(productId);
     return new ForwardResolution("/WEB-INF/jsp/catalog/ItemAdd.jsp");
   }
 
   public ForwardResolution DBItemAdd() {// IN : itemadd.JSP , OUT : Itemlist.JSP
-    String permission = (String)context.getRequest().getSession().getAttribute("permission");
+    String permission = (String) context.getRequest().getSession().getAttribute("permission");
+    String resulturl = ERROR;
     if (permission == null || permission.equals("admin") == false)
-      return new ForwardResolution(ERROR);
-    if (itemId != null && item != null) {
-      catalogService.AddItem(itemId, getProductId(), getListPrice(), getAttribute1(), getQuantity());
-    }
+      setMessage("You do not have permission.");
+    else if (itemId == null)
+      setMessage("There no itemId, write itemId please");
     else {
-      String error = "item is null";
-      if (itemId == null)
-        error = "itemId is null";
-      setMessage(error + "Fill all blank");
-      return new ForwardResolution(ERROR);
+      Item tempitem = catalogService.getItem(itemId);
+      if (tempitem != null)
+        setMessage("An itemId already exists. Please enter another itemId");
+      else {
+        if (getAttribute1() == null)
+          setMessage("No Description. Please fill in the description");
+        else if (getListPrice() == null)
+          setMessage("No ListPrice. Please fill in the ListPrice");
+        else if (getQuantity() < 0)
+          setMessage("Quantity is negative. Please re-enter Quantity");
+        else {
+          catalogService.AddItem(itemId, getProductId(), getListPrice(), getAttribute1(), getQuantity());
+          itemList = catalogService.getItemListByProduct(productId);
+          product = catalogService.getProduct(productId);
+          resulturl = VIEW_PRODUCT;
+        }
+      }
     }
-
-    itemList = catalogService.getItemListByProduct(productId);
-    product = catalogService.getProduct(productId);
-    return new ForwardResolution("/WEB-INF/jsp/catalog/Itemlist.jsp");
+    return new ForwardResolution(resulturl);
   }
 
   /////////////////////// // ITEM DELETE
   public ForwardResolution ItemDelete() {
-    String permission = (String)context.getRequest().getSession().getAttribute("permission");
-    if (permission == null || permission.equals("admin") == false)
+    String permission = (String) context.getRequest().getSession().getAttribute("permission");
+    if (permission == null || permission.equals("admin") == false) {
+      setMessage("You do not have permission.");
       return new ForwardResolution(ERROR);
-    catalogService.DeleteItem(itemId, productId);
+    }
+    Item tempitem = catalogService.getItem(itemId);
+    if (tempitem != null)
+      catalogService.DeleteItem( productId, itemId);
     itemList = catalogService.getItemListByProduct(productId);
     product = catalogService.getProduct(productId);
-    return new ForwardResolution("/WEB-INF/jsp/catalog/Itemlist.jsp");
+    return new ForwardResolution(VIEW_PRODUCT);
   }
 
 
@@ -335,6 +359,4 @@ public class CatalogActionBean extends AbstractActionBean {
 
     quantity = 0;
   }
-
-
 }
