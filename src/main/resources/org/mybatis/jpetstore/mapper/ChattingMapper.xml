@@ -19,23 +19,20 @@
 
     <cache />
 
-    <select id="getAllChatRoom" resultType="ChattingRoom">
-        SELECT *
-        FROM ChattingRoom
-    </select>
-
     <select id="getChatRoomByIdForManager" resultType="ChattingRoom">
         SELECT c.customerid as customerid,
                c.managerid as managerid
         FROM chattingRoom c
         WHERE c.managerId=#{managerId}
+        ORDER BY c.customerId;
     </select>
 
     <select id="getChatRoomByIdForUser" resultType="ChattingRoom">
         SELECT customerid,
                managerid
-        FROM ChattingRoom
-        WHERE customerid=#{customerId}
+        FROM ChattingRoom c
+        WHERE c.customerid=#{customerId}
+        ORDER BY c.managerId;
     </select>
 
     <select id="getChatLogByID" resultType="Chatting">

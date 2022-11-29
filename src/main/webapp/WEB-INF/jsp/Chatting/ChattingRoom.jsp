@@ -34,6 +34,4 @@
     </c:forEach>
 </table>
 
-
-
 <%@ include file="../common/IncludeBottom.jsp"%>
