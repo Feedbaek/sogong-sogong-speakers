@@ -19,10 +19,10 @@ public class Chatting implements Serializable {
 
     //-------------------------getter & setter------------------------------------//
 
-    public String getcustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
-    public void setcustomerId(String customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 

@@ -1,16 +1,12 @@
 package org.mybatis.jpetstore.web.actions;
 
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.SessionScope;
+import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import org.mybatis.jpetstore.domain.Chatting;
 import org.mybatis.jpetstore.domain.ChattingRoom;
 import org.mybatis.jpetstore.service.ChattingService;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @SessionScope
@@ -32,10 +28,14 @@ public class ChattingActionBean extends AbstractActionBean {
 
     private ChattingRoom chattingRoom;
 
+    private String customerId;
+    private String managerId;
+
 
     //-------------------------------------------------------------------------//
     private static final String VIEW_CHATTING_ROOM = "/WEB-INF/jsp/Chatting/ChattingRoom.jsp";
     private static final String VIEW_ALL_CHATTING_ROOM = "/WEB-INF/jsp/Chatting/AllChattingRoom.jsp";
+    private static final String JOIN_CHATTING="/WEB-INF/jsp/Chatting/Chatting.jsp";
 
 
     //------------------------getter & setter ---------------------------------//
@@ -77,6 +77,14 @@ public class ChattingActionBean extends AbstractActionBean {
         this.adminChatList3 = adminChatList3;
     }
 
+    public String getCustomerId() {return customerId;}
+
+    public void setCustomerId(String customerId) {this.customerId = customerId;}
+
+    public String getManagerId() {return managerId;}
+
+    public void setManagerId(String managerId) {this.managerId = managerId;}
+
 
     //============================================================================================
 
@@ -102,4 +110,30 @@ public class ChattingActionBean extends AbstractActionBean {
         }
         return new ForwardResolution(VIEW_CHATTING_ROOM);
     }
+
+    public ForwardResolution joinChatting(){
+        HttpSession session = context.getRequest().getSession();
+        String permission = (String) session.getAttribute("permission");
+        if(permission==null || permission.isEmpty()){
+            setMessage("로그인이 필요합니다.");
+            return new ForwardResolution(ERROR);
+        }
+        chattingRoom = new ChattingRoom();
+        chattingRoom.setCustomerId(customerId);
+        chattingRoom.setManagerId(managerId);
+        chattingLog=chattingService.getChatLogById(chattingRoom);
+        return new ForwardResolution(JOIN_CHATTING);
+    }
+
+    public Resolution insertChatting(){
+        HttpSession session = context.getRequest().getSession();
+        String userId = (String) session.getAttribute("userId");
+        if(userId==null || userId.isEmpty()){
+            setMessage("로그인이 필요합니다.");
+            return new RedirectResolution(ERROR);
+        }
+        chattingService.insertChatting(chatting);
+        return new RedirectResolution(ChattingActionBean.class);
+    }
 }
+

@@ -15,7 +15,7 @@ public class ChattingRoom implements Serializable {
     public String getCustomerId() {
         return customerId;
     }
-    public void setcustomerId(String customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 

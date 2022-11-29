@@ -15,9 +15,9 @@
  */
 package org.mybatis.jpetstore.mapper;
 
-import java.util.List;
-
 import org.mybatis.jpetstore.domain.Product;
+
+import java.util.List;
 
 /**
  * The Interface ProductMapper.
