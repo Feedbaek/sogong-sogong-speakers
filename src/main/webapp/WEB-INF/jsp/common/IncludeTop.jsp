@@ -93,7 +93,7 @@
 				<stripes:link
 						beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
 						event="viewChattingRoomForManager">
-					My Pet Manager
+					<img align="middle" src="../images/chat.png">
 				</stripes:link>
 			</c:when>
 			<c:when test="${sessionScope.permission eq 'admin'}">
@@ -108,7 +108,7 @@
 				<stripes:link
 						beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
 						event="viewChattingRoomForManager">
-					Pet Management
+					<img align="middle" src="../images/chat.png">
 				</stripes:link>
 			</c:when>
 			<c:otherwise>
@@ -116,7 +116,7 @@
 				<stripes:link
 						beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
 						event="viewChattingRoomForManager">
-					Pet Manager
+					<img align="middle" src="../images/chat.png">
 				</stripes:link>
 			</c:otherwise>
 		</c:choose>

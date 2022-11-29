@@ -17,6 +17,7 @@ public class ChattingActionBean extends AbstractActionBean {
 
     private List<ChattingRoom> chattingRoomList;
 
+    private List<ChattingRoom> adminChatList;
     private List<ChattingRoom> adminChatList1;
 
     private List<ChattingRoom> adminChatList2;
@@ -34,12 +35,22 @@ public class ChattingActionBean extends AbstractActionBean {
 
     //-------------------------------------------------------------------------//
     private static final String VIEW_CHATTING_ROOM = "/WEB-INF/jsp/Chatting/ChattingRoom.jsp";
+
+    private static final String VIEW_PM_CHATTING_ROOM = "/WEB-INF/jsp/Chatting/PetMangerChattingRoom.jsp";
     private static final String VIEW_ALL_CHATTING_ROOM = "/WEB-INF/jsp/Chatting/AllChattingRoom.jsp";
     private static final String JOIN_CHATTING="/WEB-INF/jsp/Chatting/Chatting.jsp";
 
 
     //------------------------getter & setter ---------------------------------//
     public List<ChattingRoom> getChattingRoomList() {return chattingRoomList;}
+
+    public List<ChattingRoom> getAdminChatList() {
+        return adminChatList;
+    }
+
+    public void setAdminChatList(List<ChattingRoom> adminChatList) {
+        this.adminChatList = adminChatList;
+    }
 
     public void setChattingRoomList(List<ChattingRoom> chattingRoomList) {this.chattingRoomList = chattingRoomList;}
     public List<Chatting> getChattingLog() {return chattingLog;}
@@ -97,9 +108,18 @@ public class ChattingActionBean extends AbstractActionBean {
             return new ForwardResolution(ERROR);
         }
         AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
-        String userId =  accountBean.getUsername();
+        String userId = accountBean.getUsername();
 		if (permission.equals("petmanager"))
+        {
             chattingRoomList = chattingService.getChatRoomListForManager(userId);
+            if (userId.equals("manager1"))
+                adminChatList = chattingService.getChatRoomListForManager("manager1");
+            else if (userId.equals("manager2"))
+                adminChatList = chattingService.getChatRoomListForManager("manager2");
+            else if (userId.equals("manager3"))
+                adminChatList = chattingService.getChatRoomListForManager("manager3");
+            return new ForwardResolution(VIEW_PM_CHATTING_ROOM);
+        }
 		else if (permission.equals("user"))
 			chattingRoomList = chattingService.getChatRoomListForUser(userId);
 		else if (permission.equals("admin")) {

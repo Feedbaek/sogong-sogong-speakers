@@ -16,28 +16,20 @@
 
 <div id="BackLink"><stripes:link
         beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean">
-    Return to Main Menu</stripes:link></div>
+    Return to Main Menu</stripes:link>
+</div>
 
 <div id="Catalog">
     <h2>Pet Manager Chatting List</h2>
-
     <table>
         <tr>
-            <th>User ID</th>
             <th>Manager ID</th>
-            <th></th>
+            <th>User ID</th>
         </tr>
-        <c:forEach var="ChattingRoom" items="${actionBean.chattingRoomList}">
+        <c:forEach var="managerChatList" items="${actionBean.adminChatList}">
             <tr>
-                <td>${ChattingRoom.customerId}</td>
-                <td>${ChattingRoom.managerId}</td>
-                <td><stripes:link class="Button"
-                                  beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
-                                  event="joinChatting">
-                    <stripes:param name="customerId" value="${ChattingRoom.customerId}"/>
-                    <stripes:param name="managerId" value="${ChattingRoom.managerId}"/>
-                    join
-                </stripes:link></td>
+                <td>${managerChatList.managerId}</td>
+                <td>${managerChatList.customerId}</td>
             </tr>
         </c:forEach>
     </table>
