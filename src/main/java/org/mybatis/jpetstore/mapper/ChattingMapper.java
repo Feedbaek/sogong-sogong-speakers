@@ -13,7 +13,7 @@ public interface ChattingMapper {
 
     List<ChattingRoom> getChatRoomByIdForUser(String customerId);
 
-    List<Chatting> getChatLogById(String costumerId,String managerId);
+    List<Chatting> getChatLogById(String customerId,String managerId);
 
     void insertChattingRoom(ChattingRoom chattingRoom);
 

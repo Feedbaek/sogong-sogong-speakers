@@ -25,10 +25,6 @@ public class ChattingActionBean extends AbstractActionBean {
 
     private ChattingRoom chattingRoom;
 
-    private String customerId;
-
-    private String managerId;
-
 
     //-------------------------------------------------------------------------//
     private static final String VIEW_CHATTING_ROOM = "/WEB-INF/jsp/Chatting/ChattingRoom.jsp";
@@ -47,22 +43,6 @@ public class ChattingActionBean extends AbstractActionBean {
     public ChattingRoom getChattingRoom() {return chattingRoom;}
 
     public void setChattingRoom(ChattingRoom chattingRoom) {this.chattingRoom = chattingRoom;}
-    public String getManagerId() {
-        return managerId;
-    }
-
-    public void setManagerId(String managerId) {
-        this.managerId = managerId;
-    }
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
 
     //============================================================================================
 
