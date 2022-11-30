@@ -36,6 +36,9 @@ public class ChattingActionBean extends AbstractActionBean {
 
     private String keyword;
 
+    private String senderId;
+
+
     //-------------------------------------------------------------------------//
     private static final String VIEW_CHATTING_ROOM = "/WEB-INF/jsp/chatting/ChattingRoom.jsp";
 
@@ -46,6 +49,13 @@ public class ChattingActionBean extends AbstractActionBean {
     private static final String VIEW_SEARCHED_CHATTING_ROOM = "/WEB-INF/jsp/chatting/searchChattingRoom.jsp";
 
     //------------------------getter & setter ---------------------------------//
+    public String getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
     public List<ChattingRoom> getChattingRoomList() {
         return chattingRoomList;
     }
@@ -150,18 +160,18 @@ public class ChattingActionBean extends AbstractActionBean {
             return new ForwardResolution(ERROR);
         }
         AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
-        String userId = accountBean.getUsername();
+        senderId = accountBean.getUsername();
         if (permission.equals("petmanager")) {
-            chattingRoomList = chattingService.getChatRoomListForManager(userId);
-            if (userId.equals("manager1"))
+            chattingRoomList = chattingService.getChatRoomListForManager(senderId);
+            if (senderId.equals("manager1"))
                 adminChatList = chattingService.getChatRoomListForManager("manager1");
-            else if (userId.equals("manager2"))
+            else if (senderId.equals("manager2"))
                 adminChatList = chattingService.getChatRoomListForManager("manager2");
-            else if (userId.equals("manager3"))
+            else if (senderId.equals("manager3"))
                 adminChatList = chattingService.getChatRoomListForManager("manager3");
             return new ForwardResolution(VIEW_PM_CHATTING_ROOM);
         } else if (permission.equals("user"))
-            chattingRoomList = chattingService.getChatRoomListForUser(userId);
+            chattingRoomList = chattingService.getChatRoomListForUser(senderId);
         else if (permission.equals("admin")) {
             adminChatList1 = chattingService.getChatRoomListForManager("manager1");
             adminChatList2 = chattingService.getChatRoomListForManager("manager2");
@@ -194,11 +204,15 @@ public class ChattingActionBean extends AbstractActionBean {
         if(chattingLine==null || chattingLine.isEmpty()){
             return new RedirectResolution(ChattingActionBean.class,"joinChatting");
         }
+        AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
+        senderId = accountBean.getUsername();
         chatting = new Chatting();
         chatting.setCustomerId(customerId);
         chatting.setManagerId(managerId);
         chatting.setChattingLog(chattingLine);
+        chatting.setSenderId(senderId);
         chattingService.insertChatting(chatting);
+        setChattingLine(null);
         return new RedirectResolution(ChattingActionBean.class,"joinChatting");
     }
 

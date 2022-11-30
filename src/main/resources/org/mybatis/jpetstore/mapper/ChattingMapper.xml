@@ -45,7 +45,9 @@
     <select id="getChatLog" resultType="Chatting">
         SELECT customerid,
                managerid,
-               ChattingLog
+               ChattingLog,
+               senderId,
+               timeTable
         FROM ChattingLog
         WHERE customerid=#{customerId} AND managerid=#{managerId}
     </select>
@@ -59,9 +61,9 @@
 
     <insert id="insertChatting" parameterType="Chatting">
         INSERT INTO ChattingLog
-          (customerid,managerid,ChattingLog)
+          (customerid,managerid,ChattingLog,senderId,timeTable)
         VALUES
-          (#{customerId},#{managerId},#{chattingLog})
+          (#{customerId},#{managerId},#{chattingLog},#{senderId},NOW())
     </insert>
 
     <delete id="deleteChattingRoom" parameterType="chattingRoom">

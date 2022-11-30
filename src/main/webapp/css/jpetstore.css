@@ -346,3 +346,7 @@
 	width:25%;
 	box-sizing: border-box;
   }
+
+  #grayChattingBox{
+	background-color:#eeeeee; border:#c1c1c1 1px solid;padding: 10px;
+  }
