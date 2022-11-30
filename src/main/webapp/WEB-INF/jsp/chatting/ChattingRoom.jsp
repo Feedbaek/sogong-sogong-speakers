@@ -14,13 +14,15 @@
              class="org.mybatis.jpetstore.web.actions.ChattingActionBean" />
 
 
-<div id="BackLink"><stripes:link
-        beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean">
-    Return to Main Menu</stripes:link></div>
+<div id="BackLink">
+    <stripes:link beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean">
+        Return to Main Menu
+    </stripes:link>
+</div>
 
 <div id="Catalog">
     <h2>Pet Manager Chatting List</h2>
-
+    <br>
     <table>
         <tr>
             <th>User ID</th>

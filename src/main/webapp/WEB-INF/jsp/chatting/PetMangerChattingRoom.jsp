@@ -13,13 +13,20 @@
 <jsp:useBean id="ChattingRoom"
              class="org.mybatis.jpetstore.web.actions.ChattingActionBean" />
 
-
-<div id="BackLink"><stripes:link
-        beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean">
-    Return to Main Menu</stripes:link>
+<div id="BackLink">
+    <stripes:link beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean">
+        Return to Main Menu
+    </stripes:link>
 </div>
 
 <div id="Catalog">
+    <div id="SearchContent" align="left">
+        <stripes:form
+                beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean">
+            <stripes:text name="keyword" size="14" />
+            <stripes:submit name="searchProducts" value="Search" />
+        </stripes:form>
+    </div id="SearchContent">
     <h2>Pet Manager Chatting List</h2>
     <table>
         <tr>
