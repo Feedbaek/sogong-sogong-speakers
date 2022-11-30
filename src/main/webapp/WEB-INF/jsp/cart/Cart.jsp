@@ -84,17 +84,6 @@
 				<th></th>
 			</tr>
 			<tr>
-<%--				<c:forEach var="chatRoom" items="${actionBean.chattingRoomList}">--%>
-<%--					<c:if test="${chatRoom.managerId eq 'manager1'}">--%>
-<%--						<c:set var="catdog" value="true" />--%>
-<%--					</c:if>--%>
-<%--					<c:if test="${chatRoom.managerId eq 'manager2'}">--%>
-<%--						<c:set var="repfish" value="true" />--%>
-<%--					</c:if>--%>
-<%--					<c:if test="${chatRoom.managerId eq 'manager3'}">--%>
-<%--						<c:set var="bird" value="true" />--%>
-<%--					</c:if>--%>
-<%--				</c:forEach>--%>
 				<c:choose>
 					<c:when test="${actionBean.catdog eq 'catdog'}">
 						<td colspan="2"><stripes:checkbox name="catDog" disabled="true"/> $30.00</td>
@@ -105,10 +94,10 @@
 				</c:choose>
 				<c:choose>
 					<c:when test="${actionBean.repfish eq 'repfish'}">
-						<td colspan="2"><stripes:checkbox name="repfish" disabled="true" /> $30.00</td>
+						<td colspan="2"><stripes:checkbox name="repFish" disabled="true" /> $30.00</td>
 					</c:when>
 					<c:otherwise>
-						<td colspan="2"><stripes:checkbox name="repfish" /> $30.00</td>
+						<td colspan="2"><stripes:checkbox name="repFish" /> $30.00</td>
 					</c:otherwise>
 				</c:choose>
 				<c:choose>

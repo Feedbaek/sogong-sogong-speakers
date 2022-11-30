@@ -220,18 +220,20 @@ public class ChattingActionBean extends AbstractActionBean {
         if (keyword == null || keyword.length() < 1) {
             setMessage("Please enter a keyword to search for, then press the search button.");
             return new ForwardResolution(ERROR);
-        } else
-        {
+        } else {
             HttpSession session = context.getRequest().getSession();
             AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
             String permission = (String) session.getAttribute("permission");
-            if (permission.equals("petmanager"))
-            {
+            if (permission.equals("petmanager")) {
                 String id = accountBean.getUsername();
                 chattingRoom = new ChattingRoom();
                 chattingRoom.setManagerId(id);
                 chattingRoom.setCustomerId("%" + keyword + "%");
                 chattingRoomList = chattingService.getSearchedChatRoomList(chattingRoom);
+                if (chattingRoomList.size() == 0) {
+                    setMessage("No Result!");
+                    return new ForwardResolution(ERROR);
+                }
                 return new ForwardResolution(VIEW_SEARCHED_CHATTING_ROOM);
             }
         }

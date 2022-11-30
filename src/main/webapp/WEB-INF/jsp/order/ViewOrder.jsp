@@ -178,7 +178,12 @@
 	</tr>
 
 </table>
-
+	<c:if test="${actionBean.order.catDog eq true || actionBean.order.repFish eq true || actionBean.order.bird eq true}">
+		<stripes:form
+				beanclass="org.mybatis.jpetstore.web.actions.OrderActionBean">
+			<stripes:submit name="choosePetManager" value="Choose Pet Manager" />
+		</stripes:form>
+	</c:if>
 </div>
 
 <%@ include file="../common/IncludeBottom.jsp"%>

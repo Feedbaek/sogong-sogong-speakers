@@ -193,7 +193,8 @@ public class CartActionBean extends AbstractActionBean {
   }
 
   public void handle_duplicate()
-  {    HttpSession session = context.getRequest().getSession();
+  {
+    HttpSession session = context.getRequest().getSession();
     String permission = (String) session.getAttribute("permission");
     if (permission == null)
       return ;

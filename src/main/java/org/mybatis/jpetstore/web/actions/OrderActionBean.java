@@ -20,7 +20,9 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SessionScope;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import org.mybatis.jpetstore.domain.Order;
+import org.mybatis.jpetstore.domain.PetManager;
 import org.mybatis.jpetstore.service.OrderService;
+import org.mybatis.jpetstore.service.PetManagerService;
 
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
@@ -42,6 +44,7 @@ public class OrderActionBean extends AbstractActionBean {
   private static final String NEW_ORDER = "/WEB-INF/jsp/order/NewOrderForm.jsp";
   private static final String SHIPPING = "/WEB-INF/jsp/order/ShippingForm.jsp";
   private static final String VIEW_ORDER = "/WEB-INF/jsp/order/ViewOrder.jsp";
+  private static final String CHOOSE_PM = "/WEB-INF/jsp/order/ChoosePetManager.jsp";
 
   private static final List<String> CARD_TYPE_LIST;
 
@@ -49,12 +52,25 @@ public class OrderActionBean extends AbstractActionBean {
   private transient OrderService orderService;
 
   private Order order = new Order();
+  @SpringBean
+  private transient PetManagerService petManagerService;
+
+  private List<PetManager> petManagerList;
+
   private boolean shippingAddressRequired;
   private boolean confirmed;
   private List<Order> orderList;
 
   static {
     CARD_TYPE_LIST = Collections.unmodifiableList(Arrays.asList("Visa", "MasterCard", "American Express"));
+  }
+
+  public List<PetManager> getPetManagerList() {
+    return petManagerList;
+  }
+
+  public void setPetManagerList(List<PetManager> petManagerList) {
+    this.petManagerList = petManagerList;
   }
 
   public int getOrderId() {
@@ -172,7 +188,6 @@ public class OrderActionBean extends AbstractActionBean {
     AccountActionBean accountBean = (AccountActionBean) session.getAttribute("accountBean");
 
     order = orderService.getOrder(order.getOrderId());
-    System.out.println(order.getCatDog());
     if (accountBean.getAccount().getUsername().equals(order.getUsername())) {
       return new ForwardResolution(VIEW_ORDER);
     } else {
@@ -180,6 +195,28 @@ public class OrderActionBean extends AbstractActionBean {
       setMessage("You may only view your own orders.");
       return new ForwardResolution(ERROR);
     }
+  }
+
+  public Resolution choosePetManager()
+  {
+    order = orderService.getOrder(order.getOrderId());
+    if (order.getCatDog())
+      petManagerList = petManagerService.getCatDogManagerList();
+    if (order.getRepFish())
+    {
+      if (petManagerList == null)
+        petManagerList = petManagerService.getRepFishManagerList();
+      else
+        petManagerList.addAll(petManagerService.getRepFishManagerList());
+    }
+    if (order.getBird())
+    {
+      if (petManagerList == null)
+        petManagerList = petManagerService.getBirdManagerList();
+      else
+        petManagerList.addAll(petManagerService.getBirdManagerList());
+    }
+    return new ForwardResolution(CHOOSE_PM);
   }
 
   /**
