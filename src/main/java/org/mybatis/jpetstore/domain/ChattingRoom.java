@@ -8,8 +8,6 @@ public class ChattingRoom implements Serializable {
 
     private String managerId;
 
-
-
     //------------------------------------getter&setter-----------------------------------------//
 
     public String getCustomerId() {

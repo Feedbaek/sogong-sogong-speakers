@@ -116,10 +116,10 @@
 	</c:if>
 </c:if> <img align="middle" src="../images/separator.gif" />
 	<a href="../help.html">?</a>
-	<img align="middle" src="../images/separator.gif" />
 	<c:if test="${sessionScope.accountBean.authenticated}">
 		<c:choose>
 			<c:when test="${sessionScope.permission eq 'admin'}">
+				<img align="middle" src="../images/separator.gif" />
 				<stripes:link
 						beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
 						event="adminViewCategory">
