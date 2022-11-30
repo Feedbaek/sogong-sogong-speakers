@@ -204,12 +204,10 @@ public class ChattingActionBean extends AbstractActionBean {
 
     public ForwardResolution searchUserID() {
         if (keyword == null || keyword.length() < 1) {
-            System.out.println("NOOOOOO");
             setMessage("Please enter a keyword to search for, then press the search button.");
             return new ForwardResolution(ERROR);
         } else
         {
-            System.out.println("HELLO");
             HttpSession session = context.getRequest().getSession();
             AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
             String permission = (String) session.getAttribute("permission");
