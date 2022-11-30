@@ -10,6 +10,9 @@ public class ChattingRoom implements Serializable {
 
     //------------------------------------getter&setter-----------------------------------------//
 
+    public ChattingRoom(){}
+    public ChattingRoom(String customerId,String managerId){this.customerId=customerId;this.managerId=managerId;}
+
     public String getCustomerId() {
         return customerId;
     }

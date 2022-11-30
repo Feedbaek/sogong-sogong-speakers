@@ -24,7 +24,7 @@ public class ChattingService {
         return chattingMapper.getChatRoomByIdForUser(customerId);
     }
 
-    public List<Chatting> getChatLogById(ChattingRoom chattingRoom) {
+    public List<Chatting> getChatLog(ChattingRoom chattingRoom) {
         return chattingMapper.getChatLog(chattingRoom);
     }
 
