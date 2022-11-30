@@ -43,13 +43,14 @@
 				beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
 				event="viewProduct">
 				<stripes:param name="productId" value="${product.productId}" />
+				<stripes:param name="isadmin" value="false" />
 				${product.productId}
 			</stripes:link></td>
 			<td>${product.name}</td>
 			<c:if test="${actionBean.isadmin == true}">
 				<td><stripes:link class="Button"
 								  beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
-								  event="viewItemlist">
+								  event="viewProduct">
 					<stripes:param name="productId" value="${product.productId}" />
 					EDIT ITEM
 				</stripes:link></td>

@@ -17,10 +17,16 @@
 --%>
 <%@ include file="../common/IncludeTop.jsp"%>
 
-<div id="BackLink"><stripes:link
-        beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean">
-    Return to Main Menu</stripes:link></div>
-
+<div id="BackLink">
+<c:if test="${actionBean.isadmin == true}">
+    <stripes:link
+            beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
+            event="viewCategory">
+        <stripes:param name="categoryId"
+                       value="" />
+        Return to Product
+    </stripes:link></div>
+</c:if>>
 <div id="Catalog">
     <h2>${actionBean.product.name}</h2>
 <stripes:form

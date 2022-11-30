@@ -36,12 +36,12 @@ public interface ItemMapper {
 
 
   Item getItem(String itemId);
+  String getInventory(String itemId);
   void DeleteItem(String ProductId, String itemId);
+  void DeleteInventory(String itemId);
 
   void UpdateItem(String itemId, String arg1 , BigDecimal listprice);
   void UpdateQTY(String itemId, int quantity);
-
-  String getCategoryName(String productId);
 
   void AddItem( String itemId, String productId, BigDecimal listprice, String attri);
   void AddInventory(String itemId, int qty);

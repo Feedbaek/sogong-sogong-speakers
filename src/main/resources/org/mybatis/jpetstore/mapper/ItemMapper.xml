@@ -78,7 +78,7 @@
     from ITEM I, INVENTORY V, PRODUCT P
     where P.PRODUCTID = I.PRODUCTID
       and I.ITEMID = V.ITEMID
-      and I.ITEMID = #{value}
+      and I.ITEMID = #{arg0};
   </select>
 
   <select id="getInventoryQuantity" resultType="int">
@@ -134,6 +134,19 @@
   </insert>
 
   <delete id="DeleteItem">
-    DELETE FROM item WHERE itemid = #{arg0} and ProductId = #{arg1};
+    DELETE FROM item
+           WHERE itemid = #{arg1} and
+                 ProductId = #{arg0};
+  </delete>
+  <select id="getInventory" resultType="String">
+    SELECT
+      itemId
+    FROM INVENTORY
+    WHERE ITEMID = #{arg0}
+  </select>
+
+  <delete id="DeleteInventory">
+    DELETE FROM INVENTORY
+           WHERE ITEMID = #{arg0};
   </delete>
 </mapper>
