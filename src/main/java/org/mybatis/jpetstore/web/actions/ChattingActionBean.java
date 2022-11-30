@@ -34,6 +34,7 @@ public class ChattingActionBean extends AbstractActionBean {
     private String customerId;
     private String managerId;
 
+    private String keyword;
 
     //-------------------------------------------------------------------------//
     private static final String VIEW_CHATTING_ROOM = "/WEB-INF/jsp/chatting/ChattingRoom.jsp";
@@ -42,6 +43,7 @@ public class ChattingActionBean extends AbstractActionBean {
     private static final String VIEW_ALL_CHATTING_ROOM = "/WEB-INF/jsp/chatting/AllChattingRoom.jsp";
     private static final String JOIN_CHATTING = "/WEB-INF/jsp/chatting/Chatting.jsp";
 
+    private static final String VIEW_SEARCHED_CHATTING_ROOM = "/WEB-INF/jsp/chatting/searchChattingRoom.jsp";
 
     //------------------------getter & setter ---------------------------------//
     public List<ChattingRoom> getChattingRoomList() {
@@ -63,6 +65,10 @@ public class ChattingActionBean extends AbstractActionBean {
     public List<Chatting> getChattingLog() {
         return chattingLog;
     }
+
+    public String getKeyword() { return keyword;}
+
+    public void setKeyword(String keyword) { this.keyword = keyword;}
 
     public void setChattingLog(List<Chatting> chattingLog) {
         this.chattingLog = chattingLog;
@@ -194,6 +200,30 @@ public class ChattingActionBean extends AbstractActionBean {
         chatting.setChattingLog(chattingLine);
         chattingService.insertChatting(chatting);
         return new RedirectResolution(ChattingActionBean.class,"joinChatting");
+    }
+
+    public ForwardResolution searchUserID() {
+        if (keyword == null || keyword.length() < 1) {
+            System.out.println("NOOOOOO");
+            setMessage("Please enter a keyword to search for, then press the search button.");
+            return new ForwardResolution(ERROR);
+        } else
+        {
+            System.out.println("HELLO");
+            HttpSession session = context.getRequest().getSession();
+            AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
+            String permission = (String) session.getAttribute("permission");
+            if (permission.equals("petmanager"))
+            {
+                String id = accountBean.getUsername();
+                chattingRoom = new ChattingRoom();
+                chattingRoom.setManagerId(id);
+                chattingRoom.setCustomerId("%" + keyword + "%");
+                chattingRoomList = chattingService.getSearchedChatRoomList(chattingRoom);
+                return new ForwardResolution(VIEW_SEARCHED_CHATTING_ROOM);
+            }
+        }
+        return new ForwardResolution(ERROR);
     }
 }
 

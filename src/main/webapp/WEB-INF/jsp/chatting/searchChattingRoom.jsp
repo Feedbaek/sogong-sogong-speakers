@@ -27,7 +27,7 @@
             <stripes:submit name="searchUserID" value="Search" />
         </stripes:form>
     </div id="SearchContent">
-    <h2>Pet Manager Chatting List</h2>
+    <h2>Searched Result</h2>
     <br>
     <table>
         <tr>
@@ -36,16 +36,16 @@
             <th>Memo</th>
             <th>Chat</th>
         </tr>
-        <c:forEach var="managerChatList" items="${actionBean.adminChatList}">
+        <c:forEach var="searchedChatList" items="${actionBean.chattingRoomList}">
             <tr>
-                <td>${managerChatList.managerId}</td>
-                <td>${managerChatList.customerId}</td>
+                <td>${searchedChatList.managerId}</td>
+                <td>${searchedChatList.customerId}</td>
                 <td>
                     <stripes:link class="Button"
                                   beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
                                   event="memoChatting" target="_blank">
-                        <stripes:param name="customerId" value="${managerChatList.customerId}"/>
-                        <stripes:param name="managerId" value="${managerChatList.managerId}"/>
+                        <stripes:param name="customerId" value="${searchedChatList.customerId}"/>
+                        <stripes:param name="managerId" value="${searchedChatList.managerId}"/>
                         open
                     </stripes:link>
                 </td>
@@ -53,8 +53,8 @@
                     <stripes:link class="Button"
                                   beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
                                   event="joinChatting">
-                    <stripes:param name="customerId" value="${managerChatList.customerId}"/>
-                    <stripes:param name="managerId" value="${managerChatList.managerId}"/>
+                        <stripes:param name="customerId" value="${searchedChatList.customerId}"/>
+                        <stripes:param name="managerId" value="${searchedChatList.managerId}"/>
                         join
                     </stripes:link>
                 </td>
