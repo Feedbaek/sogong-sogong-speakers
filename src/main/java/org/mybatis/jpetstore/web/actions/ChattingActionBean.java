@@ -66,6 +66,7 @@ public class ChattingActionBean extends AbstractActionBean {
         return chattingLog;
     }
 
+<<<<<<< HEAD
     public String getKeyword() { return keyword;}
 
     public void setKeyword(String keyword) { this.keyword = keyword;}
@@ -78,6 +79,16 @@ public class ChattingActionBean extends AbstractActionBean {
         return chatting;
     }
 
+=======
+    public void setChattingLog(List<Chatting> chattingLog) {
+        this.chattingLog = chattingLog;
+    }
+
+    public Chatting getChatting() {
+        return chatting;
+    }
+
+>>>>>>> b544c009d34819ecb07decbcd7d31c732af9ed2f
     public void setChatting(Chatting chatting) {
         this.chatting = chatting;
     }
@@ -200,6 +211,7 @@ public class ChattingActionBean extends AbstractActionBean {
         chatting.setChattingLog(chattingLine);
         chattingService.insertChatting(chatting);
         return new RedirectResolution(ChattingActionBean.class,"joinChatting");
+<<<<<<< HEAD
     }
 
     public ForwardResolution searchUserID() {
@@ -222,6 +234,8 @@ public class ChattingActionBean extends AbstractActionBean {
             }
         }
         return new ForwardResolution(ERROR);
+=======
+>>>>>>> b544c009d34819ecb07decbcd7d31c732af9ed2f
     }
 }
 
