@@ -185,7 +185,7 @@ public class ChattingActionBean extends AbstractActionBean {
         if (permission == null || permission.isEmpty()) {
             setMessage("로그인이 필요합니다.");
         }
-        if(chattingLog==null || chattingLog.isEmpty()){
+        if(chattingLine==null || chattingLine.isEmpty()){
             return new RedirectResolution(ChattingActionBean.class,"joinChatting");
         }
         chatting = new Chatting();
