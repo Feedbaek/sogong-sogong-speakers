@@ -21,6 +21,7 @@
 	class="org.mybatis.jpetstore.web.actions.CatalogActionBean" />
 
 <div id="BackLink">
+<<<<<<< HEAD
 	<c:if test="${actionBean.isadmin == true}">
 		<stripes:link
 				beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
@@ -42,6 +43,16 @@
 		</stripes:link></div>
 	</c:if>
 
+=======
+
+	<stripes:link
+			beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
+			event="viewCategory">
+		<stripes:param name="categoryId"
+					   value="${actionBean.product.categoryId}" />
+		Return to ${actionBean.product.categoryId}
+	</stripes:link></div>
+>>>>>>> petmanagerchat
 
 <div id="Catalog">
 
@@ -79,6 +90,7 @@
 				event="addItemToCart">
 				<stripes:param name="workingItemId" value="${item.itemId}" />
         	Add to Cart
+<<<<<<< HEAD
 	        </stripes:link></td>
 			</c:if>
 
@@ -98,9 +110,14 @@
 				</stripes:link></td>
 			</c:if>
 
+=======
+
+			</stripes:link></td>
+>>>>>>> petmanagerchat
 		</tr>
 	</c:forEach>
 </table>
+<<<<<<< HEAD
 <c:if test="${actionBean.isadmin == true}">
 	<td><stripes:link class="Button"
 					  beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
@@ -110,6 +127,8 @@
 	</stripes:link></td>
 </c:if>
 
+=======
+>>>>>>> petmanagerchat
 </div>
 
 <%@ include file="../common/IncludeBottom.jsp"%>

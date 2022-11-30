@@ -98,7 +98,7 @@
     INSERT INTO ACCOUNT
       (EMAIL, FIRSTNAME, LASTNAME, STATUS, ADDR1, ADDR2, CITY, STATE, ZIP, COUNTRY, PHONE, USERID, PERMISSION)
     VALUES
-      (#{email}, #{firstName}, #{lastName}, #{status}, #{address1},  #{address2,jdbcType=VARCHAR}, #{city}, #{state}, #{zip}, #{country}, #{phone}, #{username}, #{permission})
+      (#{email}, #{firstName}, #{lastName}, #{status}, #{address1},  #{address2,jdbcType=VARCHAR}, #{city}, #{state}, #{zip}, #{country}, #{phone}, #{username}, "user")
   </insert>
 
   <update id="updateProfile" parameterType="Account">

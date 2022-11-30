@@ -6,7 +6,6 @@ import org.mybatis.jpetstore.mapper.ChattingMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,9 +23,12 @@ public class ChattingService {
     public List<ChattingRoom> getChatRoomListForUser(String customerId) {
         return chattingMapper.getChatRoomByIdForUser(customerId);
     }
+    public List<ChattingRoom> getSearchedChatRoomList(ChattingRoom chattingRoom) {
+        return chattingMapper.getSearchedChatRoomList(chattingRoom);
+    }
 
-    public List<Chatting> getChatLog(String userId,String managerId) {
-        return chattingMapper.getChatLogById(userId,managerId);
+    public List<Chatting> getChatLog(ChattingRoom chattingRoom) {
+        return chattingMapper.getChatLog(chattingRoom);
     }
 
     @Transactional

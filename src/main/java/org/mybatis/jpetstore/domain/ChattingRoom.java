@@ -8,14 +8,15 @@ public class ChattingRoom implements Serializable {
 
     private String managerId;
 
-
-
     //------------------------------------getter&setter-----------------------------------------//
+
+    public ChattingRoom(){}
+    public ChattingRoom(String customerId,String managerId){this.customerId=customerId;this.managerId=managerId;}
 
     public String getCustomerId() {
         return customerId;
     }
-    public void setcustomerId(String customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 

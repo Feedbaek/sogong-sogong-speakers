@@ -15,10 +15,6 @@
  */
 package org.mybatis.jpetstore.service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.domain.Order;
 import org.mybatis.jpetstore.domain.Sequence;
@@ -28,6 +24,10 @@ import org.mybatis.jpetstore.mapper.OrderMapper;
 import org.mybatis.jpetstore.mapper.SequenceMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Class OrderService.

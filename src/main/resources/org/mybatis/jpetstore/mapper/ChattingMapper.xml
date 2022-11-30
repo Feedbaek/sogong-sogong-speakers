@@ -35,7 +35,14 @@
         ORDER BY c.managerId;
     </select>
 
-    <select id="getChatLogByID" resultType="Chatting">
+    <select id="getSearchedChatRoomList" resultType="ChattingRoom">
+        SELECT customerid,
+               managerid
+        FROM ChattingRoom c
+        WHERE c.customerid like #{customerId} and c.managerid=#{managerId}
+    </select>
+
+    <select id="getChatLog" resultType="Chatting">
         SELECT customerid,
                managerid,
                ChattingLog
@@ -54,7 +61,7 @@
         INSERT INTO ChattingLog
           (customerid,managerid,ChattingLog)
         VALUES
-          (#{customerId},#{managerId},#{ChattingLog})
+          (#{customerId},#{managerId},#{chattingLog})
     </insert>
 
     <delete id="deleteChattingRoom" parameterType="chattingRoom">

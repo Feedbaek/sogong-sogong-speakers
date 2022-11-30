@@ -15,12 +15,11 @@
  */
 package org.mybatis.jpetstore.mapper;
 
+import org.mybatis.jpetstore.domain.Item;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
-
-import org.mybatis.jpetstore.domain.Item;
-import org.mybatis.jpetstore.domain.Product;
 
 /**
  * The Interface ItemMapper.
@@ -43,8 +42,6 @@ public interface ItemMapper {
 
   void UpdateItem(String itemId, String arg1 , BigDecimal listprice);
   void UpdateQTY(String itemId, int quantity);
-
-  String getCategoryName(String productId);
 
   void AddItem( String itemId, String productId, BigDecimal listprice, String attri);
   void AddInventory(String itemId, int qty);

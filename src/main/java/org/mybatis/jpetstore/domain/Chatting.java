@@ -19,10 +19,10 @@ public class Chatting implements Serializable {
 
     //-------------------------getter & setter------------------------------------//
 
-    public String getcustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
-    public void setcustomerId(String customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 
@@ -30,5 +30,6 @@ public class Chatting implements Serializable {
     public void setManagerId(String managerId) {this.managerId = managerId;}
 
     public String getChattingLog() {return chattingLog;}
-    public void setChattingLog(String chatLine) {this.chattingLog = chatLine;}
+    public void setChattingLog(String chattingLog) {this.chattingLog = chattingLog;}
+
 }

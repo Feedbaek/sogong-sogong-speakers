@@ -22,16 +22,17 @@
 	Return to Main Menu</stripes:link></div>
 
 <div id="Catalog">
+<<<<<<< HEAD
 	<c:if test="${actionBean.isadmin == false}">
 		<h2> ${actionBean.category.name} </h2>
 	</c:if>
+=======
+		<h2> ${actionBean.category.name} </h2>
+>>>>>>> petmanagerchat
 <table>
 	<tr>
 		<th>Product ID</th>
 		<th>Name</th>
-		<c:if test="${actionBean.isadmin == true}">
-			<th></th>
-		</c:if>
 	</tr>
 	<c:forEach var="product" items="${actionBean.productList}">
 		<tr>
@@ -43,6 +44,7 @@
 				${product.productId}
 			</stripes:link></td>
 			<td>${product.name}</td>
+<<<<<<< HEAD
 			<c:if test="${actionBean.isadmin == true}">
 				<td><stripes:link class="Button"
 								  beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
@@ -51,6 +53,8 @@
 					EDIT ITEM
 				</stripes:link></td>
 			</c:if>
+=======
+>>>>>>> petmanagerchat
 		</tr>
 	</c:forEach>
 </table>

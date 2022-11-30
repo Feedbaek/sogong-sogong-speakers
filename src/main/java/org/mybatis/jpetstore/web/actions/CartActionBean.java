@@ -15,19 +15,18 @@
  */
 package org.mybatis.jpetstore.web.actions;
 
-import java.util.Iterator;
-
-import javax.servlet.http.HttpServletRequest;
-
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SessionScope;
 import net.sourceforge.stripes.integration.spring.SpringBean;
-
-import org.mybatis.jpetstore.domain.Cart;
-import org.mybatis.jpetstore.domain.CartItem;
-import org.mybatis.jpetstore.domain.Item;
+import org.mybatis.jpetstore.domain.*;
 import org.mybatis.jpetstore.service.CatalogService;
+import org.mybatis.jpetstore.service.ChattingService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * The Class CartActionBean.
@@ -44,13 +43,55 @@ public class CartActionBean extends AbstractActionBean {
 
   @SpringBean
   private transient CatalogService catalogService;
+
+  @SpringBean
+  private transient ChattingService chattingService;
   //추가
 
   private Cart cart = new Cart();
+
+  private List<ChattingRoom> chattingRoomList;
   private String workingItemId;
 
+  private  String catdog;
+
+  private  String repfish;
+
+  private  String bird;
   public Cart getCart() {
     return cart;
+  }
+
+  public String getCatdog() {
+    return catdog;
+  }
+
+  public void setCatdog(String catdog) {
+    this.catdog = catdog;
+  }
+
+  public String getRepfish() {
+    return repfish;
+  }
+
+  public void setRepfish(String repfish) {
+    this.repfish = repfish;
+  }
+
+  public String getBird() {
+    return bird;
+  }
+
+  public void setBird(String bird) {
+    this.bird = bird;
+  }
+
+  public List<ChattingRoom> getChattingRoomList() {
+    return chattingRoomList;
+  }
+
+  public void setChattingRoomList(List<ChattingRoom> chattingRoomList) {
+    this.chattingRoomList = chattingRoomList;
   }
 
   public void setCart(Cart cart) {
@@ -77,7 +118,7 @@ public class CartActionBean extends AbstractActionBean {
       Item item = catalogService.getItem(workingItemId);
       cart.addItem(item, isInStock);
     }
-
+    handle_duplicate();
     return new ForwardResolution(VIEW_CART);
   }
 
@@ -94,6 +135,7 @@ public class CartActionBean extends AbstractActionBean {
       setMessage("Attempted to remove null CartItem from Cart.");
       return new ForwardResolution(ERROR);
     } else {
+      handle_duplicate();
       return new ForwardResolution(VIEW_CART);
     }
   }
@@ -132,10 +174,12 @@ public class CartActionBean extends AbstractActionBean {
         // ignore parse exceptions on purpose
       }
     }
-      return new ForwardResolution(VIEW_CART);
+    handle_duplicate();
+    return new ForwardResolution(VIEW_CART);
   }
 
   public ForwardResolution viewCart() {
+    handle_duplicate();
     return new ForwardResolution(VIEW_CART);
   }
 
@@ -146,6 +190,34 @@ public class CartActionBean extends AbstractActionBean {
   public void clear() {
     cart = new Cart();
     workingItemId = null;
+  }
+
+  public void handle_duplicate()
+  {    HttpSession session = context.getRequest().getSession();
+    String permission = (String) session.getAttribute("permission");
+    if (permission == null)
+      return ;
+    if (permission.equals("user"))
+    {
+      AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
+      String userId = accountBean.getUsername();
+      chattingRoomList = chattingService.getChatRoomListForUser(userId);
+      for (int i = 0;i < chattingRoomList.size();i++)
+      {
+        if (chattingRoomList.get(i).getManagerId().equals("manager1"))
+          setCatdog("catdog");
+        if (chattingRoomList.get(i).getManagerId().equals("manager2"))
+          setRepfish("repfish");
+        if (chattingRoomList.get(i).getManagerId().equals("manager3"))
+          setBird("bird");
+      }
+    }
+    else
+    {
+      setCatdog("catdog");
+      setRepfish("repfish");
+      setBird("bird");
+    }
   }
 
 }

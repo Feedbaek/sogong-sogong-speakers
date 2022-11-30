@@ -15,10 +15,6 @@
  */
 package org.mybatis.jpetstore.service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.mybatis.jpetstore.domain.Category;
 import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.domain.Product;
@@ -26,6 +22,10 @@ import org.mybatis.jpetstore.mapper.CategoryMapper;
 import org.mybatis.jpetstore.mapper.ItemMapper;
 import org.mybatis.jpetstore.mapper.ProductMapper;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Class CatalogService.
@@ -71,7 +71,6 @@ public class CatalogService {
   }
 
   // OBJ
-
   public Category getCategory(String categoryId) {
     return categoryMapper.getCategory(categoryId);
   }
@@ -83,11 +82,13 @@ public class CatalogService {
     return itemMapper.getItem(itemId);
   }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> petmanagerchat
   public boolean isItemInStock(String itemId) {
     return itemMapper.getInventoryQuantity(itemId) > 0;
   }
-
 
   // VOID
   public void UpdateItem(String itemId, String arg1 , BigDecimal listprice,int quantity)
@@ -96,9 +97,16 @@ public class CatalogService {
     itemMapper.UpdateQTY( itemId,quantity);
   }
 
+<<<<<<< HEAD
   public void AddItem(String itemId, String productId, BigDecimal listprice, String attri ,int qty) {
       itemMapper.AddItem( itemId,  productId,  listprice,  attri);
       itemMapper.AddInventory(itemId,qty);
+=======
+
+  public void AddItem(String itemId, String productId, BigDecimal listprice, String attri ,int qty) {
+    itemMapper.AddItem( itemId,  productId,  listprice,  attri);
+    itemMapper.AddInventory(itemId,qty);
+>>>>>>> petmanagerchat
   }
 
   public void DeleteItem(String productId, String itemId)
@@ -106,5 +114,8 @@ public class CatalogService {
     itemMapper.DeleteItem(productId,itemId);
     itemMapper.DeleteInventory(itemId);
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> petmanagerchat
 }

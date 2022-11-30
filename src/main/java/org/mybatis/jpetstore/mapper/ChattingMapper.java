@@ -3,7 +3,6 @@ package org.mybatis.jpetstore.mapper;
 import org.mybatis.jpetstore.domain.Chatting;
 import org.mybatis.jpetstore.domain.ChattingRoom;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface ChattingMapper {
@@ -12,7 +11,9 @@ public interface ChattingMapper {
 
     List<ChattingRoom> getChatRoomByIdForUser(String customerId);
 
-    List<Chatting> getChatLogById(String customerId,String managerId);
+    List<ChattingRoom> getSearchedChatRoomList(ChattingRoom chattingRoom);
+
+    List<Chatting> getChatLog(ChattingRoom chattingRoom);
 
     void insertChattingRoom(ChattingRoom chattingRoom);
 

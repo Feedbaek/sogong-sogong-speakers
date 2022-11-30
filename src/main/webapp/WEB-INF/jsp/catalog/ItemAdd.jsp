@@ -18,16 +18,25 @@
 <%@ include file="../common/IncludeTop.jsp"%>
 
 <div id="BackLink">
+<<<<<<< HEAD
 <c:if test="${actionBean.isadmin == true}">
     <stripes:link
             beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
             event="viewCategory">
+=======
+    <stripes:link
+            beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
+            event="adminViewCategory">
+>>>>>>> petmanagerchat
         <stripes:param name="categoryId"
                        value="" />
         Return to Product
     </stripes:link></div>
+<<<<<<< HEAD
 </c:if>
 
+=======
+>>>>>>> petmanagerchat
 <div id="Catalog">
     <h2>${actionBean.product.name}</h2>
 <stripes:form

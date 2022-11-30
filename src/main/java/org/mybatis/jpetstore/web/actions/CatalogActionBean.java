@@ -15,23 +15,18 @@
  */
 package org.mybatis.jpetstore.web.actions;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SessionScope;
 import net.sourceforge.stripes.integration.spring.SpringBean;
-
 import org.mybatis.jpetstore.domain.Category;
 import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.domain.Product;
 import org.mybatis.jpetstore.service.CatalogService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import java.util.List;
 
 
 /**
@@ -49,6 +44,10 @@ public class CatalogActionBean extends AbstractActionBean {
   private static final String VIEW_PRODUCT = "/WEB-INF/jsp/catalog/Product.jsp";
   private static final String VIEW_ITEM = "/WEB-INF/jsp/catalog/Item.jsp";
   private static final String SEARCH_PRODUCTS = "/WEB-INF/jsp/catalog/SearchProducts.jsp";
+  private static final String ITEM_ADD_PAGE = "/WEB-INF/jsp/catalog/ItemAdd.jsp";
+  private static final String ITEM_UPDATE_PAGE = "/WEB-INF/jsp/catalog/ItemUpdate.jsp";
+  private static final String ADMIN_VIEW_CATEGORY = "/WEB-INF/jsp/catalog/AdminCategory.jsp";
+  private static final String ADMIN_VIEW_PRODUCT = "/WEB-INF/jsp/catalog/AdminProduct.jsp";
 
   @SpringBean
   private transient CatalogService catalogService;
@@ -180,6 +179,7 @@ public class CatalogActionBean extends AbstractActionBean {
     return new ForwardResolution(MAIN);
   }
 
+<<<<<<< HEAD
 
   public boolean isIsadmin() {
     return isadmin;
@@ -191,6 +191,8 @@ public class CatalogActionBean extends AbstractActionBean {
 
   private boolean isadmin;
 
+=======
+>>>>>>> petmanagerchat
   /**
    * View category.
    *
@@ -216,6 +218,7 @@ public class CatalogActionBean extends AbstractActionBean {
 
   // =========================================================================================
   public ForwardResolution viewCategory() {
+<<<<<<< HEAD
     String permission = (String) context.getRequest().getSession().getAttribute("permission");
     if (categoryId != null) {
       isadmin = false;
@@ -236,14 +239,45 @@ public class CatalogActionBean extends AbstractActionBean {
   public ForwardResolution viewProduct() {
     String permission = (String) context.getRequest().getSession().getAttribute("permission");
     if (isadmin == true)
+=======
+    productList = catalogService.getProductListByCategory(categoryId);
+    category = catalogService.getCategory(categoryId);
+    return new ForwardResolution(VIEW_CATEGORY);
+  }
+
+  public ForwardResolution adminViewCategory() {
+    String permission = (String) context.getRequest().getSession().getAttribute("permission");
+    if (categoryId == null) {
+>>>>>>> petmanagerchat
       if (permission == null || permission.equals("admin") == false) {
         setMessage("You do not have permission.");
         return new ForwardResolution(ERROR);
       }
+<<<<<<< HEAD
+=======
+      productList = catalogService.getProductList();
+    }
+    return new ForwardResolution(ADMIN_VIEW_CATEGORY);
+  }
+
+  public ForwardResolution viewProduct() {
+>>>>>>> petmanagerchat
     itemList = catalogService.getItemListByProduct(productId);
     product = catalogService.getProduct(productId);
     return new ForwardResolution(VIEW_PRODUCT);
   }
+
+  public ForwardResolution adminViewProduct() {
+    String permission = (String) context.getRequest().getSession().getAttribute("permission");
+    if (permission == null || permission.equals("admin") == false) {
+      setMessage("You do not have permission.");
+      return new ForwardResolution(ERROR);
+    }
+    itemList = catalogService.getItemListByProduct(productId);
+    product = catalogService.getProduct(productId);
+    return new ForwardResolution(ADMIN_VIEW_PRODUCT);
+  }
+
 
   ////////////////////////// ITEMUPDATE
   public ForwardResolution ItemUpdatePage() { // IN : Itemlist.JSP , OUT : Itemupdate.JSP
@@ -253,14 +287,22 @@ public class CatalogActionBean extends AbstractActionBean {
       return new ForwardResolution(ERROR);
     }
     item = catalogService.getItem(itemId);
-    return new ForwardResolution("/WEB-INF/jsp/catalog/ItemUpdate.jsp");
+    return new ForwardResolution(ITEM_UPDATE_PAGE);
   }
 
   public ForwardResolution DBItemUpdate() { // IN : Itemupdate.JSP , OUT : Itemlist.JSP
+<<<<<<< HEAD
 //    String permission = (String) context.getRequest().getSession().getAttribute("permission");
 //    if (permission == null || permission.equals("admin") == false)
 //      setMessage("권한이 없습니다.");
 //    else
+=======
+    String permission = (String) context.getRequest().getSession().getAttribute("permission");
+    if (permission == null || permission.equals("admin") == false) {
+      setMessage("You do not have permission.");
+      return new ForwardResolution(ERROR);
+    }
+>>>>>>> petmanagerchat
     String resulturl = ERROR;
 
     if (item == null)
@@ -276,7 +318,11 @@ public class CatalogActionBean extends AbstractActionBean {
         catalogService.UpdateItem(itemId, getAttribute1(), getListPrice(), getQuantity());
         itemList = catalogService.getItemListByProduct(productId);
         product = catalogService.getProduct(productId);
+<<<<<<< HEAD
         resulturl = VIEW_PRODUCT;
+=======
+        resulturl = ADMIN_VIEW_PRODUCT;
+>>>>>>> petmanagerchat
       }
     }
     return new ForwardResolution(resulturl);
@@ -291,7 +337,8 @@ public class CatalogActionBean extends AbstractActionBean {
     }
     item = new Item();
     item.setProductId(productId);
-    return new ForwardResolution("/WEB-INF/jsp/catalog/ItemAdd.jsp");
+    itemId = null;
+    return new ForwardResolution(ITEM_ADD_PAGE);
   }
 
   public ForwardResolution DBItemAdd() {// IN : itemadd.JSP , OUT : Itemlist.JSP
@@ -316,7 +363,11 @@ public class CatalogActionBean extends AbstractActionBean {
           catalogService.AddItem(itemId, getProductId(), getListPrice(), getAttribute1(), getQuantity());
           itemList = catalogService.getItemListByProduct(productId);
           product = catalogService.getProduct(productId);
+<<<<<<< HEAD
           resulturl = VIEW_PRODUCT;
+=======
+          resulturl = ADMIN_VIEW_PRODUCT;
+>>>>>>> petmanagerchat
         }
       }
     }
@@ -332,12 +383,18 @@ public class CatalogActionBean extends AbstractActionBean {
     }
     Item tempitem = catalogService.getItem(itemId);
     if (tempitem != null)
+<<<<<<< HEAD
       catalogService.DeleteItem( productId, itemId);
     itemList = catalogService.getItemListByProduct(productId);
     product = catalogService.getProduct(productId);
     return new ForwardResolution(VIEW_PRODUCT);
+=======
+      catalogService.DeleteItem(productId, itemId);
+    itemList = catalogService.getItemListByProduct(productId);
+    product = catalogService.getProduct(productId);
+    return new ForwardResolution(ADMIN_VIEW_PRODUCT);
+>>>>>>> petmanagerchat
   }
-
 
   /**
    * Clear.

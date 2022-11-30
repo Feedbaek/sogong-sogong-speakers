@@ -30,6 +30,13 @@
         <tr>
             <td>${ChattingRoom.customerId}</td>
             <td>${ChattingRoom.managerId}</td>
+            <td><stripes:link class="Button"
+                              beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
+                              event="joinChatting">
+                <stripes:param name="customerId" value="${ChattingRoom.customerId}"/>
+                <stripes:param name="managerId" value="${ChattingRoom.managerId}"/>
+                join
+            </stripes:link></td>
         </tr>
     </c:forEach>
 </table>

@@ -145,7 +145,10 @@
     WHERE ITEMID = #{arg0}
   </select>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> petmanagerchat
   <delete id="DeleteInventory">
     DELETE FROM INVENTORY
            WHERE ITEMID = #{arg0};

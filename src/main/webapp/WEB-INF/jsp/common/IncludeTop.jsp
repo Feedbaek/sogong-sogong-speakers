@@ -56,6 +56,7 @@
 		</stripes:link> <img align="middle" src="../images/separator.gif" />
 			<c:if test="${sessionScope.accountBean == null}">
 				<stripes:link
+<<<<<<< HEAD
 						beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
 						event="signonForm">
 					Sign In
@@ -111,6 +112,48 @@
 			</c:if> <img align="middle" src="../images/separator.gif" />
 			<a href="../help.html">?</a></div>
 	</div>
+=======
+						beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
+						event="viewChattingRoomForManager">
+					<img align="middle" src="../images/chat.png">
+				</stripes:link>
+			</c:when>
+			<c:when test="${sessionScope.permission eq 'admin'}">
+<%--				관리자 채팅방--%>
+				<stripes:link
+						beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
+						event="viewChattingRoomForManager">
+					<img align="middle" src="../images/chat.png">
+				</stripes:link>
+			</c:when>
+			<c:otherwise>
+				<!--펫 매니저 채팅방-->
+				<stripes:link
+						beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
+						event="viewChattingRoomForManager">
+					<img align="middle" src="../images/chat.png">
+				</stripes:link>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
+</c:if> <img align="middle" src="../images/separator.gif" />
+	<a href="../help.html">?</a>
+	<c:if test="${sessionScope.accountBean.authenticated}">
+		<c:choose>
+			<c:when test="${sessionScope.permission eq 'admin'}">
+				<img align="middle" src="../images/separator.gif" />
+				<stripes:link
+						beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
+						event="adminViewCategory">
+					<stripes:param name="categoryId" value= "" />
+					Admin Dashboard
+				</stripes:link>
+			</c:when>
+		</c:choose>
+	</c:if>
+</div>
+</div>
+>>>>>>> petmanagerchat
 
 	<div id="Search">
 		<div id="SearchContent"><stripes:form
