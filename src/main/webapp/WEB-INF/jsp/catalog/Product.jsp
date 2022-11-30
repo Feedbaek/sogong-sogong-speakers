@@ -21,18 +21,7 @@
 	class="org.mybatis.jpetstore.web.actions.CatalogActionBean" />
 
 <div id="BackLink">
-<c:if test="${actionBean.isadmin == true}">
-	<stripes:link
-			beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
-			event="viewCategory">
-		<stripes:param name="categoryId"
-					   value="" />
-		Return to Product
-	</stripes:link></div>
-</c:if>
 
-
-<c:if test="${actionBean.isadmin == false}">
 	<stripes:link
 			beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
 			event="viewCategory">
@@ -40,7 +29,6 @@
 					   value="${actionBean.product.categoryId}" />
 		Return to ${actionBean.product.categoryId}
 	</stripes:link></div>
-</c:if>
 
 <div id="Catalog">
 
@@ -52,9 +40,6 @@
 		<th>Product ID</th>
 		<th>Description</th>
 		<th>List Price</th>
-		<c:if test="${actionBean.isadmin == true}">
-			<th> </th>
-		</c:if>
 		<th>&nbsp;</th>
 	</tr>
 	<c:forEach var="item" items="${actionBean.itemList}">
@@ -70,7 +55,6 @@
 			${item.attribute4} ${item.attribute5} ${actionBean.product.name}</td>
 			<td><fmt:formatNumber value="${item.listPrice}"
 				pattern="$#,##0.00" /></td>
-			<c:if test="${actionBean.isadmin == false}">
 			<td><stripes:link class="Button"
 				beanclass="org.mybatis.jpetstore.web.actions.CartActionBean"
 				event="addItemToCart">
@@ -78,23 +62,6 @@
         	Add to Cart
 
 			</stripes:link></td>
-			</c:if>
-
-			<c:if test="${actionBean.isadmin == true}">
-				<td><stripes:link class="Button"
-								  beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
-								  event="ItemUpdatePage">
-					<stripes:param name="itemId" value="${item.itemId}" />
-					UPDATE
-				</stripes:link></td>
-				<td><stripes:link class="Button"
-								  beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
-								  event="ItemDelete">
-					<stripes:param name="productId" value="${actionBean.productId}" />
-					<stripes:param name="itemId" value="${item.itemId}" />
-					DELETE
-				</stripes:link></td>
-			</c:if>
 		</tr>
 	</c:forEach>
 	<tr>
@@ -102,14 +69,6 @@
 		</td>
 	</tr>
 </table>
-	<c:if test="${actionBean.isadmin == true}">
-		<td><stripes:link class="Button"
-						  beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
-						  event="ItemAddPage">
-			<stripes:param name="productId" value="${actionBean.productId}" />
-			Add
-		</stripes:link></td>
-	</c:if>
 </div>
 
 <%@ include file="../common/IncludeBottom.jsp"%>

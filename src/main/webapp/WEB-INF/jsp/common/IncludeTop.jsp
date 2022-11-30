@@ -97,7 +97,6 @@
 				</stripes:link>
 			</c:when>
 			<c:when test="${sessionScope.permission eq 'admin'}">
-				<img align="middle" src="../images/separator.gif" />
 <%--				관리자 채팅방--%>
 				<stripes:link
 						beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
@@ -117,13 +116,13 @@
 	</c:if>
 </c:if> <img align="middle" src="../images/separator.gif" />
 	<a href="../help.html">?</a>
-
+	<img align="middle" src="../images/separator.gif" />
 	<c:if test="${sessionScope.accountBean.authenticated}">
 		<c:choose>
 			<c:when test="${sessionScope.permission eq 'admin'}">
 				<stripes:link
 						beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
-						event="viewCategory">
+						event="adminViewCategory">
 					<stripes:param name="categoryId" value= "" />
 					Admin Dashboard
 				</stripes:link>

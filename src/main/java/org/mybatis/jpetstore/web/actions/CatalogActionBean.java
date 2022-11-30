@@ -44,6 +44,10 @@ public class CatalogActionBean extends AbstractActionBean {
   private static final String VIEW_PRODUCT = "/WEB-INF/jsp/catalog/Product.jsp";
   private static final String VIEW_ITEM = "/WEB-INF/jsp/catalog/Item.jsp";
   private static final String SEARCH_PRODUCTS = "/WEB-INF/jsp/catalog/SearchProducts.jsp";
+  private static final String ITEM_ADD_PAGE = "/WEB-INF/jsp/catalog/ItemAdd.jsp";
+  private static final String ITEM_UPDATE_PAGE = "/WEB-INF/jsp/catalog/ItemUpdate.jsp";
+  private static final String ADMIN_VIEW_CATEGORY = "/WEB-INF/jsp/catalog/AdminCategory.jsp";
+  private static final String ADMIN_VIEW_PRODUCT = "/WEB-INF/jsp/catalog/AdminProduct.jsp";
 
   @SpringBean
   private transient CatalogService catalogService;
@@ -175,17 +179,6 @@ public class CatalogActionBean extends AbstractActionBean {
     return new ForwardResolution(MAIN);
   }
 
-
-  public boolean isIsadmin() {
-    return isadmin;
-  }
-
-  public void setIsadmin(boolean isadmin) {
-    this.isadmin = isadmin;
-  }
-
-  private  boolean isadmin;
-
   /**
    * View category.
    *
@@ -193,8 +186,6 @@ public class CatalogActionBean extends AbstractActionBean {
    */
 
   // =========================================================================================
-
-
   public ForwardResolution viewItem() {
     item = catalogService.getItem(itemId);
     product = item.getProduct();
@@ -213,33 +204,38 @@ public class CatalogActionBean extends AbstractActionBean {
 
   // =========================================================================================
   public ForwardResolution viewCategory() {
+    productList = catalogService.getProductListByCategory(categoryId);
+    category = catalogService.getCategory(categoryId);
+    return new ForwardResolution(VIEW_CATEGORY);
+  }
+
+  public ForwardResolution adminViewCategory() {
     String permission = (String) context.getRequest().getSession().getAttribute("permission");
-    if (categoryId != null) {
-      isadmin = false;
-      productList = catalogService.getProductListByCategory(categoryId);
-      category = catalogService.getCategory(categoryId);
-    }
     if (categoryId == null) {
       if (permission == null || permission.equals("admin") == false) {
         setMessage("You do not have permission.");
         return new ForwardResolution(ERROR);
       }
-      isadmin = true;
       productList = catalogService.getProductList();
     }
-    return new ForwardResolution(VIEW_CATEGORY);
+    return new ForwardResolution(ADMIN_VIEW_CATEGORY);
   }
 
   public ForwardResolution viewProduct() {
-    String permission = (String) context.getRequest().getSession().getAttribute("permission");
-    if (isadmin == true)
-      if (permission == null || permission.equals("admin") == false) {
-        setMessage("You do not have permission.");
-        return new ForwardResolution(ERROR);
-      }
     itemList = catalogService.getItemListByProduct(productId);
     product = catalogService.getProduct(productId);
     return new ForwardResolution(VIEW_PRODUCT);
+  }
+
+  public ForwardResolution adminViewProduct() {
+    String permission = (String) context.getRequest().getSession().getAttribute("permission");
+    if (permission == null || permission.equals("admin") == false) {
+      setMessage("You do not have permission.");
+      return new ForwardResolution(ERROR);
+    }
+    itemList = catalogService.getItemListByProduct(productId);
+    product = catalogService.getProduct(productId);
+    return new ForwardResolution(ADMIN_VIEW_PRODUCT);
   }
 
 
@@ -251,7 +247,7 @@ public class CatalogActionBean extends AbstractActionBean {
       return new ForwardResolution(ERROR);
     }
     item = catalogService.getItem(itemId);
-    return new ForwardResolution("/WEB-INF/jsp/catalog/ItemUpdate.jsp");
+    return new ForwardResolution(ITEM_UPDATE_PAGE);
   }
 
   public ForwardResolution DBItemUpdate() { // IN : Itemupdate.JSP , OUT : Itemlist.JSP
@@ -275,7 +271,7 @@ public class CatalogActionBean extends AbstractActionBean {
         catalogService.UpdateItem(itemId, getAttribute1(), getListPrice(), getQuantity());
         itemList = catalogService.getItemListByProduct(productId);
         product = catalogService.getProduct(productId);
-        resulturl = VIEW_PRODUCT;
+        resulturl = ADMIN_VIEW_PRODUCT;
       }
     }
     return new ForwardResolution(resulturl);
@@ -290,7 +286,8 @@ public class CatalogActionBean extends AbstractActionBean {
     }
     item = new Item();
     item.setProductId(productId);
-    return new ForwardResolution("/WEB-INF/jsp/catalog/ItemAdd.jsp");
+    itemId = null;
+    return new ForwardResolution(ITEM_ADD_PAGE);
   }
 
   public ForwardResolution DBItemAdd() {// IN : itemadd.JSP , OUT : Itemlist.JSP
@@ -315,7 +312,7 @@ public class CatalogActionBean extends AbstractActionBean {
           catalogService.AddItem(itemId, getProductId(), getListPrice(), getAttribute1(), getQuantity());
           itemList = catalogService.getItemListByProduct(productId);
           product = catalogService.getProduct(productId);
-          resulturl = VIEW_PRODUCT;
+          resulturl = ADMIN_VIEW_PRODUCT;
         }
       }
     }
@@ -331,10 +328,10 @@ public class CatalogActionBean extends AbstractActionBean {
     }
     Item tempitem = catalogService.getItem(itemId);
     if (tempitem != null)
-      catalogService.DeleteItem( productId, itemId);
+      catalogService.DeleteItem(productId, itemId);
     itemList = catalogService.getItemListByProduct(productId);
     product = catalogService.getProduct(productId);
-    return new ForwardResolution(VIEW_PRODUCT);
+    return new ForwardResolution(ADMIN_VIEW_PRODUCT);
   }
 
   /**
@@ -357,6 +354,4 @@ public class CatalogActionBean extends AbstractActionBean {
 
     quantity = 0;
   }
-
-
 }
