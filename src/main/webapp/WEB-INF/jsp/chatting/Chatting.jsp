@@ -25,6 +25,8 @@
 <stripes:form
         beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean">
   <stripes:text name="chattingLine"/>
+    <stripes:param name="customerId" value="${actionBean.customerId}"/>
+    <stripes:param name="managerId" value="${actionBean.managerId}"/>
   <stripes:submit name="insertChatting" value="Send"/>
 </stripes:form>
 

@@ -54,7 +54,7 @@
         INSERT INTO ChattingLog
           (customerid,managerid,ChattingLog)
         VALUES
-          (#{customerId},#{managerId},#{ChattingLog})
+          (#{customerId},#{managerId},#{chattingLog})
     </insert>
 
     <delete id="deleteChattingRoom" parameterType="chattingRoom">

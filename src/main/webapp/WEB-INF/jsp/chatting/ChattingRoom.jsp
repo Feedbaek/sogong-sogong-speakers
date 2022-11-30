@@ -13,6 +13,11 @@
 <jsp:useBean id="ChattingRoom"
              class="org.mybatis.jpetstore.web.actions.ChattingActionBean" />
 
+<head>
+    <style>
+        h2{text-align: center}
+    </style>
+</head>
 
 <div id="BackLink">
     <stripes:link beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean">
@@ -21,6 +26,7 @@
 </div>
 
 <div id="Catalog">
+
     <h2>Pet Manager Chatting List</h2>
     <br>
     <table>
