@@ -2,6 +2,7 @@ package org.mybatis.jpetstore.service;
 
 import org.mybatis.jpetstore.domain.Chatting;
 import org.mybatis.jpetstore.domain.ChattingRoom;
+import org.mybatis.jpetstore.domain.Memo;
 import org.mybatis.jpetstore.mapper.ChattingMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,5 +44,18 @@ public class ChattingService {
 
     @Transactional
     public void destroyChattingRoom(ChattingRoom chattingRoom) {chattingMapper.deleteChattingRoom(chattingRoom);}
+
+    @Transactional
+    public Memo getMemoById(String managerId, String customerId) { return chattingMapper.getMemoById(managerId, customerId);}
+
+    @Transactional
+    public void updateMemo(Memo memo) {
+        chattingMapper.updateMemo(memo);
+    }
+
+    @Transactional
+    public void insertMemo(Memo memo) {
+        chattingMapper.insertMemo(memo);
+    }
 
 }

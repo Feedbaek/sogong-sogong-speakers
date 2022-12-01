@@ -2,6 +2,7 @@ package org.mybatis.jpetstore.mapper;
 
 import org.mybatis.jpetstore.domain.Chatting;
 import org.mybatis.jpetstore.domain.ChattingRoom;
+import org.mybatis.jpetstore.domain.Memo;
 
 import java.util.List;
 
@@ -20,4 +21,10 @@ public interface ChattingMapper {
     void insertChatting(Chatting chatting);
 
     void deleteChattingRoom(ChattingRoom chattingRoom);
+
+    Memo getMemoById(String managerId, String customerId);
+
+    void updateMemo(Memo memo);
+
+    void insertMemo(Memo memo);
 }

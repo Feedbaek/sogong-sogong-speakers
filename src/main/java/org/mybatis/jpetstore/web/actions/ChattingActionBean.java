@@ -4,9 +4,9 @@ import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import org.mybatis.jpetstore.domain.Chatting;
 import org.mybatis.jpetstore.domain.ChattingRoom;
+import org.mybatis.jpetstore.domain.Memo;
 import org.mybatis.jpetstore.service.ChattingService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -39,6 +39,8 @@ public class ChattingActionBean extends AbstractActionBean {
 
     private String senderId;
 
+    private Memo memo;
+
 
     //-------------------------------------------------------------------------//
     private static final String VIEW_CHATTING_ROOM = "/WEB-INF/jsp/chatting/ChattingRoom.jsp";
@@ -48,6 +50,7 @@ public class ChattingActionBean extends AbstractActionBean {
     private static final String JOIN_CHATTING = "/WEB-INF/jsp/chatting/Chatting.jsp";
 
     private static final String VIEW_SEARCHED_CHATTING_ROOM = "/WEB-INF/jsp/chatting/searchChattingRoom.jsp";
+    private static final String VIEW_CHATTING_MEMO = "/WEB-INF/jsp/chatting/memoChatting.jsp";
 
     //------------------------getter & setter ---------------------------------//
     public String getSenderId() {
@@ -148,6 +151,13 @@ public class ChattingActionBean extends AbstractActionBean {
     public void setChattingLine(String chattingLine) {
         this.chattingLine = chattingLine;
     }
+    public Memo getMemo() {
+        return memo;
+    }
+
+    public void setMemo(Memo memo) {
+        this.memo = memo;
+    }
 
 
     //============================================================================================
@@ -240,7 +250,35 @@ public class ChattingActionBean extends AbstractActionBean {
         }
         return new ForwardResolution(ERROR);
     }
+    public ForwardResolution memoChatting() {
+        HttpSession session = context.getRequest().getSession();
+        String permission = (String) session.getAttribute("permission");
+        if (permission == null || permission.isEmpty() || permission.equals("petmanager") == false) {
+            setMessage("잘못된 접근입니다.");
+            return new ForwardResolution(ERROR);
+        }
+        System.out.println("[DEBUG] Memo chatting start");
+        memo = chattingService.getMemoById(managerId, customerId);
+        if (memo == null) {
+            memo = new Memo();
+            memo.setManagerId(managerId);
+            memo.setCustomerId(customerId);
+            chattingService.insertMemo(memo);
+            System.out.println("[DEBUG] new memo insert");
+        }
+        return new ForwardResolution(VIEW_CHATTING_MEMO);
+    }
+    public Resolution saveMemo() {
+//        HttpSession session = context.getRequest().getSession();
+//        String permission = (String) session.getAttribute("permission");
+//        if (permission == null || permission.isEmpty() || permission.equals("petmanager") == false) {
+//            setMessage("잘못된 접근입니다.");
+//            return new ForwardResolution(ERROR);
+//        }
+        chattingService.updateMemo(memo);
+        System.out.println("[DEBUG] updateMemo");
+        System.out.println("[DEBUG] Memo:" + memo.getEvalLog());
+        return new RedirectResolution(ChattingActionBean.class, "memoChatting");
+    }
 }
-
-
 

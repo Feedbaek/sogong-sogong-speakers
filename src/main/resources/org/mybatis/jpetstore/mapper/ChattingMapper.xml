@@ -54,21 +54,46 @@
 
     <insert id="insertChattingRoom" parameterType="ChattingRoom">
         INSERT INTO ChattingRoom
-          (customerid,managerid)
+            (customerid,managerid)
         VALUES
-          (#{customerId},#{managerId})
+            (#{customerId},#{managerId})
     </insert>
 
     <insert id="insertChatting" parameterType="Chatting">
         INSERT INTO ChattingLog
-          (customerid,managerid,ChattingLog,senderId,timeTable)
+            (customerid,managerid,ChattingLog,senderId,timeTable)
         VALUES
-          (#{customerId},#{managerId},#{chattingLog},#{senderId},NOW())
+            (#{customerId},#{managerId},#{chattingLog},#{senderId},NOW())
     </insert>
 
     <delete id="deleteChattingRoom" parameterType="chattingRoom">
         DELETE FROM ChattingRoom
         WHERE customerid=#{customerId} AND managerid=#{managerId}
     </delete>
+
+    <select id="getMemoById" resultType="Memo">
+        SELECT managerid,
+               customerid,
+               petname,
+               petcategory,
+               petage,
+               startdate,
+               evallog,
+               curstatus
+        FROM chattingeval
+        WHERE managerid=#{param1} and customerid=#{param2};
+    </select>
+
+    <update id="updateMemo" parameterType="Memo">
+        UPDATE chattingeval
+        SET petname=#{petName}, petcategory=#{petCategory}, petage=#{petAge}, evallog=#{evalLog}, curstatus=#{curStatus}
+        WHERE managerid=#{managerId} and customerid=#{customerId};
+    </update>
+
+    <insert id="insertMemo" parameterType="Memo">
+        INSERT INTO chattingeval
+        (managerid, customerid, petname, petcategory, petage, startdate, evallog, curstatus)
+        VALUES (#{managerId}, #{customerId}, #{petName}, #{petCategory}, #{petAge}, NOW(), #{evalLog}, #{curStatus});
+    </insert>
 
 </mapper>
