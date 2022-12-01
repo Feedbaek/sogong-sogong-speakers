@@ -19,8 +19,10 @@ import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SessionScope;
 import net.sourceforge.stripes.integration.spring.SpringBean;
+import org.mybatis.jpetstore.domain.ChattingRoom;
 import org.mybatis.jpetstore.domain.Order;
 import org.mybatis.jpetstore.domain.PetManager;
+import org.mybatis.jpetstore.service.ChattingService;
 import org.mybatis.jpetstore.service.OrderService;
 import org.mybatis.jpetstore.service.PetManagerService;
 
@@ -55,14 +57,29 @@ public class OrderActionBean extends AbstractActionBean {
   @SpringBean
   private transient PetManagerService petManagerService;
 
+  @SpringBean
+  private transient ChattingService chattingService;
+
+  private List<ChattingRoom> chattingRoomList;
+
   private List<PetManager> petManagerList;
 
   private boolean shippingAddressRequired;
   private boolean confirmed;
+
+  private boolean _showChooseButton;
   private List<Order> orderList;
 
   static {
     CARD_TYPE_LIST = Collections.unmodifiableList(Arrays.asList("Visa", "MasterCard", "American Express"));
+  }
+
+  public boolean is_showChooseButton() {
+    return _showChooseButton;
+  }
+
+  public void set_showChooseButton(boolean _showChooseButton) {
+    this._showChooseButton = _showChooseButton;
   }
 
   public List<PetManager> getPetManagerList() {
@@ -169,7 +186,7 @@ public class OrderActionBean extends AbstractActionBean {
       cartBean.clear();
 
       setMessage("Thank you, your order has been submitted.");
-
+      set_showChooseButton(true);
       return new ForwardResolution(VIEW_ORDER);
     } else {
       setMessage("An error occurred processing your order (order was null).");
@@ -189,6 +206,39 @@ public class OrderActionBean extends AbstractActionBean {
 
     order = orderService.getOrder(order.getOrderId());
     if (accountBean.getAccount().getUsername().equals(order.getUsername())) {
+      String senderId = accountBean.getUsername();
+      chattingRoomList = chattingService.getChatRoomListForUser(senderId);
+      boolean catDog_select = order.getCatDog();
+      boolean repFish_select = order.getRepFish();
+      boolean bird_select = order.getBird();
+      set_showChooseButton(true);
+      if (catDog_select)
+      {
+        for (int i = 0;i < chattingRoomList.size();i++)
+        {
+          String managerID = chattingRoomList.get(i).getManagerId();
+          if (managerID.equals("manager1") || managerID.equals("manager4") || managerID.equals("manager7"))
+              set_showChooseButton(false);
+        }
+      }
+      if (repFish_select)
+      {
+        for (int i = 0;i < chattingRoomList.size();i++)
+        {
+          String managerID = chattingRoomList.get(i).getManagerId();
+          if (managerID.equals("manager2") || managerID.equals("manager5") || managerID.equals("manager8"))
+            set_showChooseButton(false);
+        }
+      }
+      if (bird_select)
+      {
+        for (int i = 0;i < chattingRoomList.size();i++)
+        {
+          String managerID = chattingRoomList.get(i).getManagerId();
+          if (managerID.equals("manager3") || managerID.equals("manager6") || managerID.equals("manager9"))
+            set_showChooseButton(false);
+        }
+      }
       return new ForwardResolution(VIEW_ORDER);
     } else {
       order = null;
