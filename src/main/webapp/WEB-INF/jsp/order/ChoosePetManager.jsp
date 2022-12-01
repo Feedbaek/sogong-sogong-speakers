@@ -69,7 +69,7 @@
                             AGE   : ${petManager.age}<br><br>
                             SINCE : ${petManager.since}
                         </td>
-                        <td><input type="radio" name="bird" value="${petManager.managerId} checked"></td>
+                        <td><input type="radio" name="bird" value="${petManager.managerId}" checked></td>
                     </tr>
                 </c:if>
             </c:forEach>
