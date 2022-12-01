@@ -9,4 +9,6 @@ public interface PetManagerMapper {
     List<PetManager> getCatDogManagerList();
     List<PetManager> getRepFishManagerList();
     List<PetManager> getBirdManagerList();
+    List<PetManager> getPetMangerList();
+    void insertPetManager(PetManager petManager);
 }

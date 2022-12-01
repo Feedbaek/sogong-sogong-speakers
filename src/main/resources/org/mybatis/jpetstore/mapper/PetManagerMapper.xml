@@ -53,4 +53,21 @@
     WHERE bird=1
   </select>
 
+    <select id="getPetMangerList" resultType="PetManager">
+        SELECT managerId,
+               petType,
+               name,
+               age,
+               since
+        FROM petmanager
+        ORDER BY managerId
+    </select>
+
+    <insert id="insertPetManager" parameterType="PetManager">
+        INSERT INTO petmanager
+            (managerId, petType, catdog, repfish, bird, name, age, since)
+        VALUES
+            (#{managerId},#{petType}, #{catdog}, #{repfish}, #{bird}, #{name}, #{age}, #{since})
+    </insert>
+
 </mapper>

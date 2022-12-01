@@ -1,8 +1,10 @@
 package org.mybatis.jpetstore.service;
 
+import org.mybatis.jpetstore.domain.Chatting;
 import org.mybatis.jpetstore.domain.PetManager;
 import org.mybatis.jpetstore.mapper.PetManagerMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,5 +20,9 @@ public class PetManagerService {
     public List<PetManager> getRepFishManagerList() { return petManagerMapper.getRepFishManagerList(); }
 
     public List<PetManager> getBirdManagerList() { return petManagerMapper.getBirdManagerList(); }
+    public List<PetManager> getPetMangerList() { return petManagerMapper.getPetMangerList(); }
+
+    @Transactional
+    public void insertPetManager(PetManager petManager) { petManagerMapper.insertPetManager(petManager);}
 
 }
