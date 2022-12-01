@@ -6,6 +6,7 @@ import org.mybatis.jpetstore.domain.Chatting;
 import org.mybatis.jpetstore.domain.ChattingRoom;
 import org.mybatis.jpetstore.service.ChattingService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -240,4 +241,6 @@ public class ChattingActionBean extends AbstractActionBean {
         return new ForwardResolution(ERROR);
     }
 }
+
+
 

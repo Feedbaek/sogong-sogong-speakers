@@ -61,7 +61,6 @@
 				<td>${cartItem.inStock}</td>
 				<td><stripes:text size="3" name="${cartItem.item.itemId}"
 					value="${cartItem.quantity}" /></td>
-<%--				<td><stripes:checkbox name="${cartItem.item.itemId}a"/> $30.00</td>--%>
 				<td>$<fmt:formatNumber value="${cartItem.item.listPrice}"
 					pattern="#,##0.00" /></td>
 				<td>$<fmt:formatNumber value="${cartItem.total}"

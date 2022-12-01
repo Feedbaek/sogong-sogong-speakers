@@ -19,6 +19,7 @@ import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SessionScope;
 import net.sourceforge.stripes.integration.spring.SpringBean;
+import org.mybatis.jpetstore.domain.CartItem;
 import org.mybatis.jpetstore.domain.ChattingRoom;
 import org.mybatis.jpetstore.domain.Order;
 import org.mybatis.jpetstore.domain.PetManager;
@@ -26,9 +27,11 @@ import org.mybatis.jpetstore.service.ChattingService;
 import org.mybatis.jpetstore.service.OrderService;
 import org.mybatis.jpetstore.service.PetManagerService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -48,6 +51,7 @@ public class OrderActionBean extends AbstractActionBean {
   private static final String VIEW_ORDER = "/WEB-INF/jsp/order/ViewOrder.jsp";
   private static final String CHOOSE_PM = "/WEB-INF/jsp/order/ChoosePetManager.jsp";
 
+  private static final String MAIN = "/WEB-INF/jsp/catalog/Main.jsp";
   private static final List<String> CARD_TYPE_LIST;
 
   @SpringBean
@@ -59,6 +63,8 @@ public class OrderActionBean extends AbstractActionBean {
 
   @SpringBean
   private transient ChattingService chattingService;
+
+  private ChattingRoom chattingRoom = new ChattingRoom();
 
   private List<ChattingRoom> chattingRoomList;
 
@@ -128,6 +134,14 @@ public class OrderActionBean extends AbstractActionBean {
 
   public List<Order> getOrderList() {
     return orderList;
+  }
+
+  public ChattingRoom getChattingRoom() {
+    return chattingRoom;
+  }
+
+  public void setChattingRoom(ChattingRoom chattingRoom) {
+    this.chattingRoom = chattingRoom;
   }
 
   /**
@@ -267,6 +281,29 @@ public class OrderActionBean extends AbstractActionBean {
         petManagerList.addAll(petManagerService.getBirdManagerList());
     }
     return new ForwardResolution(CHOOSE_PM);
+  }
+
+  public Resolution submitPetManager() {
+    HttpServletRequest request = context.getRequest();
+    HttpSession session = context.getRequest().getSession();
+    AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
+
+    String userId = accountBean.getUsername();
+    String managerId;
+
+    if((managerId = request.getParameter("catDog")) != null) {
+      chattingRoom = new ChattingRoom(userId, managerId);
+      chattingService.createChattingRoom(chattingRoom);
+    }
+    if((managerId = request.getParameter("repFish")) != null) {
+      chattingRoom = new ChattingRoom(userId, managerId);
+      chattingService.createChattingRoom(chattingRoom);
+    }
+    if((managerId = request.getParameter("bird")) != null) {
+      chattingRoom = new ChattingRoom(userId, managerId);
+      chattingService.createChattingRoom(chattingRoom);
+    }
+    return new ForwardResolution(MAIN);
   }
 
   /**
