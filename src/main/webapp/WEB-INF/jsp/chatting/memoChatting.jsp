@@ -29,7 +29,6 @@
         <th>petCategory</th>
         <th>petAge</th>
         <th>startDate</th>
-        <th>petMemo</th>
       </tr>
       <tr>
         <td>
@@ -50,11 +49,13 @@
         <td>
             ${actionBean.memo.startDate}
         </td>
-        <td>
-            <stripes:textarea name="memo.evalLog"
-            >${actionBean.memo.evalLog}
+      </tr>
+      <tr>
+          <td colspan="4">
+            <stripes:textarea name="memo.evalLog" rows="10" cols="92"
+                >${actionBean.memo.evalLog}
             </stripes:textarea>
-        </td>
+          </td>
       </tr>
     </table>
       <stripes:param name="customerId" value="${actionBean.customerId}"/>
