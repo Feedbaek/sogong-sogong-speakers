@@ -81,6 +81,7 @@
 				<th colspan="4"> BIRD </th>
 			</tr>
 			<tr>
+<<<<<<< Updated upstream
 				<c:choose>
 					<c:when test="${actionBean.catdog eq 'catdog'}">
 						<td colspan="2"><stripes:checkbox name="catDog" disabled="true"/> $30.00</td>
