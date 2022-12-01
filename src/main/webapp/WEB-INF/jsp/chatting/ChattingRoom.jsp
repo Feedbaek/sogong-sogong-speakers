@@ -26,7 +26,8 @@
 </div>
 
 <div id="Catalog">
-    <h2>Pet Manager Chatting List</h2>
+    <div align="left"><p>         </p></div>
+    <h2>My Pet Manager Messenger</h2>
     <br>
     <table>
         <tr>

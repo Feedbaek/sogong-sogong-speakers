@@ -20,7 +20,7 @@
 </div>
 
 <div id="Catalog">
-  <h2>Pet Manager Chatting List</h2>
+  <h2>Messenger Admin</h2>
 
   <div id="Chat">
     <div>

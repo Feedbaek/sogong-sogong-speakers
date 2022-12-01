@@ -75,13 +75,11 @@
 			</tr>
 		</c:forEach>
 		<c:if test="${actionBean.cart.numberOfItems != 0}">
-			<th colspan="7"><b>PET MANAGER SERVICE</b></th>
-			<th></th>
+			<th colspan="8"><b>PET MANAGER SERVICE</b></th>
 			<tr>
 				<th colspan="2"> CAT / DOG </th>
 				<th colspan="2"> REPTILES / FISH </th>
-				<th colspan="3"> BIRD </th>
-				<th></th>
+				<th colspan="4"> BIRD </th>
 			</tr>
 			<tr>
 				<c:choose>
@@ -102,21 +100,18 @@
 				</c:choose>
 				<c:choose>
 					<c:when test="${actionBean.bird eq 'bird'}">
-						<td colspan="2"><stripes:checkbox name="bird" disabled="true"/> $30.00</td>
+						<td colspan="4"><stripes:checkbox name="bird" disabled="true"/> $30.00</td>
 					</c:when>
 					<c:otherwise>
-						<td colspan="2"><stripes:checkbox name="bird" /> $30.00</td>
+						<td colspan="4"><stripes:checkbox name="bird" /> $30.00</td>
 					</c:otherwise>
 				</c:choose>
-				<td> </td>
-				<td> </td>
 			</tr>
 		</c:if>
 		<tr>
-			<td colspan="7">Sub Total: $<fmt:formatNumber
+			<td colspan="8">Sub Total: $<fmt:formatNumber
 				value="${actionBean.cart.subTotal}" pattern="#,##0.00" /> <stripes:submit
 				name="updateCartQuantities" value="Update Cart" /></td>
-			<td>&nbsp;</td>
 		</tr>
 	</table>
 

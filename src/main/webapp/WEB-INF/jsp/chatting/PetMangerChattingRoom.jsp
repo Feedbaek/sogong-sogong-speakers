@@ -8,6 +8,9 @@
 <%--<%@ page contentType="text/html; charset=utf-8"%>--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<%@ taglib prefix="sdyn" uri="http://stripes.sourceforge.net/stripes-dynattr.tld" %>
+
+
 <%@ include file="../common/IncludeTop.jsp"%>
 
 <jsp:useBean id="ChattingRoom"
@@ -23,11 +26,11 @@
     <div id="SearchContent" align="left">
         <stripes:form
                 beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean">
-            <stripes:text name="keyword" size="14" />
+            <sdyn:text name="keyword" size="14" placeholder="User ID"/>
             <stripes:submit name="searchUserID" value="Search" />
         </stripes:form>
     </div id="SearchContent">
-    <h2>Pet Manager Chatting List</h2>
+    <h2>My Client Messenger</h2>
     <br>
     <table>
         <tr>
