@@ -25,21 +25,30 @@
 
  <select id="getCatDogManagerList" resultType="PetManager">
     SELECT managerId,
-           petType
+           petType,
+           name,
+           age,
+           since
     FROM petmanager
     WHERE catdog=1
  </select>
 
   <select id="getRepFishManagerList" resultType="PetManager">
     SELECT managerId,
-           petType
+           petType,
+           name,
+           age,
+           since
     FROM petmanager
     WHERE repfish=1
   </select>
 
   <select id="getBirdManagerList" resultType="PetManager">
     SELECT managerId,
-           petType
+           petType,
+           name,
+           age,
+           since
     FROM petmanager
     WHERE bird=1
   </select>
