@@ -222,6 +222,7 @@ public class ChattingActionBean extends AbstractActionBean {
         chatting.setManagerId(managerId);
         chatting.setChattingLog(chattingLine);
         chatting.setSenderId(senderId);
+        System.out.println(chattingLine.replace("\n\r","<br>"));
         chattingService.insertChatting(chatting);
         setChattingLine(null);
         return new RedirectResolution(ChattingActionBean.class,"joinChatting");
