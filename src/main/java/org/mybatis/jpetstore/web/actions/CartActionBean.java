@@ -22,6 +22,7 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
 import org.mybatis.jpetstore.domain.*;
 import org.mybatis.jpetstore.service.CatalogService;
 import org.mybatis.jpetstore.service.ChattingService;
+import org.mybatis.jpetstore.service.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -43,6 +44,9 @@ public class CartActionBean extends AbstractActionBean {
 
   @SpringBean
   private transient CatalogService catalogService;
+
+  @SpringBean
+  private transient OrderService orderService;
 
   @SpringBean
   private transient ChattingService chattingService;
@@ -202,14 +206,27 @@ public class CartActionBean extends AbstractActionBean {
     {
       AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
       String userId = accountBean.getUsername();
+      String managerId;
       chattingRoomList = chattingService.getChatRoomListForUser(userId);
       for (int i = 0;i < chattingRoomList.size();i++)
       {
-        if (chattingRoomList.get(i).getManagerId().equals("manager1"))
+        managerId = chattingRoomList.get(i).getManagerId();
+        if (managerId.equals("manager1") || managerId.equals("manager4") || managerId.equals("manager7"))
           setCatdog("catdog");
-        if (chattingRoomList.get(i).getManagerId().equals("manager2"))
+        if (managerId.equals("manager2") || managerId.equals("manager5") || managerId.equals("manager8"))
           setRepfish("repfish");
-        if (chattingRoomList.get(i).getManagerId().equals("manager3"))
+        if (managerId.equals("manager3") || managerId.equals("manager6") || managerId.equals("manager9"))
+          setBird("bird");
+      }
+      List<Order> orderList = orderService.getOrdersByUsername(userId);
+      if (orderList != null)
+      {
+        Order order = orderList.get(orderList.size() - 1);
+        if (order.getCatDog())
+          setCatdog("catdog");
+        if (order.getRepFish())
+          setRepfish("repfish");
+        if (order.getBird())
           setBird("bird");
       }
     }

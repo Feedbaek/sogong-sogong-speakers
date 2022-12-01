@@ -264,18 +264,20 @@ public class OrderActionBean extends AbstractActionBean {
   public Resolution choosePetManager()
   {
     order = orderService.getOrder(order.getOrderId());
+    if (petManagerList != null)
+      petManagerList.clear();
     if (order.getCatDog())
       petManagerList = petManagerService.getCatDogManagerList();
     if (order.getRepFish())
     {
-      if (petManagerList == null)
+      if (petManagerList == null || petManagerList.size() == 0)
         petManagerList = petManagerService.getRepFishManagerList();
       else
         petManagerList.addAll(petManagerService.getRepFishManagerList());
     }
     if (order.getBird())
     {
-      if (petManagerList == null)
+      if (petManagerList == null || petManagerList.size() == 0)
         petManagerList = petManagerService.getBirdManagerList();
       else
         petManagerList.addAll(petManagerService.getBirdManagerList());
