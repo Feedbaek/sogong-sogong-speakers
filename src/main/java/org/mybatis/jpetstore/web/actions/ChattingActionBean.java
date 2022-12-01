@@ -48,9 +48,9 @@ public class ChattingActionBean extends AbstractActionBean {
     private static final String VIEW_PM_CHATTING_ROOM = "/WEB-INF/jsp/chatting/PetMangerChattingRoom.jsp";
     private static final String VIEW_ALL_CHATTING_ROOM = "/WEB-INF/jsp/chatting/AllChattingRoom.jsp";
     private static final String JOIN_CHATTING = "/WEB-INF/jsp/chatting/Chatting.jsp";
-
     private static final String VIEW_SEARCHED_CHATTING_ROOM = "/WEB-INF/jsp/chatting/searchChattingRoom.jsp";
     private static final String VIEW_CHATTING_MEMO = "/WEB-INF/jsp/chatting/memoChatting.jsp";
+    private static final String VIEW_MANAGER_LIST = "/WEB-INF/jsp/chatting/allManagerList.jsp";
 
     //------------------------getter & setter ---------------------------------//
     public String getSenderId() {
@@ -290,6 +290,9 @@ public class ChattingActionBean extends AbstractActionBean {
         System.out.println("[DEBUG] updateMemo");
         System.out.println("[DEBUG] Memo:" + memo.getEvalLog());
         return new RedirectResolution(ChattingActionBean.class, "memoChatting");
+    }
+    public ForwardResolution allManagerList() {
+        return new ForwardResolution(VIEW_MANAGER_LIST);
     }
 }
 

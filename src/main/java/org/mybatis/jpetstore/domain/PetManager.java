@@ -19,7 +19,6 @@ public class PetManager implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
     public String getAge() {
         return age;
     }
@@ -35,7 +34,6 @@ public class PetManager implements Serializable {
     public void setSince(String since) {
         this.since = since;
     }
-
     public String getManagerId() {
         return managerId;
     }

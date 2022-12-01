@@ -41,7 +41,8 @@
             <table>
                 <tr>
                     <th>User ID</th>
-                    <th>Manager ID</th>
+                    <th><stripes:link beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
+                                      event="allManagerList">Manager</stripes:link></th>
                     <th></th>
                 </tr>
                 <c:forEach var="ChattingRoom" items="${actionBean.chattingRoomList}">
