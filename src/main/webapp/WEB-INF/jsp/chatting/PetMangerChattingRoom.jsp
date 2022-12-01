@@ -36,14 +36,32 @@
         <tr>
             <th>Manager ID</th>
             <th>User ID</th>
+            <th>Notification</th>
             <th>Memo</th>
-            <th>Chat</th>
-            <th>Check</th>
+            <th></th>
         </tr>
-        <c:forEach var="managerChatList" items="${actionBean.adminChatList}">
+        <c:forEach var="managerChatList" items="${actionBean.chattingRoomList}">
             <tr>
                 <td>${managerChatList.managerId}</td>
                 <td>${managerChatList.customerId}</td>
+                <td>
+                    <c:set var="flag" value="false"/>
+                    <c:forEach var="alarm" items="${actionBean.alarms}">
+                        <c:if test="${alarm.senderId eq managerChatList.customerId}">
+                            <c:if test="${alarm.alarm eq 'on'}">
+                                <c:set var="flag" value="true"/>
+                            </c:if>
+                        </c:if>
+                    </c:forEach>
+                    <c:choose>
+                        <c:when test="${flag}">
+                            <b>Not Read</b>
+                        </c:when>
+                        <c:otherwise>
+                            Read
+                        </c:otherwise>
+                    </c:choose>
+                </td>
                 <td>
                     <stripes:link class="Button"
                                   beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
@@ -61,24 +79,6 @@
                     <stripes:param name="managerId" value="${managerChatList.managerId}"/>
                         join
                     </stripes:link>
-                </td>
-                <td>
-                    <c:set var="flag" value="false"/>
-                    <c:forEach var="alarm" items="${actionBean.alarms}">
-                        <c:if test="${alarm.senderId eq managerChatList.customerId}">
-                            <c:if test="${alarm.alarm eq 'on'}">
-                                <c:set var="flag" value="true"/>
-                            </c:if>
-                        </c:if>
-                    </c:forEach>
-                    <c:choose>
-                        <c:when test="${flag}">
-                            not check
-                        </c:when>
-                        <c:otherwise>
-                            all check
-                        </c:otherwise>
-                    </c:choose>
                 </td>
             </tr>
         </c:forEach>

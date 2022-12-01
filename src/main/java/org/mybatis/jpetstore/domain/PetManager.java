@@ -8,12 +8,22 @@ public class PetManager implements Serializable {
     private String name;
     private String age;
     private String since;
+
+    private String manage;
     private boolean catdog;
     private boolean repfish;
     private boolean bird;
 
     public String getName() {
         return name;
+    }
+
+    public String getManage() {
+        return manage;
+    }
+
+    public void setManage(String manage) {
+        this.manage = manage;
     }
 
     public void setName(String name) {

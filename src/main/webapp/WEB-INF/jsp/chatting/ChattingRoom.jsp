@@ -41,26 +41,14 @@
             <table>
                 <tr>
                     <th>User ID</th>
-<<<<<<< Updated upstream
-                    <th><stripes:link beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
-                                      event="allManagerList">Manager</stripes:link></th>
-=======
                     <th>Manager ID</th>
-                    <th>Check</th>
->>>>>>> Stashed changes
+                    <th>Notification</th>
                     <th></th>
                 </tr>
                 <c:forEach var="ChattingRoom" items="${actionBean.chattingRoomList}">
                     <tr>
                         <td>${ChattingRoom.customerId}</td>
                         <td>${ChattingRoom.managerId}</td>
-                        <td><stripes:link class="Button"
-                                          beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
-                                          event="joinChatting">
-                            <stripes:param name="customerId" value="${ChattingRoom.customerId}"/>
-                            <stripes:param name="managerId" value="${ChattingRoom.managerId}"/>
-                            join
-                        </stripes:link></td>
                         <td>
                             <c:set var="flag" value="false"/>
                             <c:forEach var="alarm" items="${actionBean.alarms}">
@@ -72,13 +60,20 @@
                             </c:forEach>
                             <c:choose>
                                 <c:when test="${flag}">
-                                    not check
+                                    <b>Not Read</b>
                                 </c:when>
                                 <c:otherwise>
-                                    all check
+                                    Read
                                 </c:otherwise>
                             </c:choose>
                         </td>
+                        <td><stripes:link class="Button"
+                                          beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
+                                          event="joinChatting">
+                            <stripes:param name="customerId" value="${ChattingRoom.customerId}"/>
+                            <stripes:param name="managerId" value="${ChattingRoom.managerId}"/>
+                            join
+                        </stripes:link></td>
                     </tr>
                 </c:forEach>
             </table>

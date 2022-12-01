@@ -28,7 +28,8 @@
            petType,
            name,
            age,
-           since
+           since,
+           manage
     FROM petmanager
     WHERE catdog=1
  </select>
@@ -38,7 +39,8 @@
            petType,
            name,
            age,
-           since
+           since,
+           manage
     FROM petmanager
     WHERE repfish=1
   </select>
@@ -48,7 +50,8 @@
            petType,
            name,
            age,
-           since
+           since,
+           manage
     FROM petmanager
     WHERE bird=1
   </select>
@@ -58,16 +61,17 @@
                petType,
                name,
                age,
-               since
+               since,
+               manage
         FROM petmanager
         ORDER BY managerId
     </select>
 
     <insert id="insertPetManager" parameterType="PetManager">
         INSERT INTO petmanager
-            (managerId, petType, catdog, repfish, bird, name, age, since)
+            (managerId, petType, catdog, repfish, bird, name, age, since, manage)
         VALUES
-            (#{managerId},#{petType}, #{catdog}, #{repfish}, #{bird}, #{name}, #{age}, #{since})
+            (#{managerId},#{petType}, #{catdog}, #{repfish}, #{bird}, #{name}, #{age}, #{since}, #{manage})
     </insert>
 
 </mapper>

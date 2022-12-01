@@ -16,13 +16,13 @@
 
 <div id="Catalog">
   <div id = "PetmanagerList">
-      <h2>Pet Managers</h2>
+      <h2>JPetStore's Pet Manager List</h2>
       <br>
       <table>
         <tr>
           <th></th>
-          <th>Manager Id</th>
-          <th>Major</th>
+          <th>Manager ID</th>
+          <th>Category</th>
           <th>Profile</th>
         </tr>
           <c:forEach var="petManager" items="${actionBean.petManagerList}">
@@ -33,11 +33,11 @@
                       <td>${petManager.managerId}</td>
                       <td>${petManager.petType}</td>
                       <td>
-                          NAME  : ${petManager.name}<br><br>
-                          AGE   : ${petManager.age}<br><br>
-                          SINCE : ${petManager.since}
+                          NAME  : ${petManager.name}<br>
+                          AGE   : ${petManager.age}<br>
+                          CAREER : ${petManager.since} years<br>
+                          MANAGE : ${petManager.manage}
                       </td>
-                      <td><input type="radio" name="catDog" value="${petManager.managerId}" checked ></td>
                   </tr>
               </c:if>
               <c:if test="${petManager.managerId eq 'manager2' || petManager.managerId eq 'manager5'
@@ -47,11 +47,11 @@
                       <td>${petManager.managerId}</td>
                       <td>${petManager.petType}</td>
                       <td>
-                          NAME  : ${petManager.name}<br><br>
-                          AGE   : ${petManager.age}<br><br>
-                          SINCE : ${petManager.since}
+                          NAME  : ${petManager.name}<br>
+                          AGE   : ${petManager.age}<br>
+                          CAREER : ${petManager.since} years<br>
+                          MANAGE : ${petManager.manage}
                       </td>
-                      <td><input type="radio" name="repFish" value="${petManager.managerId}" checked ></td>
                   </tr>
               </c:if>
               <c:if test="${petManager.managerId eq 'manager3' || petManager.managerId eq 'manager6'
@@ -61,11 +61,11 @@
                       <td>${petManager.managerId}</td>
                       <td>${petManager.petType}</td>
                       <td>
-                          NAME  : ${petManager.name}<br><br>
-                          AGE   : ${petManager.age}<br><br>
-                          SINCE : ${petManager.since}
+                          NAME  : ${petManager.name}<br>
+                          AGE   : ${petManager.age}<br>
+                          CAREER : ${petManager.since} years<br>
+                          MANAGE : ${petManager.manage}
                       </td>
-                      <td><input type="radio" name="bird" value="${petManager.managerId}" checked ></td>
                   </tr>
               </c:if>
           </c:forEach>

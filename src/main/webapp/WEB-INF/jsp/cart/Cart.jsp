@@ -74,7 +74,15 @@
 			</tr>
 		</c:forEach>
 		<c:if test="${actionBean.cart.numberOfItems != 0}">
-			<th colspan="8"><b>PET MANAGER SERVICE</b></th>
+			<tr>
+				<th colspan="6"><b>PET MANAGER SERVICE</b></th>
+				<th colspan="2">
+					<stripes:link class="Button" beanclass="org.mybatis.jpetstore.web.actions.PetManagerActionBean"
+								  event="allManagerList">
+						View Pet Manager List
+					</stripes:link>
+				</th>
+			</tr>
 			<tr>
 				<th colspan="2"> CAT / DOG </th>
 				<th colspan="2"> REPTILES / FISH </th>

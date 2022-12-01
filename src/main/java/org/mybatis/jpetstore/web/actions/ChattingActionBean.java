@@ -57,7 +57,6 @@ public class ChattingActionBean extends AbstractActionBean {
     private static final String JOIN_CHATTING = "/WEB-INF/jsp/chatting/Chatting.jsp";
     private static final String VIEW_SEARCHED_CHATTING_ROOM = "/WEB-INF/jsp/chatting/searchChattingRoom.jsp";
     private static final String VIEW_CHATTING_MEMO = "/WEB-INF/jsp/chatting/memoChatting.jsp";
-    private static final String VIEW_MANAGER_LIST = "/WEB-INF/jsp/chatting/allManagerList.jsp";
 
     //------------------------getter & setter ---------------------------------//
     public List<Alarm> getAlarms() {
@@ -189,24 +188,6 @@ public class ChattingActionBean extends AbstractActionBean {
         senderId = accountBean.getUsername();
         if (permission.equals("petmanager")) {
             chattingRoomList = chattingService.getChatRoomListForManager(senderId);
-            if (senderId.equals("manager1"))
-                adminChatList = chattingService.getChatRoomListForManager("manager1");
-            else if (senderId.equals("manager2"))
-                adminChatList = chattingService.getChatRoomListForManager("manager2");
-            else if (senderId.equals("manager3"))
-                adminChatList = chattingService.getChatRoomListForManager("manager3");
-            else if (senderId.equals("manager4"))
-                adminChatList = chattingService.getChatRoomListForManager("manager4");
-            else if (senderId.equals("manager5"))
-                adminChatList = chattingService.getChatRoomListForManager("manager5");
-            else if (senderId.equals("manager6"))
-                adminChatList = chattingService.getChatRoomListForManager("manager6");
-            else if (senderId.equals("manager7"))
-                adminChatList = chattingService.getChatRoomListForManager("manager7");
-            else if (senderId.equals("manager8"))
-                adminChatList = chattingService.getChatRoomListForManager("manager8");
-            else if (senderId.equals("manager9"))
-                adminChatList = chattingService.getChatRoomListForManager("manager9");
             return new ForwardResolution(VIEW_PM_CHATTING_ROOM);
         } else if (permission.equals("user"))
             chattingRoomList = chattingService.getChatRoomListForUser(senderId);
@@ -263,7 +244,6 @@ public class ChattingActionBean extends AbstractActionBean {
         chatting.setManagerId(managerId);
         chatting.setChattingLog(chattingLine);
         chatting.setSenderId(senderId);
-        System.out.println(chattingLine.replace("\n\r","<br>"));
         chattingService.insertChatting(chatting);
         setChattingLine(null);
         Alarm alarm = new Alarm();
@@ -332,9 +312,6 @@ public class ChattingActionBean extends AbstractActionBean {
         System.out.println("[DEBUG] updateMemo");
         System.out.println("[DEBUG] Memo:" + memo.getEvalLog());
         return new RedirectResolution(ChattingActionBean.class, "memoChatting");
-    }
-    public ForwardResolution allManagerList() {
-        return new ForwardResolution(VIEW_MANAGER_LIST);
     }
 }
 
