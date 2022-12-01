@@ -16,10 +16,13 @@ public interface ChattingMapper {
     List<ChattingRoom> getSearchedChatRoomList(ChattingRoom chattingRoom);
 
     List<Chatting> getChatLog(ChattingRoom chattingRoom);
+    List<Chatting> getAdminChatLog(String userId);
 
     void insertChattingRoom(ChattingRoom chattingRoom);
 
     void insertChatting(Chatting chatting);
+
+    void insertAdminChatting(Chatting chatting);
 
     void deleteChattingRoom(ChattingRoom chattingRoom);
 

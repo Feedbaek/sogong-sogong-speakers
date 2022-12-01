@@ -20,9 +20,11 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
 import net.sourceforge.stripes.validation.Validate;
 import org.mybatis.jpetstore.domain.Account;
 import org.mybatis.jpetstore.domain.Alarm;
+import org.mybatis.jpetstore.domain.ChattingRoom;
 import org.mybatis.jpetstore.domain.Product;
 import org.mybatis.jpetstore.service.AccountService;
 import org.mybatis.jpetstore.service.CatalogService;
+import org.mybatis.jpetstore.service.ChattingService;
 
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
@@ -43,6 +45,8 @@ public class AccountActionBean extends AbstractActionBean {
   private static final String EDIT_ACCOUNT = "/WEB-INF/jsp/account/EditAccountForm.jsp";
   private static final String SIGNON = "/WEB-INF/jsp/account/SignonForm.jsp";
 
+  private static final String ALL_ACCOUNT_VIEW = "/WEB-INF/jsp/chatting/adminChattingRoom.jsp";
+
   private static final List<String> LANGUAGE_LIST;
   private static final List<String> CATEGORY_LIST;
 
@@ -51,9 +55,17 @@ public class AccountActionBean extends AbstractActionBean {
   @SpringBean
   private transient CatalogService catalogService;
 
+  @SpringBean
+  private transient ChattingService chattingService;
+
   private Account account = new Account();
+
+  private List<Account> accountList;
   private List<Product> myList;
+
+  private String keyword;
   private boolean authenticated;
+
 
   static {
     LANGUAGE_LIST = Collections.unmodifiableList(Arrays.asList("english", "japanese"));
@@ -66,6 +78,14 @@ public class AccountActionBean extends AbstractActionBean {
 
   public String getUsername() {
     return account.getUsername();
+  }
+
+  public String getKeyword() {
+    return keyword;
+  }
+
+  public void setKeyword(String keyword) {
+    this.keyword = keyword;
   }
 
   @Validate(required = true, on = { "signon", "newAccount", "editAccount" })
@@ -98,6 +118,19 @@ public class AccountActionBean extends AbstractActionBean {
     return CATEGORY_LIST;
   }
 
+  public List<Account> getAccountList() {return accountList;}
+
+  public void setAccountList(List<Account> accountList) {this.accountList = accountList;}
+
+  public String getAdminName(){return accountService.getAccountListByPermission("admin").get(0).getFirstName()+
+          " "+
+          accountService.getAccountListByPermission("admin").get(0).getLastName();}
+  public String getAdminId(){return accountService.getAccountListByPermission("admin").get(0).getUsername();}
+
+  public List<Account> searchAccountByUserId(String userId){
+    return accountService.searchAccountByUserId(userId);
+  }
+
   public Resolution newAccountForm() {
     return new ForwardResolution(NEW_ACCOUNT);
   }
@@ -111,6 +144,8 @@ public class AccountActionBean extends AbstractActionBean {
     accountService.insertAccount(account);
     account = accountService.getAccount(account.getUsername());
     myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId());
+    ChattingRoom chattingRoom=new ChattingRoom(account.getUsername(),getAdminId());
+    chattingService.createChattingRoom(chattingRoom);
     authenticated = true;
     return new RedirectResolution(CatalogActionBean.class);
   }
@@ -134,6 +169,16 @@ public class AccountActionBean extends AbstractActionBean {
     account = accountService.getAccount(account.getUsername());
     myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId());
     return new RedirectResolution(CatalogActionBean.class);
+  }
+
+  public ForwardResolution viewAllAccountExceptManager(){
+    HttpSession session = context.getRequest().getSession();
+    String permission = (String) session.getAttribute("permission");
+    if(permission.equals("admin")) {
+      accountList = accountService.getAccountListByPermission("user");
+      return new ForwardResolution(ALL_ACCOUNT_VIEW);
+    }
+    return new ForwardResolution(ERROR);
   }
 
   /**

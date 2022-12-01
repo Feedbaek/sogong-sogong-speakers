@@ -46,6 +46,12 @@ public class AccountService {
     return accountMapper.getAccountByUsernameAndPassword(username, password);
   }
 
+  public List<Account> getAccountListByPermission(String permission){return accountMapper.getAccountListByPermission(permission);}
+  public List<Account> searchAccountByUserId(String userid){
+    return accountMapper.searchAccountByUserId("%"+userid+"%");
+  }
+
+
   /**
    * Insert account.
    *

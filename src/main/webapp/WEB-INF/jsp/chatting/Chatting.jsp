@@ -67,7 +67,10 @@
                     <div id="timeStampTag" align="Right">${ChattingLine.timeTable}</div>
                 </c:when>
                 <c:otherwise>
-                    <div id="nameTag" align="Left" style="font-style: italic"> ${ChattingLine.senderId}:</div>
+                    <div id="nameTag" align="Left" style="font-style: italic;">
+                        <c:if test="${ChattingLine.senderId eq actionBean.adminId}">Admin:</c:if>
+                        <c:if test="${ChattingLine.senderId ne actionBean.adminId}">${ChattingLine.senderId}:</c:if>
+                    </div>
                     <div id="OppositeChattingBox" align="Left"> ${ChattingLine.chattingLog}</div>
                     <div id="timeStampTag" align="LEFT">${ChattingLine.timeTable}</div>
                 </c:otherwise>
@@ -98,7 +101,6 @@
                       font-size:15px;font-family:sans-serif;" placeholder="Write your message...."/>
         <stripes:param name="customerId" value="${actionBean.customerId}"/>
         <stripes:param name="managerId" value="${actionBean.managerId}"/>
-        <stripes:param name="timestamp" value="${nowTime}"/>
         <div align="right">
             <stripes:submit name="insertChatting" value="Send" style="margin-right: 12px"/>
         </div>

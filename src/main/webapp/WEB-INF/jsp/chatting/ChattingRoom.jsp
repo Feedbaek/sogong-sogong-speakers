@@ -79,6 +79,22 @@
             </table>
         </c:otherwise>
     </c:choose>
+    <br/>
+    <br/>
+    <br/>
+    <table>
+        <caption>Admin Message</caption>
+        <tr>
+            <td>Admin</td>
+            <td><stripes:link class="Button"
+                              beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
+                              event="joinChatting">
+                <stripes:param name="customerId" value="${sessionScope.accountBean.username}"/>
+                <stripes:param name="managerId" value="${actionBean.adminId}"/>
+                join
+            </stripes:link></td>
+        </tr>
+    </table>
 </div>
 
 <%@ include file="../common/IncludeBottom.jsp"%>

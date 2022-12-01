@@ -31,11 +31,17 @@ public class ChattingService {
     public List<Chatting> getChatLog(ChattingRoom chattingRoom) {
         return chattingMapper.getChatLog(chattingRoom);
     }
+    public List<Chatting> getAdminChatLog(String userId) {
+        return chattingMapper.getAdminChatLog(userId);
+    }
 
     @Transactional
     public void insertChatting(Chatting chatting) {
         chattingMapper.insertChatting(chatting);
     }
+
+    @Transactional
+    public void insertAdminChatting(Chatting chatting){chattingMapper.insertAdminChatting(chatting);}
 
     @Transactional
     public void createChattingRoom(ChattingRoom chattingRoom) {

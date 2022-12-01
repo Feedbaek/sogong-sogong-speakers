@@ -81,12 +81,23 @@
             Sign Out
 		</stripes:link>
 		<img align="middle" src="../images/separator.gif" />
-		<stripes:link
-			beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
-			event="editAccountForm">
-            My Account
-		</stripes:link>
-		<img align="middle" src="../images/separator.gif" />
+		<c:choose>
+			<c:when test="${sessionScope.permission eq 'user'}">
+				<stripes:link
+						beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
+						event="editAccountForm">
+					My Account
+				</stripes:link>
+			</c:when>
+			<c:otherwise>
+				<stripes:link
+						beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
+						event="viewAllAccountExceptManager">
+					All Account
+				</stripes:link>
+			</c:otherwise>
+		</c:choose>
+			<img align="middle" src="../images/separator.gif" />
 		<c:choose>
 <%--			사용자 채팅방--%>
 			<c:when test="${sessionScope.permission eq 'user'}">
@@ -99,8 +110,8 @@
 			<c:when test="${sessionScope.permission eq 'admin'}">
 <%--				관리자 채팅방--%>
 				<stripes:link
-						beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
-						event="viewChattingRoomForManager">
+						beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
+						event="viewAllAccount">
 					<img align="middle" src="../images/chat.png">
 				</stripes:link>
 			</c:when>

@@ -31,6 +31,9 @@ public interface AccountMapper {
 
   Account getAccountByUsernameAndPassword(String username, String password);
 
+  List<Account> searchAccountByUserId(String userId);
+  List<Account> getAccountListByPermission(String permission);
+
   void insertAccount(Account account);
 
   void insertProfile(Account account);

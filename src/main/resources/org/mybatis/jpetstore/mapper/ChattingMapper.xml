@@ -19,6 +19,8 @@
 
     <cache />
 
+
+
     <select id="getChatRoomByIdForManager" resultType="ChattingRoom">
         SELECT c.customerid as customerid,
                c.managerid as managerid
@@ -52,6 +54,15 @@
         WHERE customerid=#{customerId} AND managerid=#{managerId}
     </select>
 
+    <select id="getAdminChatLog" resultType="Chatting">
+        SELECT userid,
+               ChattingLog,
+               senderId,
+               timeTable
+        FROM AdminChattingLog
+        WHERE userid=#{customerId}
+    </select>
+
     <insert id="insertChattingRoom" parameterType="ChattingRoom">
         INSERT INTO ChattingRoom
             (customerid,managerid)
@@ -64,6 +75,13 @@
             (customerid,managerid,ChattingLog,senderId,timeTable)
         VALUES
             (#{customerId},#{managerId},#{chattingLog},#{senderId},NOW())
+    </insert>
+
+    <insert id="insertAdminChatting" parameterType="Chatting">
+        INSERT INTO AdminChattingLog
+            (userid,ChattingLog,senderId,timeTable)
+        VALUES
+            (#{customerId},#{chattingLog},#{senderId},NOW())
     </insert>
 
     <delete id="deleteChattingRoom" parameterType="chattingRoom">

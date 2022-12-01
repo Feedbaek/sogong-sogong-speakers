@@ -21,7 +21,6 @@
 
 <div id="Catalog">
   <h2>Messenger Admin</h2>
-
   <div id="Chat">
     <div>
     <table>

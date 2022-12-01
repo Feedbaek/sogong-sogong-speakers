@@ -176,6 +176,7 @@ public class CatalogActionBean extends AbstractActionBean {
   @DefaultHandler
   public ForwardResolution viewMain() {
     HttpSession session = context.getRequest().getSession();
+    setKeyword(null);
     return new ForwardResolution(MAIN);
   }
 
