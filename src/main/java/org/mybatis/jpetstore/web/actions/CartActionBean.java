@@ -219,7 +219,7 @@ public class CartActionBean extends AbstractActionBean {
           setBird("bird");
       }
       List<Order> orderList = orderService.getOrdersByUsername(userId);
-      if (orderList != null)
+      if (orderList != null && orderList.size() > 0)
       {
         Order order = orderList.get(orderList.size() - 1);
         if (order.getCatDog())

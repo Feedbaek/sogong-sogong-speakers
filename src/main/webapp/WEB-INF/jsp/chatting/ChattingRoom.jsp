@@ -27,28 +27,39 @@
 
 <div id="Catalog">
     <div align="left"><p>         </p></div>
-    <h2>My Pet Manager Messenger</h2>
-    <br>
-    <table>
-        <tr>
-            <th>User ID</th>
-            <th>Manager ID</th>
-            <th></th>
-        </tr>
-        <c:forEach var="ChattingRoom" items="${actionBean.chattingRoomList}">
-            <tr>
-                <td>${ChattingRoom.customerId}</td>
-                <td>${ChattingRoom.managerId}</td>
-                <td><stripes:link class="Button"
-                                  beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
-                                  event="joinChatting">
-                    <stripes:param name="customerId" value="${ChattingRoom.customerId}"/>
-                    <stripes:param name="managerId" value="${ChattingRoom.managerId}"/>
-                    join
-                </stripes:link></td>
-            </tr>
-        </c:forEach>
-    </table>
+    <c:choose>
+        <c:when test="${actionBean.chattingRoomList.size() eq 0}">
+            <h2>Why don't you register for JPetstore's Pet Manager Messenger Service?</h2>
+            <br>
+            <p>
+                When purchasing JPetstore's pet, you can register for this service on the shopping cart page :)
+            </p>
+        </c:when>
+        <c:otherwise>
+            <h2>My Pet Manager Messenger</h2>
+            <br>
+            <table>
+                <tr>
+                    <th>User ID</th>
+                    <th>Manager ID</th>
+                    <th></th>
+                </tr>
+                <c:forEach var="ChattingRoom" items="${actionBean.chattingRoomList}">
+                    <tr>
+                        <td>${ChattingRoom.customerId}</td>
+                        <td>${ChattingRoom.managerId}</td>
+                        <td><stripes:link class="Button"
+                                          beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
+                                          event="joinChatting">
+                            <stripes:param name="customerId" value="${ChattingRoom.customerId}"/>
+                            <stripes:param name="managerId" value="${ChattingRoom.managerId}"/>
+                            join
+                        </stripes:link></td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </c:otherwise>
+    </c:choose>
 </div>
 
 <%@ include file="../common/IncludeBottom.jsp"%>

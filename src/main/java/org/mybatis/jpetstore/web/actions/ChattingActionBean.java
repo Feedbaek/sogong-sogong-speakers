@@ -180,6 +180,18 @@ public class ChattingActionBean extends AbstractActionBean {
                 adminChatList = chattingService.getChatRoomListForManager("manager2");
             else if (senderId.equals("manager3"))
                 adminChatList = chattingService.getChatRoomListForManager("manager3");
+            else if (senderId.equals("manager4"))
+                adminChatList = chattingService.getChatRoomListForManager("manager4");
+            else if (senderId.equals("manager5"))
+                adminChatList = chattingService.getChatRoomListForManager("manager5");
+            else if (senderId.equals("manager6"))
+                adminChatList = chattingService.getChatRoomListForManager("manager6");
+            else if (senderId.equals("manager7"))
+                adminChatList = chattingService.getChatRoomListForManager("manager7");
+            else if (senderId.equals("manager8"))
+                adminChatList = chattingService.getChatRoomListForManager("manager8");
+            else if (senderId.equals("manager9"))
+                adminChatList = chattingService.getChatRoomListForManager("manager9");
             return new ForwardResolution(VIEW_PM_CHATTING_ROOM);
         } else if (permission.equals("user"))
             chattingRoomList = chattingService.getChatRoomListForUser(senderId);
@@ -258,14 +270,12 @@ public class ChattingActionBean extends AbstractActionBean {
             setMessage("잘못된 접근입니다.");
             return new ForwardResolution(ERROR);
         }
-        System.out.println("[DEBUG] Memo chatting start");
         memo = chattingService.getMemoById(managerId, customerId);
         if (memo == null) {
             memo = new Memo();
             memo.setManagerId(managerId);
             memo.setCustomerId(customerId);
             chattingService.insertMemo(memo);
-            System.out.println("[DEBUG] new memo insert");
         }
         return new ForwardResolution(VIEW_CHATTING_MEMO);
     }

@@ -7,6 +7,7 @@
 --%>
 <%@ page import="java.sql.Timestamp"%>
 <%@ include file="../common/IncludeTop.jsp"%>
+<%@ taglib prefix="sdyn" uri="http://stripes.sourceforge.net/stripes-dynattr.tld" %>
 
 <jsp:useBean id="ChattingRoom"
              class="org.mybatis.jpetstore.web.actions.ChattingActionBean" />
@@ -90,11 +91,11 @@
 <div align="center">
     <stripes:form
             beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean">
-    <stripes:textarea name="chattingLine"
+    <sdyn:textarea name="chattingLine"
                       style="margin-bottom:5px;resize:none;
                       overflow:hidden;word-break:break-all;
                       width:95%;height:50px;
-                      font-size:15px;font-family:sans-serif;"/>
+                      font-size:15px;font-family:sans-serif;" placeholder="Write your message...."/>
         <stripes:param name="customerId" value="${actionBean.customerId}"/>
         <stripes:param name="managerId" value="${actionBean.managerId}"/>
         <stripes:param name="timestamp" value="${nowTime}"/>

@@ -7,44 +7,47 @@
 --%>
 <%--<%@ page contentType="text/html; charset=utf-8"%>--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="sdyn" uri="http://stripes.sourceforge.net/stripes-dynattr.tld" %>
 <%@ include file="../common/IncludeTop.jsp"%>
 
 <jsp:useBean id="ChattingRoom"
              class="org.mybatis.jpetstore.web.actions.ChattingActionBean" />
 
 
-<div id="BackLink"><stripes:link
+<div id="BackLink">
+    <stripes:link
         beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean">
-  Return to Main Menu</stripes:link>
+        Return to Main Menu
+    </stripes:link>
 </div>
 
 <div id="Catalog">
-  <h2>Pet Manager Memo</h2>
-
+    <p>    </p>
+    <h2>My Memo</h2>
+    <br>
   <stripes:form beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean">
     <table>
       <tr>
-        <th>petName</th>
-        <th>petCategory</th>
-        <th>petAge</th>
-        <th>startDate</th>
+        <th>Pet Name</th>
+        <th>Pet Category</th>
+        <th>Pet Age</th>
+        <th>Start Date</th>
       </tr>
       <tr>
         <td>
-            <stripes:text name="memo.petName"
-            >${actionBean.memo.petName}
-            </stripes:text>
+            <sdyn:text name="memo.petName" placeholder="name">
+                ${actionBean.memo.petName}
+            </sdyn:text>
         </td>
         <td>
-            <stripes:text name="memo.petCategory"
-            >${actionBean.memo.petCategory}
-            </stripes:text>
+            <sdyn:text name="memo.petCategory" placeholder="category">
+                ${actionBean.memo.petCategory}
+            </sdyn:text>
         </td>
         <td>
-            <stripes:text name="memo.petAge"
-            >${actionBean.memo.petAge}
-            </stripes:text>
+            <sdyn:text name="memo.petAge" placeholder="age">
+                ${actionBean.memo.petAge}
+            </sdyn:text>
         </td>
         <td>
             ${actionBean.memo.startDate}
@@ -52,9 +55,9 @@
       </tr>
       <tr>
           <td colspan="4">
-            <stripes:textarea name="memo.evalLog" rows="10" cols="92"
-                >${actionBean.memo.evalLog}
-            </stripes:textarea>
+            <sdyn:textarea name="memo.evalLog" rows="10" cols="92" placeholder="Memo">
+                ${actionBean.memo.evalLog}
+            </sdyn:textarea>
           </td>
       </tr>
     </table>
