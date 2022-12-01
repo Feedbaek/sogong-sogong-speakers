@@ -16,6 +16,9 @@
 package org.mybatis.jpetstore.mapper;
 
 import org.mybatis.jpetstore.domain.Account;
+import org.mybatis.jpetstore.domain.Alarm;
+
+import java.util.List;
 
 /**
  * The Interface AccountMapper.
@@ -40,4 +43,8 @@ public interface AccountMapper {
 
   void updateSignon(Account account);
 
+  List<Alarm> getAlarmById(String id);
+  void insertAlarm(Alarm alarm);
+
+  void updateAlarm(Alarm alarm);
 }

@@ -19,6 +19,7 @@ import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import net.sourceforge.stripes.validation.Validate;
 import org.mybatis.jpetstore.domain.Account;
+import org.mybatis.jpetstore.domain.Alarm;
 import org.mybatis.jpetstore.domain.Product;
 import org.mybatis.jpetstore.service.AccountService;
 import org.mybatis.jpetstore.service.CatalogService;
@@ -167,6 +168,8 @@ public class AccountActionBean extends AbstractActionBean {
       // this bean is already registered as /actions/Account.action
       s.setAttribute("accountBean", this);
       s.setAttribute("permission", account.getPermission());
+      List<Alarm> alarms = accountService.getAlarmById(account.getUsername());
+      s.setAttribute("alarms", alarms);
       return new RedirectResolution(CatalogActionBean.class);
     }
   }

@@ -16,10 +16,12 @@
 package org.mybatis.jpetstore.service;
 
 import org.mybatis.jpetstore.domain.Account;
+import org.mybatis.jpetstore.domain.Alarm;
 import org.mybatis.jpetstore.mapper.AccountMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -70,6 +72,18 @@ public class AccountService {
 
     Optional.ofNullable(account.getPassword()).filter(password -> password.length() > 0)
         .ifPresent(password -> accountMapper.updateSignon(account));
+  }
+  @Transactional
+  public List<Alarm> getAlarmById(String id) {
+    return accountMapper.getAlarmById(id);
+  }
+  @Transactional
+  public void insertAlarm(Alarm alarm) {
+    accountMapper.insertAlarm(alarm);
+  }
+  @Transactional
+  public void updateAlarm(Alarm alarm) {
+    accountMapper.updateAlarm(alarm);
   }
 
 }

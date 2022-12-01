@@ -41,8 +41,13 @@
             <table>
                 <tr>
                     <th>User ID</th>
+<<<<<<< Updated upstream
                     <th><stripes:link beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
                                       event="allManagerList">Manager</stripes:link></th>
+=======
+                    <th>Manager ID</th>
+                    <th>Check</th>
+>>>>>>> Stashed changes
                     <th></th>
                 </tr>
                 <c:forEach var="ChattingRoom" items="${actionBean.chattingRoomList}">
@@ -56,6 +61,24 @@
                             <stripes:param name="managerId" value="${ChattingRoom.managerId}"/>
                             join
                         </stripes:link></td>
+                        <td>
+                            <c:set var="flag" value="false"/>
+                            <c:forEach var="alarm" items="${actionBean.alarms}">
+                                <c:if test="${alarm.senderId eq ChattingRoom.managerId}">
+                                    <c:if test="${alarm.alarm eq 'on'}">
+                                        <c:set var="flag" value="true"/>
+                                    </c:if>
+                                </c:if>
+                            </c:forEach>
+                            <c:choose>
+                                <c:when test="${flag}">
+                                    not check
+                                </c:when>
+                                <c:otherwise>
+                                    all check
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>

@@ -131,4 +131,23 @@
     VALUES (#{password}, #{username})
   </insert>
 
+<!--  List<Alarm> getAlarmById(String id);-->
+  <select id="getAlarmById" resultType="Alarm">
+    SELECT * from chattingalarm
+    WHERE receiverid=#{receiverId}
+  </select>
+
+  <insert id="insertAlarm" parameterType="Alarm">
+    INSERT INTO chattingalarm
+    (senderid, receiverid, alarm)
+    VALUES (#{senderId}, #{receiverId}, #{alarm})
+    ON DUPLICATE KEY UPDATE alarm=#{alarm};
+  </insert>
+
+  <update id="updateAlarm" parameterType="Alarm">
+    UPDATE chattingalarm
+    SET alarm=#{alarm}
+    WHERE senderid=#{senderId} and receiverId=#{receiverId}
+  </update>
+
 </mapper>

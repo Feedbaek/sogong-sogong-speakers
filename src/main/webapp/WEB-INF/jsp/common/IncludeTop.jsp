@@ -113,6 +113,17 @@
 				</stripes:link>
 			</c:otherwise>
 		</c:choose>
+		<c:set var="flag" value="false"/>
+		<c:forEach var="alarm" items="${sessionScope.alarms}">
+			<c:if test="${alarm.alarm eq 'on'}">
+				<c:set var="flag" value="true"/>
+			</c:if>
+		</c:forEach>
+		<c:choose>
+			<c:when test="${flag}">
+				alarm
+			</c:when>
+		</c:choose>
 	</c:if>
 </c:if> <img align="middle" src="../images/separator.gif" />
 	<a href="../help.html">?</a>

@@ -38,6 +38,7 @@
             <th>User ID</th>
             <th>Memo</th>
             <th>Chat</th>
+            <th>Check</th>
         </tr>
         <c:forEach var="managerChatList" items="${actionBean.adminChatList}">
             <tr>
@@ -60,6 +61,24 @@
                     <stripes:param name="managerId" value="${managerChatList.managerId}"/>
                         join
                     </stripes:link>
+                </td>
+                <td>
+                    <c:set var="flag" value="false"/>
+                    <c:forEach var="alarm" items="${actionBean.alarms}">
+                        <c:if test="${alarm.senderId eq managerChatList.customerId}">
+                            <c:if test="${alarm.alarm eq 'on'}">
+                                <c:set var="flag" value="true"/>
+                            </c:if>
+                        </c:if>
+                    </c:forEach>
+                    <c:choose>
+                        <c:when test="${flag}">
+                            not check
+                        </c:when>
+                        <c:otherwise>
+                            all check
+                        </c:otherwise>
+                    </c:choose>
                 </td>
             </tr>
         </c:forEach>

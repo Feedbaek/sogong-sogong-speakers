@@ -1,5 +1,6 @@
 package org.mybatis.jpetstore.mapper;
 
+import org.mybatis.jpetstore.domain.Alarm;
 import org.mybatis.jpetstore.domain.Chatting;
 import org.mybatis.jpetstore.domain.ChattingRoom;
 import org.mybatis.jpetstore.domain.Memo;
@@ -27,4 +28,9 @@ public interface ChattingMapper {
     void updateMemo(Memo memo);
 
     void insertMemo(Memo memo);
+
+//    List<Alarm> getAlarmById(String id);
+//    void insertAlarm(Alarm alarm);
+//
+//    void updateAlarm(Alarm alarm);
 }

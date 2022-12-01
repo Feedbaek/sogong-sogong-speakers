@@ -2,9 +2,11 @@ package org.mybatis.jpetstore.web.actions;
 
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.integration.spring.SpringBean;
+import org.mybatis.jpetstore.domain.Alarm;
 import org.mybatis.jpetstore.domain.Chatting;
 import org.mybatis.jpetstore.domain.ChattingRoom;
 import org.mybatis.jpetstore.domain.Memo;
+import org.mybatis.jpetstore.service.AccountService;
 import org.mybatis.jpetstore.service.ChattingService;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +17,8 @@ public class ChattingActionBean extends AbstractActionBean {
 
     @SpringBean
     private transient ChattingService chattingService;
+    @SpringBean
+    private transient AccountService accountService;
 
     private List<ChattingRoom> chattingRoomList;
 
@@ -42,6 +46,9 @@ public class ChattingActionBean extends AbstractActionBean {
     private Memo memo;
 
 
+    private List<Alarm> alarms;
+
+
     //-------------------------------------------------------------------------//
     private static final String VIEW_CHATTING_ROOM = "/WEB-INF/jsp/chatting/ChattingRoom.jsp";
 
@@ -53,6 +60,13 @@ public class ChattingActionBean extends AbstractActionBean {
     private static final String VIEW_MANAGER_LIST = "/WEB-INF/jsp/chatting/allManagerList.jsp";
 
     //------------------------getter & setter ---------------------------------//
+    public List<Alarm> getAlarms() {
+        return alarms;
+    }
+
+    public void setAlarms(List<Alarm> alarms) {
+        this.alarms = alarms;
+    }
     public String getSenderId() {
         return senderId;
     }
@@ -171,6 +185,7 @@ public class ChattingActionBean extends AbstractActionBean {
             return new ForwardResolution(ERROR);
         }
         AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
+        alarms = (List<Alarm>) session.getAttribute("alarms");
         senderId = accountBean.getUsername();
         if (permission.equals("petmanager")) {
             chattingRoomList = chattingService.getChatRoomListForManager(senderId);
@@ -215,6 +230,20 @@ public class ChattingActionBean extends AbstractActionBean {
         chattingRoom.setCustomerId(customerId);
         chattingRoom.setManagerId(managerId);
         chattingLog = chattingService.getChatLog(chattingRoom);
+        AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
+        Alarm alarm = new Alarm();
+        alarm.setAlarm("off");
+        if (accountBean.getUsername().equals(customerId)) {
+            alarm.setSenderId(managerId);
+            alarm.setReceiverId(customerId);
+        }
+        else {
+            alarm.setSenderId(customerId);
+            alarm.setReceiverId(managerId);
+        }
+        accountService.insertAlarm(alarm);
+        alarms = accountService.getAlarmById(accountBean.getUsername());
+        session.setAttribute("alarms", alarms);
         return new ForwardResolution(JOIN_CHATTING);
     }
 
@@ -237,6 +266,19 @@ public class ChattingActionBean extends AbstractActionBean {
         System.out.println(chattingLine.replace("\n\r","<br>"));
         chattingService.insertChatting(chatting);
         setChattingLine(null);
+        Alarm alarm = new Alarm();
+        if (senderId.equals(customerId)) {
+            alarm.setSenderId(customerId);
+            alarm.setReceiverId(managerId);
+            alarm.setAlarm("on");
+            accountService.insertAlarm(alarm);
+        }
+        else {
+            alarm.setSenderId(managerId);
+            alarm.setReceiverId(customerId);
+            alarm.setAlarm("on");
+            accountService.insertAlarm(alarm);
+        }
         return new RedirectResolution(ChattingActionBean.class,"joinChatting");
     }
 
@@ -280,12 +322,12 @@ public class ChattingActionBean extends AbstractActionBean {
         return new ForwardResolution(VIEW_CHATTING_MEMO);
     }
     public Resolution saveMemo() {
-//        HttpSession session = context.getRequest().getSession();
-//        String permission = (String) session.getAttribute("permission");
-//        if (permission == null || permission.isEmpty() || permission.equals("petmanager") == false) {
-//            setMessage("잘못된 접근입니다.");
-//            return new ForwardResolution(ERROR);
-//        }
+        HttpSession session = context.getRequest().getSession();
+        String permission = (String) session.getAttribute("permission");
+        if (permission == null || permission.isEmpty() || permission.equals("petmanager") == false) {
+            setMessage("잘못된 접근입니다.");
+            return new ForwardResolution(ERROR);
+        }
         chattingService.updateMemo(memo);
         System.out.println("[DEBUG] updateMemo");
         System.out.println("[DEBUG] Memo:" + memo.getEvalLog());

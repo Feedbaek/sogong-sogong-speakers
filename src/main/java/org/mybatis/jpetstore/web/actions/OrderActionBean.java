@@ -19,10 +19,8 @@ import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SessionScope;
 import net.sourceforge.stripes.integration.spring.SpringBean;
-import org.mybatis.jpetstore.domain.CartItem;
-import org.mybatis.jpetstore.domain.ChattingRoom;
-import org.mybatis.jpetstore.domain.Order;
-import org.mybatis.jpetstore.domain.PetManager;
+import org.mybatis.jpetstore.domain.*;
+import org.mybatis.jpetstore.service.AccountService;
 import org.mybatis.jpetstore.service.ChattingService;
 import org.mybatis.jpetstore.service.OrderService;
 import org.mybatis.jpetstore.service.PetManagerService;
@@ -63,6 +61,9 @@ public class OrderActionBean extends AbstractActionBean {
 
   @SpringBean
   private transient ChattingService chattingService;
+
+  @SpringBean
+  private transient AccountService accountService;
 
   private ChattingRoom chattingRoom = new ChattingRoom();
 
@@ -296,14 +297,47 @@ public class OrderActionBean extends AbstractActionBean {
     if((managerId = request.getParameter("catDog")) != null) {
       chattingRoom = new ChattingRoom(userId, managerId);
       chattingService.createChattingRoom(chattingRoom);
+//      알람추가
+      Alarm manager = new Alarm();
+      Alarm user = new Alarm();
+      manager.setSenderId(managerId);
+      manager.setReceiverId(userId);
+      manager.setAlarm("off");
+      user.setSenderId(userId);
+      user.setReceiverId(managerId);
+      user.setAlarm("off");
+      accountService.insertAlarm(manager);
+      accountService.insertAlarm(user);
     }
     if((managerId = request.getParameter("repFish")) != null) {
       chattingRoom = new ChattingRoom(userId, managerId);
       chattingService.createChattingRoom(chattingRoom);
+      //      알람추가
+      Alarm manager = new Alarm();
+      Alarm user = new Alarm();
+      manager.setSenderId(managerId);
+      manager.setReceiverId(userId);
+      manager.setAlarm("off");
+      user.setSenderId(userId);
+      user.setReceiverId(managerId);
+      user.setAlarm("off");
+      accountService.insertAlarm(manager);
+      accountService.insertAlarm(user);
     }
     if((managerId = request.getParameter("bird")) != null) {
       chattingRoom = new ChattingRoom(userId, managerId);
       chattingService.createChattingRoom(chattingRoom);
+      //      알람추가
+      Alarm manager = new Alarm();
+      Alarm user = new Alarm();
+      manager.setSenderId(managerId);
+      manager.setReceiverId(userId);
+      manager.setAlarm("off");
+      user.setSenderId(userId);
+      user.setReceiverId(managerId);
+      user.setAlarm("off");
+      accountService.insertAlarm(manager);
+      accountService.insertAlarm(user);
     }
     return new ForwardResolution(MAIN);
   }
