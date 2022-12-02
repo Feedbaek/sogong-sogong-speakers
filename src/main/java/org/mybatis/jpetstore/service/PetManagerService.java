@@ -20,7 +20,10 @@ public class PetManagerService {
     public List<PetManager> getRepFishManagerList() { return petManagerMapper.getRepFishManagerList(); }
 
     public List<PetManager> getBirdManagerList() { return petManagerMapper.getBirdManagerList(); }
+
     public List<PetManager> getPetMangerList() { return petManagerMapper.getPetMangerList(); }
+
+    public PetManager getPetMangerByID(String id) { return petManagerMapper.getPetMangerByID(id); }
 
     @Transactional
     public void insertPetManager(PetManager petManager) { petManagerMapper.insertPetManager(petManager);}

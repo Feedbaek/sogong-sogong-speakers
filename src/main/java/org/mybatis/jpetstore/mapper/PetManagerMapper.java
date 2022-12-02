@@ -10,5 +10,6 @@ public interface PetManagerMapper {
     List<PetManager> getRepFishManagerList();
     List<PetManager> getBirdManagerList();
     List<PetManager> getPetMangerList();
+    PetManager getPetMangerByID(String id);
     void insertPetManager(PetManager petManager);
 }

@@ -23,6 +23,7 @@ import org.mybatis.jpetstore.domain.*;
 import org.mybatis.jpetstore.service.CatalogService;
 import org.mybatis.jpetstore.service.ChattingService;
 import org.mybatis.jpetstore.service.OrderService;
+import org.mybatis.jpetstore.service.PetManagerService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -50,6 +51,9 @@ public class CartActionBean extends AbstractActionBean {
 
   @SpringBean
   private transient ChattingService chattingService;
+
+  @SpringBean
+  private transient PetManagerService petManagerService;
   //추가
 
   private Cart cart = new Cart();
@@ -211,23 +215,27 @@ public class CartActionBean extends AbstractActionBean {
       for (int i = 0;i < chattingRoomList.size();i++)
       {
         managerId = chattingRoomList.get(i).getManagerId();
-        if (managerId.equals("manager1") || managerId.equals("manager4") || managerId.equals("manager7"))
+        PetManager petManager= petManagerService.getPetMangerByID(managerId);
+        if (petManager.getPetType().equals("CAT/DOG"))
           setCatdog("catdog");
-        if (managerId.equals("manager2") || managerId.equals("manager5") || managerId.equals("manager8"))
+        else if (petManager.getPetType().equals("REPTILE/FISH"))
           setRepfish("repfish");
-        if (managerId.equals("manager3") || managerId.equals("manager6") || managerId.equals("manager9"))
+        else if (petManager.getPetType().equals("BIRD"))
           setBird("bird");
       }
       List<Order> orderList = orderService.getOrdersByUsername(userId);
       if (orderList != null && orderList.size() > 0)
       {
-        Order order = orderList.get(orderList.size() - 1);
-        if (order.getCatDog())
-          setCatdog("catdog");
-        if (order.getRepFish())
-          setRepfish("repfish");
-        if (order.getBird())
-          setBird("bird");
+        for (int i = 0;i < orderList.size();i++)
+        {
+          Order order = orderList.get(i);
+          if (order.getCatDog())
+            setCatdog("catdog");
+          else if (order.getRepFish())
+            setRepfish("repfish");
+          else if (order.getBird())
+            setBird("bird");
+        }
       }
     }
     else

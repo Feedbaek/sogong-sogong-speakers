@@ -26,6 +26,16 @@
 </c:if></div>
 </div>
 
+<c:if test="${sessionScope.permission eq 'admin'}">
+	<div id="BackLink">
+		<stripes:link
+				beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
+				event="viewAllAccountExceptManager">
+			Admin Messenger
+		</stripes:link>
+	</div>
+</c:if>
+
 <div id="Main">
 <div id="Sidebar">
 <div id="SidebarContent"><stripes:link

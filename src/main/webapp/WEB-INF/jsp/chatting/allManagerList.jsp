@@ -33,10 +33,10 @@
                       <td>${petManager.managerId}</td>
                       <td>${petManager.petType}</td>
                       <td>
-                          NAME  : ${petManager.name}<br>
-                          AGE   : ${petManager.age}<br>
-                          CAREER : ${petManager.since} years<br>
-                          MANAGE : ${petManager.manage}
+                          Name  : ${petManager.name}<br>
+                          Age   : ${petManager.age}<br>
+                          Career : ${petManager.since} years<br>
+                          Manage : ${petManager.manage}
                       </td>
                   </tr>
               </c:if>
@@ -47,10 +47,10 @@
                       <td>${petManager.managerId}</td>
                       <td>${petManager.petType}</td>
                       <td>
-                          NAME  : ${petManager.name}<br>
-                          AGE   : ${petManager.age}<br>
-                          CAREER : ${petManager.since} years<br>
-                          MANAGE : ${petManager.manage}
+                          Name  : ${petManager.name}<br>
+                          Age   : ${petManager.age}<br>
+                          Career : ${petManager.since} years<br>
+                          Manage : ${petManager.manage}
                       </td>
                   </tr>
               </c:if>
@@ -61,10 +61,10 @@
                       <td>${petManager.managerId}</td>
                       <td>${petManager.petType}</td>
                       <td>
-                          NAME  : ${petManager.name}<br>
-                          AGE   : ${petManager.age}<br>
-                          CAREER : ${petManager.since} years<br>
-                          MANAGE : ${petManager.manage}
+                          Name  : ${petManager.name}<br>
+                          Age   : ${petManager.age}<br>
+                          Career : ${petManager.since} years<br>
+                          Manage : ${petManager.manage}
                       </td>
                   </tr>
               </c:if>

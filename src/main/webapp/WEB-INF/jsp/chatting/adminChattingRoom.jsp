@@ -27,26 +27,66 @@
         </stripes:form>
     </div id="SearchContent">
 
-    <h2>Clients Messenger</h2><br/>
+    <h2>Admin Messenger</h2><br/>
     <table>
         <tr>
             <th>User ID</th>
-            <th>User Name</th>
-            <th>Chat</th>
+            <th>Notification</th>
+            <th></th>
         </tr>
-        <c:forEach var="user" items="${actionBean.accountList}">
+        <c:forEach var="alarm" items="${sessionScope.alarms}">
             <tr>
-                <td>${user.username}</td>
-                <td>${user.firstName} ${user.lastName}</td>
-                <td align="center"><stripes:link class="Button"
+                <td>${alarm.senderId}</td>
+            <c:choose>
+                <c:when test="${alarm.alarm eq 'on'}">
+                    <td><b>Not Read</b></td>
+                </c:when>
+                <c:otherwise>
+                    <td>Read</td>
+                </c:otherwise>
+            </c:choose>
+                <td align="center">
+                    <stripes:link class="Button"
                                   beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
                                   event="joinChatting">
-                    <stripes:param name="customerId" value="${user.username}"/>
-                    <stripes:param name="managerId" value="${sessionScope.accountBean.username}"/>
-                    join
-                </stripes:link></td>
+                        <stripes:param name="customerId" value="${alarm.senderId}"/>
+                        <stripes:param name="managerId" value="${sessionScope.accountBean.username}"/>
+                        join
+                    </stripes:link>
+                </td>
             </tr>
         </c:forEach>
+<%--        <c:forEach var="user" items="${actionBean.accountList}">--%>
+<%--            <tr>--%>
+<%--                <td>--%>
+<%--                    <c:set var="flag" value="false"/>--%>
+<%--                    <c:forEach var="alarm" items="${sessionScope.alarms}">--%>
+<%--                        <c:if test="${alarm.senderId eq user.username}">--%>
+<%--                            <c:if test="${alarm.alarm eq 'on'}">--%>
+<%--                                <c:set var="flag" value="true"/>--%>
+<%--                            </c:if>--%>
+<%--                        </c:if>--%>
+<%--                    </c:forEach>--%>
+<%--                    <c:choose>--%>
+<%--                        <c:when test="${flag}">--%>
+<%--                            <b>Not Read</b>--%>
+<%--                        </c:when>--%>
+<%--                        <c:otherwise>--%>
+<%--                            Read--%>
+<%--                        </c:otherwise>--%>
+<%--                    </c:choose>--%>
+<%--                </td>--%>
+<%--                <td align="center">--%>
+<%--                    <stripes:link class="Button"--%>
+<%--                                  beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"--%>
+<%--                                  event="joinChatting">--%>
+<%--                    <stripes:param name="customerId" value="${user.username}"/>--%>
+<%--                    <stripes:param name="managerId" value="${sessionScope.accountBean.username}"/>--%>
+<%--                    join--%>
+<%--                    </stripes:link>--%>
+<%--                </td>--%>
+<%--            </tr>--%>
+<%--        </c:forEach>--%>
     </table>
 </div>
 

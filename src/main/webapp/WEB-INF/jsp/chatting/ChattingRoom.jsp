@@ -20,8 +20,9 @@
 </head>
 
 <div id="BackLink">
-    <stripes:link beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean">
-        Return to Main Menu
+    <stripes:link beanclass="org.mybatis.jpetstore.web.actions.PetManagerActionBean"
+                  event="allManagerList">
+        View Pet Manager List
     </stripes:link>
 </div>
 
@@ -83,9 +84,29 @@
     <br/>
     <br/>
     <table>
-        <caption>Admin Message</caption>
+        <th>Admin</th>
+        <th>Notification</th>
+        <th></th>
         <tr>
-            <td>Admin</td>
+            <td>ACID</td>
+            <td>
+                <c:set var="flag" value="false"/>
+                <c:forEach var="alarm" items="${actionBean.alarms}">
+                    <c:if test="${alarm.senderId eq 'ACID'}">
+                        <c:if test="${alarm.alarm eq 'on'}">
+                            <c:set var="flag" value="true"/>
+                        </c:if>
+                    </c:if>
+                </c:forEach>
+                <c:choose>
+                    <c:when test="${flag}">
+                        <b>Not Read</b>
+                    </c:when>
+                    <c:otherwise>
+                        Read
+                    </c:otherwise>
+                </c:choose>
+            </td>
             <td><stripes:link class="Button"
                               beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
                               event="joinChatting">

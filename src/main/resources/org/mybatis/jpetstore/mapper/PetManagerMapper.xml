@@ -34,6 +34,17 @@
     WHERE catdog=1
  </select>
 
+    <select id="getPetMangerByID" resultType="PetManager">
+        SELECT managerId,
+               petType,
+               name,
+               age,
+               since,
+               manage
+        FROM petmanager
+        WHERE managerId=#{id}
+    </select>
+
   <select id="getRepFishManagerList" resultType="PetManager">
     SELECT managerId,
            petType,

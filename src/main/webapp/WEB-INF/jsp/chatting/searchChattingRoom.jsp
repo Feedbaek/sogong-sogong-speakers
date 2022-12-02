@@ -33,7 +33,7 @@
         <tr>
             <th>Manager ID</th>
             <th>User ID</th>
-            <th>Notificationn</th>
+            <th>Notification</th>
             <th>Memo</th>
             <th></th>
         </tr>

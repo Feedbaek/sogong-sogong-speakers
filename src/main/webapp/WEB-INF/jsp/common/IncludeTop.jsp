@@ -80,27 +80,15 @@
 			event="signoff">
             Sign Out
 		</stripes:link>
-		<c:choose>
-			<c:when test="${sessionScope.permission eq 'user'}">
+		<c:if test="${sessionScope.permission eq 'user'}">
 			<img align="middle" src="../images/separator.gif" />
-				<stripes:link
-						beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
-						event="editAccountForm">
-					My Account
-				</stripes:link>
-			</c:when>
-			<c:when test="${sessionScope.permission eq 'admin'}">
-				<img align="middle" src="../images/separator.gif" />
-				<stripes:link
-						beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
-						event="viewAllAccountExceptManager">
-					Clients
-				</stripes:link>
-			</c:when>
-			<c:otherwise>
-			</c:otherwise>
-		</c:choose>
-			<img align="middle" src="../images/separator.gif" />
+			<stripes:link
+					beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
+					event="editAccountForm">
+				My Account
+			</stripes:link>
+		</c:if>
+		<img align="middle" src="../images/separator.gif" />
 		<c:choose>
 <%--			사용자 채팅방--%>
 			<c:when test="${sessionScope.permission eq 'user'}">
