@@ -80,21 +80,24 @@
 			event="signoff">
             Sign Out
 		</stripes:link>
-		<img align="middle" src="../images/separator.gif" />
 		<c:choose>
 			<c:when test="${sessionScope.permission eq 'user'}">
+			<img align="middle" src="../images/separator.gif" />
 				<stripes:link
 						beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
 						event="editAccountForm">
 					My Account
 				</stripes:link>
 			</c:when>
-			<c:otherwise>
+			<c:when test="${sessionScope.permission eq 'admin'}">
+				<img align="middle" src="../images/separator.gif" />
 				<stripes:link
 						beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
 						event="viewAllAccountExceptManager">
-					All Account
+					Clients
 				</stripes:link>
+			</c:when>
+			<c:otherwise>
 			</c:otherwise>
 		</c:choose>
 			<img align="middle" src="../images/separator.gif" />
