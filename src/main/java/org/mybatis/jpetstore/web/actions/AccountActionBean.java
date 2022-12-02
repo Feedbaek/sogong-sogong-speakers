@@ -144,8 +144,6 @@ public class AccountActionBean extends AbstractActionBean {
     accountService.insertAccount(account);
     account = accountService.getAccount(account.getUsername());
     myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId());
-    ChattingRoom chattingRoom=new ChattingRoom(account.getUsername(),getAdminId());
-    chattingService.createChattingRoom(chattingRoom);
     authenticated = true;
     return new RedirectResolution(CatalogActionBean.class);
   }
