@@ -17,16 +17,16 @@
 --%>
 <%@ include file="../common/IncludeTop.jsp"%>
 
-<div id="Welcome">
-<div id="WelcomeContent"><c:if
-	test="${sessionScope.accountBean != null }">
-	<c:if test="${sessionScope.accountBean.authenticated}">
-        Welcome ${sessionScope.accountBean.account.firstName}!
-      </c:if>
-</c:if></div>
-</div>
-
 <c:if test="${sessionScope.permission eq 'admin'}">
+	<div align="right">ADMIN MENU</div><br>
+	<div id="BackLink">
+		<stripes:link
+				beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
+				event="viewChattingRoom">
+			PetManager Chatting Management
+		</stripes:link>
+	</div>
+	<br><br><br>
 	<div id="BackLink">
 		<stripes:link
 				beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
@@ -35,6 +35,15 @@
 		</stripes:link>
 	</div>
 </c:if>
+
+<div id="Welcome">
+	<div id="WelcomeContent"><c:if
+			test="${sessionScope.accountBean != null }">
+		<c:if test="${sessionScope.accountBean.authenticated}">
+			Welcome ${sessionScope.accountBean.account.firstName}!
+		</c:if>
+	</c:if></div>
+</div>
 
 <div id="Main">
 <div id="Sidebar">

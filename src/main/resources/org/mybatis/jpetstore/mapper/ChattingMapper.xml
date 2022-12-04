@@ -37,6 +37,13 @@
         ORDER BY c.managerId;
     </select>
 
+    <select id="getAllChatRoom" resultType="ChattingRoom">
+        SELECT customerid,
+               managerid
+        FROM ChattingRoom
+        ORDER BY managerid;
+    </select>
+
     <select id="getSearchedChatRoomList" resultType="ChattingRoom">
         SELECT customerid,
                managerid

@@ -24,6 +24,10 @@ public class ChattingService {
     public List<ChattingRoom> getChatRoomListForUser(String customerId) {
         return chattingMapper.getChatRoomByIdForUser(customerId);
     }
+
+    public List<ChattingRoom> getAllChatRoom(){
+        return chattingMapper.getAllChatRoom();
+    }
     public List<ChattingRoom> getSearchedChatRoomList(ChattingRoom chattingRoom) {
         return chattingMapper.getSearchedChatRoomList(chattingRoom);
     }

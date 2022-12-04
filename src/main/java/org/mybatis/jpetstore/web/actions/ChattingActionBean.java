@@ -2,13 +2,10 @@ package org.mybatis.jpetstore.web.actions;
 
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.integration.spring.SpringBean;
-import org.mybatis.jpetstore.domain.Alarm;
-import org.mybatis.jpetstore.domain.Account;
-import org.mybatis.jpetstore.domain.Chatting;
-import org.mybatis.jpetstore.domain.ChattingRoom;
-import org.mybatis.jpetstore.domain.Memo;
+import org.mybatis.jpetstore.domain.*;
 import org.mybatis.jpetstore.service.AccountService;
 import org.mybatis.jpetstore.service.ChattingService;
+import org.mybatis.jpetstore.service.PetManagerService;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -21,14 +18,12 @@ public class ChattingActionBean extends AbstractActionBean {
     @SpringBean
     private transient AccountService accountService;
 
+    @SpringBean
+    private transient PetManagerService petManagerService;
+
     private List<ChattingRoom> chattingRoomList;
 
     private List<ChattingRoom> adminChatList;
-    private List<ChattingRoom> adminChatList1;
-
-    private List<ChattingRoom> adminChatList2;
-
-    private List<ChattingRoom> adminChatList3;
 
     private List<Chatting> chattingLog;
 
@@ -55,15 +50,18 @@ public class ChattingActionBean extends AbstractActionBean {
 
     private List<Alarm> alarms;
 
+    private List<PetManager> petManagerList;
+
 
     //-------------------------------------------------------------------------//
     private static final String VIEW_CHATTING_ROOM = "/WEB-INF/jsp/chatting/ChattingRoom.jsp";
     private static final String VIEW_PM_CHATTING_ROOM = "/WEB-INF/jsp/chatting/PetMangerChattingRoom.jsp";
-    private static final String VIEW_ALL_CHATTING_ROOM = "/WEB-INF/jsp/chatting/AllChattingRoom.jsp";
+    private static final String VIEW_CHATTINGROOM_MANAGER = "/WEB-INF/jsp/chatting/ChattingRoomManager.jsp";
     private static final String JOIN_CHATTING = "/WEB-INF/jsp/chatting/Chatting.jsp";
     private static final String VIEW_SEARCHED_CHATTING_ROOM = "/WEB-INF/jsp/chatting/searchChattingRoom.jsp";
     private static final String VIEW_SEARCHED_ADMIN_CHATTING_ROOM = "/WEB-INF/jsp/chatting/searchAdminChattingRoom.jsp";
     private static final String VIEW_CHATTING_MEMO = "/WEB-INF/jsp/chatting/memoChatting.jsp";
+    private static final String VIEW_CHATTING_MEMO_READONLY = "/WEB-INF/jsp/chatting/memoChattingOnlyView.jsp";
 
     //------------------------getter & setter ---------------------------------//
     public List<Alarm> getAlarms() {
@@ -124,30 +122,6 @@ public class ChattingActionBean extends AbstractActionBean {
         this.chattingRoom = chattingRoom;
     }
 
-    public List<ChattingRoom> getAdminChatList1() {
-        return adminChatList1;
-    }
-
-    public void setAdminChatList1(List<ChattingRoom> adminChatList1) {
-        this.adminChatList1 = adminChatList1;
-    }
-
-    public List<ChattingRoom> getAdminChatList2() {
-        return adminChatList2;
-    }
-
-    public void setAdminChatList2(List<ChattingRoom> adminChatList2) {
-        this.adminChatList2 = adminChatList2;
-    }
-
-    public List<ChattingRoom> getAdminChatList3() {
-        return adminChatList3;
-    }
-
-    public void setAdminChatList3(List<ChattingRoom> adminChatList3) {
-        this.adminChatList3 = adminChatList3;
-    }
-
     public String getCustomerId() {
         return customerId;
     }
@@ -194,6 +168,10 @@ public class ChattingActionBean extends AbstractActionBean {
         return accountList;
     }
 
+    public List<PetManager> getPetManagerList() {return petManagerList;}
+
+    public void setPetManagerList(List<PetManager> petManagerList) {this.petManagerList = petManagerList;}
+
 
     //============================================================================================
 
@@ -216,10 +194,8 @@ public class ChattingActionBean extends AbstractActionBean {
         } else if (permission.equals("user"))
             chattingRoomList = chattingService.getChatRoomListForUser(senderId);
         else if (permission.equals("admin")) {
-            adminChatList1 = chattingService.getChatRoomListForManager("manager1");
-            adminChatList2 = chattingService.getChatRoomListForManager("manager2");
-            adminChatList3 = chattingService.getChatRoomListForManager("manager3");
-            return new ForwardResolution(VIEW_ALL_CHATTING_ROOM);
+            chattingRoomList = chattingService.getChatRoomListForManager(managerId);
+            return new ForwardResolution(VIEW_CHATTINGROOM_MANAGER);
         }
         return new ForwardResolution(VIEW_CHATTING_ROOM);
     }
@@ -356,7 +332,7 @@ public class ChattingActionBean extends AbstractActionBean {
     public ForwardResolution memoChatting() {
         HttpSession session = context.getRequest().getSession();
         String permission = (String) session.getAttribute("permission");
-        if (permission == null || permission.isEmpty() || permission.equals("petmanager") == false) {
+        if (permission == null || permission.equals("user")) {
             setMessage("잘못된 접근입니다.");
             return new ForwardResolution(ERROR);
         }
@@ -367,7 +343,10 @@ public class ChattingActionBean extends AbstractActionBean {
             memo.setCustomerId(customerId);
             chattingService.insertMemo(memo);
         }
-        return new ForwardResolution(VIEW_CHATTING_MEMO);
+         else if(permission.equals("admin"))
+            return new ForwardResolution(VIEW_CHATTING_MEMO_READONLY);
+
+         return new ForwardResolution(VIEW_CHATTING_MEMO);
     }
     public Resolution saveMemo() {
         HttpSession session = context.getRequest().getSession();
@@ -377,9 +356,8 @@ public class ChattingActionBean extends AbstractActionBean {
             return new ForwardResolution(ERROR);
         }
         chattingService.updateMemo(memo);
-        System.out.println("[DEBUG] updateMemo");
-        System.out.println("[DEBUG] Memo:" + memo.getEvalLog());
         return new RedirectResolution(ChattingActionBean.class, "memoChatting");
     }
+
 }
 

@@ -22,7 +22,7 @@ public class PetManagerActionBean extends AbstractActionBean {
         this.petManagerList = petManagerList;
     }
 
-    private static final String VIEW_MANAGER_LIST = "/WEB-INF/jsp/chatting/allManagerList.jsp";
+    private static final String VIEW_MANAGER_LIST = "/WEB-INF/jsp/manager/allManagerList.jsp";
 
     public ForwardResolution allManagerList() {
         petManagerList = petManagerService.getPetMangerList();

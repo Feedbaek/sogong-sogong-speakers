@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface ChattingMapper {
 
+    List<ChattingRoom> getAllChatRoom();
     List<ChattingRoom> getChatRoomByIdForManager(String managerId);
 
     List<ChattingRoom> getChatRoomByIdForUser(String customerId);

@@ -48,6 +48,7 @@ public class CatalogActionBean extends AbstractActionBean {
   private static final String ITEM_UPDATE_PAGE = "/WEB-INF/jsp/catalog/ItemUpdate.jsp";
   private static final String ADMIN_VIEW_CATEGORY = "/WEB-INF/jsp/catalog/AdminCategory.jsp";
   private static final String ADMIN_VIEW_PRODUCT = "/WEB-INF/jsp/catalog/AdminProduct.jsp";
+  private static final String VIEW_ADMIN_DASHBOARD = "/WEB-INF/jsp/catalog/AdminDashboardChoosing.jsp";
 
   @SpringBean
   private transient CatalogService catalogService;
@@ -213,13 +214,24 @@ public class CatalogActionBean extends AbstractActionBean {
   public ForwardResolution adminViewCategory() {
     String permission = (String) context.getRequest().getSession().getAttribute("permission");
     if (categoryId == null) {
-      if (permission == null || permission.equals("admin") == false) {
+      if (permission == null || !permission.equals("admin")) {
         setMessage("You do not have permission.");
         return new ForwardResolution(ERROR);
       }
       productList = catalogService.getProductList();
     }
     return new ForwardResolution(ADMIN_VIEW_CATEGORY);
+  }
+
+  public ForwardResolution viewAdminDashboardChoose() {
+    String permission = (String) context.getRequest().getSession().getAttribute("permission");
+    if (categoryId == null) {
+      if (permission == null || !permission.equals("admin")) {
+        setMessage("You do not have permission.");
+        return new ForwardResolution(ERROR);
+      }
+    }
+    return new ForwardResolution(VIEW_ADMIN_DASHBOARD);
   }
 
   public ForwardResolution viewProduct() {

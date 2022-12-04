@@ -24,10 +24,13 @@
           <th>Manager ID</th>
           <th>Category</th>
           <th>Profile</th>
+            <c:if test="${sessionScope.permission eq 'admin'}">
+                <th>Show ChattingRoom</th>
+            </c:if>
         </tr>
           <c:forEach var="petManager" items="${actionBean.petManagerList}">
-              <c:if test="${petManager.managerId eq 'manager1' || petManager.managerId eq 'manager4'
-                                || petManager.managerId eq 'manager7'}">
+<%--              <c:if test="${petManager.managerId eq 'manager1' || petManager.managerId eq 'manager4'--%>
+<%--                                || petManager.managerId eq 'manager7'}">--%>
                   <tr>
                       <td><img src="../images/${petManager.managerId}.jpeg" width="150" height="150" /></td>
                       <td>${petManager.managerId}</td>
@@ -38,9 +41,17 @@
                           Career : ${petManager.since} years<br>
                           Manage : ${petManager.manage}
                       </td>
+                      <c:if test="${sessionScope.permission eq 'admin'}">
+                          <td><stripes:link class="Button"
+                                            beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
+                                            event="viewChattingRoom">
+                              <stripes:param name="managerId" value="${petManager.managerId}"/>
+                            Show
+                          </stripes:link></td>
+                      </c:if>
                   </tr>
-              </c:if>
-              <c:if test="${petManager.managerId eq 'manager2' || petManager.managerId eq 'manager5'
+<%--              </c:if>--%>
+              <%--<c:if test="${petManager.managerId eq 'manager2' || petManager.managerId eq 'manager5'
                                 || petManager.managerId eq 'manager8'}">
                   <tr>
                       <td><img src="../images/${petManager.managerId}.jpeg" width="150" height="150" /></td>
@@ -67,7 +78,7 @@
                           Manage : ${petManager.manage}
                       </td>
                   </tr>
-              </c:if>
+              </c:if>--%>
           </c:forEach>
       </table>
   </div>

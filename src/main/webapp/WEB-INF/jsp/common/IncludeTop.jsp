@@ -102,7 +102,7 @@
 <%--				관리자 채팅방--%>
 				<stripes:link
 						beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
-						event="viewAllAccount">
+						event="viewAllAccountExceptManager">
 					<img align="middle" src="../images/chat.png">
 				</stripes:link>
 			</c:when>
@@ -135,8 +135,8 @@
 				<img align="middle" src="../images/separator.gif" />
 				<stripes:link
 						beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
-						event="adminViewCategory">
-					<stripes:param name="categoryId" value= "" />
+						event="viewAdminDashboardChoose">
+<%--					<stripes:param name="categoryId" value= "" />--%>
 					Admin Dashboard
 				</stripes:link>
 			</c:when>
