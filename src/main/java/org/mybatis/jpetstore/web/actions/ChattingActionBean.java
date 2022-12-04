@@ -66,6 +66,8 @@ public class ChattingActionBean extends AbstractActionBean {
     private static final String VIEW_CHATTING_MEMO_READONLY = "/WEB-INF/jsp/chatting/memoChattingOnlyView.jsp";
     private static final String VIEW_UPDATE_CHATTING_ROOM_FORM = "/WEB-INF/jsp/chatting/UpdateChattingRoomForm.jsp";
 
+//    private static final String VIEW_DELETION_CHECK = "/WEB-INF/jsp/chatting/ChattingRoomDeletionCheck.jsp";
+
     //------------------------getter & setter ---------------------------------//
     public List<Alarm> getAlarms() {
         return alarms;
@@ -399,6 +401,28 @@ public class ChattingActionBean extends AbstractActionBean {
         chattingService.updateChattingRoom(chattingRoom,updatedChattingRoom);
         return new RedirectResolution(ChattingActionBean.class,"viewChattingRoom");
     }
+
+/*    public ForwardResolution viewDeletionCheck(){
+        HttpSession session = context.getRequest().getSession();
+        String permission = (String) session.getAttribute("permission");
+        if(!permission.equals("admin")){
+            setMessage("You don't have permission to access");
+            return new ForwardResolution(ERROR);
+        }
+        return new ForwardResolution(VIEW_DELETION_CHECK);
+    }
+
+    public Resolution deleteChattingRoom(){
+        HttpSession session = context.getRequest().getSession();
+        String permission = (String) session.getAttribute("permission");
+        if(!permission.equals("admin")){
+            setMessage("You don't have permission to access");
+            return new ForwardResolution(ERROR);
+        }
+        chattingRoom = new ChattingRoom(customerId,managerId);
+        chattingService.destroyChattingRoom(chattingRoom);
+        return new RedirectResolution(ChattingActionBean.class,"viewChattingRoom");
+    }*/
 
 
 }

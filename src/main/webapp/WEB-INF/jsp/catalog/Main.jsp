@@ -17,24 +17,6 @@
 --%>
 <%@ include file="../common/IncludeTop.jsp"%>
 
-<c:if test="${sessionScope.permission eq 'admin'}">
-	<div align="right">ADMIN MENU</div><br>
-	<div id="BackLink">
-		<stripes:link
-				beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
-				event="viewChattingRoom">
-			PetManager Chatting Management
-		</stripes:link>
-	</div>
-	<br><br><br>
-	<div id="BackLink">
-		<stripes:link
-				beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
-				event="viewAllAccountExceptManager">
-			Admin Messenger
-		</stripes:link>
-	</div>
-</c:if>
 
 <div id="Welcome">
 	<div id="WelcomeContent"><c:if
