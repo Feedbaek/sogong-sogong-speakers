@@ -391,14 +391,15 @@ public class ChattingActionBean extends AbstractActionBean {
         for(ChattingRoom chatroom : chattingRoomList){
             if(chatroom.getManagerId().equals(updatedChattingRoom.getManagerId())&&
                     chatroom.getCustomerId().equals(updatedChattingRoom.getCustomerId())) {
-                setMessage("the ChattingRoom is duplicated. Try again with another value.");
+                setMessage("The ChattingRoom is duplicated. Try again with another value.");
                 return new RedirectResolution(ChattingActionBean.class,"viewUpdateChattingRoom");
             }
-            else{
-                chattingService.updateChattingRoom(chattingRoom,updatedChattingRoom);
-            }
         }
+        chattingRoom = new ChattingRoom(customerId,managerId);
+        chattingService.updateChattingRoom(chattingRoom,updatedChattingRoom);
         return new RedirectResolution(ChattingActionBean.class,"viewChattingRoom");
     }
+
+
 }
 
