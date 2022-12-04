@@ -52,6 +52,10 @@ public class ChattingService {
         chattingMapper.insertChattingRoom(chattingRoom);
     }
 
+    public int updateChattingRoom(ChattingRoom fromChattingRoom,ChattingRoom toChattingRoom){
+        return chattingMapper.updateChattingRoom(fromChattingRoom,toChattingRoom);
+    }
+
     @Transactional
     public void destroyChattingRoom(ChattingRoom chattingRoom) {chattingMapper.deleteChattingRoom(chattingRoom);}
 

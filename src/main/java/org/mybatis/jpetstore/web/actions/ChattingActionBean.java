@@ -34,6 +34,8 @@ public class ChattingActionBean extends AbstractActionBean {
 
     private ChattingRoom chattingRoom;
 
+    private ChattingRoom updatedChattingRoom;
+
     private String customerId;
     private String managerId;
 
@@ -62,6 +64,7 @@ public class ChattingActionBean extends AbstractActionBean {
     private static final String VIEW_SEARCHED_ADMIN_CHATTING_ROOM = "/WEB-INF/jsp/chatting/searchAdminChattingRoom.jsp";
     private static final String VIEW_CHATTING_MEMO = "/WEB-INF/jsp/chatting/memoChatting.jsp";
     private static final String VIEW_CHATTING_MEMO_READONLY = "/WEB-INF/jsp/chatting/memoChattingOnlyView.jsp";
+    private static final String VIEW_UPDATE_CHATTING_ROOM_FORM = "/WEB-INF/jsp/chatting/UpdateChattingRoomForm.jsp";
 
     //------------------------getter & setter ---------------------------------//
     public List<Alarm> getAlarms() {
@@ -171,6 +174,11 @@ public class ChattingActionBean extends AbstractActionBean {
     public List<PetManager> getPetManagerList() {return petManagerList;}
 
     public void setPetManagerList(List<PetManager> petManagerList) {this.petManagerList = petManagerList;}
+
+    public ChattingRoom getUpdatedChattingRoom() {return updatedChattingRoom;}
+
+    public void setUpdatedChattingRoom(ChattingRoom updatedChattingRoom) {this.updatedChattingRoom = updatedChattingRoom;}
+
 
 
     //============================================================================================
@@ -343,9 +351,10 @@ public class ChattingActionBean extends AbstractActionBean {
             memo.setCustomerId(customerId);
             chattingService.insertMemo(memo);
         }
-         else if(permission.equals("admin"))
-            return new ForwardResolution(VIEW_CHATTING_MEMO_READONLY);
 
+        if(permission.equals("admin")) {
+            return new ForwardResolution(VIEW_CHATTING_MEMO_READONLY);
+        }
          return new ForwardResolution(VIEW_CHATTING_MEMO);
     }
     public Resolution saveMemo() {
@@ -359,5 +368,37 @@ public class ChattingActionBean extends AbstractActionBean {
         return new RedirectResolution(ChattingActionBean.class, "memoChatting");
     }
 
+    public ForwardResolution viewUpdateChattingRoom(){
+        HttpSession session = context.getRequest().getSession();
+        String permission = (String) session.getAttribute("permission");
+        if(!permission.equals("admin")){
+            setMessage("You don't have permission to access");
+            return new ForwardResolution(ERROR);
+        }
+        petManagerList=petManagerService.getPetMangerList();
+        updatedChattingRoom = new ChattingRoom(customerId,managerId);
+        return new ForwardResolution(VIEW_UPDATE_CHATTING_ROOM_FORM);
+    }
+
+    public Resolution updateChattingRoom(){
+        HttpSession session = context.getRequest().getSession();
+        String permission = (String) session.getAttribute("permission");
+        if(!permission.equals("admin")){
+            setMessage("You don't have permission to access");
+            return new ForwardResolution(ERROR);
+        }
+        chattingRoomList = chattingService.getAllChatRoom();
+        for(ChattingRoom chatroom : chattingRoomList){
+            if(chatroom.getManagerId().equals(updatedChattingRoom.getManagerId())&&
+                    chatroom.getCustomerId().equals(updatedChattingRoom.getCustomerId())) {
+                setMessage("the ChattingRoom is duplicated. Try again with another value.");
+                return new RedirectResolution(ChattingActionBean.class,"viewUpdateChattingRoom");
+            }
+            else{
+                chattingService.updateChattingRoom(chattingRoom,updatedChattingRoom);
+            }
+        }
+        return new RedirectResolution(ChattingActionBean.class,"viewChattingRoom");
+    }
 }
 

@@ -91,6 +91,12 @@
             (#{customerId},#{chattingLog},#{senderId},NOW())
     </insert>
 
+    <update id="updateChattingRoom" parameterType="ChattingRoom">
+        UPDATE ChattingRoom
+        SET managerid=#{param2.managerId},customerid=#{param2.customerId}
+        WHERE managerid=#{param1.managerId} AND customerid=#{param1.customerId}
+    </update>
+
     <delete id="deleteChattingRoom" parameterType="chattingRoom">
         DELETE FROM ChattingRoom
         WHERE customerid=#{customerId} AND managerid=#{managerId}

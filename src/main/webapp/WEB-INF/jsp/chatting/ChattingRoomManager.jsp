@@ -27,9 +27,9 @@
                 <th>Manager ID</th>
                 <th>User ID</th>
                 <th>Memo</th>
+                  <th>Chatting</th>
               </tr>
               <c:forEach var="managerChatList" items="${actionBean.chattingRoomList}">
-                <c:if test="${PetManager.managerId eq managerChatList.managerId}">
                   <tr>
                     <td>${managerChatList.managerId}</td>
                     <td>${managerChatList.customerId}</td>
@@ -38,10 +38,16 @@
                                       event="memoChatting" target="_blank">
                       <stripes:param name="customerId" value="${managerChatList.customerId}"/>
                       <stripes:param name="managerId" value="${managerChatList.managerId}"/>
-                      open
+                      View
                     </stripes:link></td>
+                      <td><stripes:link class="Button"
+                                        beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
+                                        event="viewUpdateChattingRoom">
+                          <stripes:param name="customerId" value="${managerChatList.customerId}"/>
+                          <stripes:param name="managerId" value="${managerChatList.managerId}"/>
+                          Update
+                      </stripes:link></td></td>
                   </tr>
-                </c:if>
               </c:forEach>
           </table>
   </div>

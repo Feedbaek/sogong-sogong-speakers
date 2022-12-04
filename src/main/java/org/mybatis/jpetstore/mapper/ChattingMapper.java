@@ -25,6 +25,8 @@ public interface ChattingMapper {
 
     void insertAdminChatting(Chatting chatting);
 
+    int updateChattingRoom(ChattingRoom fromChattingRoom,ChattingRoom toChattingRoom);
+
     void deleteChattingRoom(ChattingRoom chattingRoom);
 
     Memo getMemoById(String managerId, String customerId);

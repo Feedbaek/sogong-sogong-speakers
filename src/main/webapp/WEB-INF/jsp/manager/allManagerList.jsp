@@ -25,7 +25,7 @@
           <th>Category</th>
           <th>Profile</th>
             <c:if test="${sessionScope.permission eq 'admin'}">
-                <th>Show ChattingRoom</th>
+                <th>ChattingRoom List</th>
             </c:if>
         </tr>
           <c:forEach var="petManager" items="${actionBean.petManagerList}">
@@ -42,7 +42,7 @@
                           Manage : ${petManager.manage}
                       </td>
                       <c:if test="${sessionScope.permission eq 'admin'}">
-                          <td><stripes:link class="Button"
+                          <td><stripes:link class="Button" style="font-size:20px;"
                                             beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
                                             event="viewChattingRoom">
                               <stripes:param name="managerId" value="${petManager.managerId}"/>
