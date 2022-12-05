@@ -204,13 +204,19 @@ public class CatalogActionBean extends AbstractActionBean {
     }
   }
 
-  // =========================================================================================
+  public ForwardResolution viewProduct() {
+    itemList = catalogService.getItemListByProduct(productId);
+    product = catalogService.getProduct(productId);
+    return new ForwardResolution(VIEW_PRODUCT);
+  }
   public ForwardResolution viewCategory() {
     productList = catalogService.getProductListByCategory(categoryId);
     category = catalogService.getCategory(categoryId);
     return new ForwardResolution(VIEW_CATEGORY);
   }
 
+
+  // =========================================================================================
   public ForwardResolution adminViewCategory() {
     String permission = (String) context.getRequest().getSession().getAttribute("permission");
     if (categoryId == null) {
@@ -233,13 +239,6 @@ public class CatalogActionBean extends AbstractActionBean {
     }
     return new ForwardResolution(VIEW_ADMIN_DASHBOARD);
   }
-
-  public ForwardResolution viewProduct() {
-    itemList = catalogService.getItemListByProduct(productId);
-    product = catalogService.getProduct(productId);
-    return new ForwardResolution(VIEW_PRODUCT);
-  }
-
   public ForwardResolution adminViewProduct() {
     String permission = (String) context.getRequest().getSession().getAttribute("permission");
     if (permission == null || permission.equals("admin") == false) {
@@ -253,7 +252,7 @@ public class CatalogActionBean extends AbstractActionBean {
 
 
   ////////////////////////// ITEMUPDATE
-  public ForwardResolution ItemUpdatePage() { // IN : Itemlist.JSP , OUT : Itemupdate.JSP
+  public ForwardResolution ItemUpdatePage() {
     String permission = (String) context.getRequest().getSession().getAttribute("permission");
     if (permission == null || permission.equals("admin") == false) {
       setMessage("You do not have permission.");
@@ -262,8 +261,7 @@ public class CatalogActionBean extends AbstractActionBean {
     item = catalogService.getItem(itemId);
     return new ForwardResolution(ITEM_UPDATE_PAGE);
   }
-
-  public ForwardResolution DBItemUpdate() { // IN : Itemupdate.JSP , OUT : Itemlist.JSP
+  public ForwardResolution DBItemUpdate() {
     String permission = (String) context.getRequest().getSession().getAttribute("permission");
     if (permission == null || permission.equals("admin") == false) {
       setMessage("You do not have permission.");
@@ -278,6 +276,8 @@ public class CatalogActionBean extends AbstractActionBean {
         setMessage("No Description. Please fill in the description");
       else if (getListPrice() == null)
         setMessage("No ListPrice. Please fill in the ListPrice");
+      else if (getListPrice().compareTo(new BigDecimal("0")) < 0 )
+        setMessage("ListPrice is negative. Please re-enter ListPrice");
       else if (getQuantity() < 0)
         setMessage("Quantity is negative. Please re-enter Quantity");
       else {
@@ -291,7 +291,7 @@ public class CatalogActionBean extends AbstractActionBean {
   }
 
   /////////////////////////// ITEMADD
-  public ForwardResolution ItemAddPage() {// IN : Itemlist.JSP , OUT : Itemadd.JSP
+  public ForwardResolution ItemAddPage() {
     String permission = (String) context.getRequest().getSession().getAttribute("permission");
     if (permission == null || permission.equals("admin") == false) {
       setMessage("You do not have permission.");
@@ -303,7 +303,7 @@ public class CatalogActionBean extends AbstractActionBean {
     return new ForwardResolution(ITEM_ADD_PAGE);
   }
 
-  public ForwardResolution DBItemAdd() {// IN : itemadd.JSP , OUT : Itemlist.JSP
+  public ForwardResolution DBItemAdd() {
     String permission = (String) context.getRequest().getSession().getAttribute("permission");
     String resulturl = ERROR;
     if (permission == null || permission.equals("admin") == false)
@@ -319,6 +319,8 @@ public class CatalogActionBean extends AbstractActionBean {
           setMessage("No Description. Please fill in the description");
         else if (getListPrice() == null)
           setMessage("No ListPrice. Please fill in the ListPrice");
+        else if (getListPrice().compareTo(new BigDecimal("0")) < 0 )
+          setMessage("ListPrice is negative. Please re-enter ListPrice");
         else if (getQuantity() < 0)
           setMessage("Quantity is negative. Please re-enter Quantity");
         else {
