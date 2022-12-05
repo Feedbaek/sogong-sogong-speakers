@@ -6,9 +6,11 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import net.sourceforge.stripes.action.FileBean;
 import net.sourceforge.stripes.action.ForwardResolution;
+import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 
@@ -235,6 +237,8 @@ public class PetManagerActionBean extends AbstractActionBean {
 
     private static final String EDIT_ACCOUNT = "/WEB-INF/jsp/manager/EditPetManagerForm.jsp";
 
+    private static final String VIEW_DELETION_CHECK = "/WEB-INF/jsp/manager/PetManagerDeletingCheck.jsp";
+
     public Resolution newAccountForm() {
         return new ForwardResolution(NEW_ACCOUNT);
     }
@@ -280,10 +284,20 @@ public class PetManagerActionBean extends AbstractActionBean {
             setMessage("You don't have permission.");
             return new ForwardResolution(ERROR);
         }
-        String managerId = context.getRequest().getParameter("managerId");
-        petManagerService.deletePetManager(managerId);
-        accountService.deleteAccountByUserId(managerId);
+        petManagerService.deletePetManager(name);
+        accountService.deleteAccountByUserId(name);
         return new RedirectResolution(PetManagerActionBean.class,"allManagerList");
+    }
+
+    public ForwardResolution viewDeletionCheck(){
+        HttpSession session = context.getRequest().getSession();
+        String permission = (String) session.getAttribute("permission");
+        name = context.getRequest().getParameter("managerId");
+        if(!permission.equals("admin")){
+            setMessage("You don't have permission to access");
+            return new ForwardResolution(ERROR);
+        }
+        return new ForwardResolution(VIEW_DELETION_CHECK);
     }
 
     public Resolution newAccount() {
