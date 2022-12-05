@@ -13,6 +13,7 @@
   <stripes:link class="Button" style="font-size:15px"
                 beanclass="org.mybatis.jpetstore.web.actions.PetManagerActionBean"
                 event="deletePetManagerAccount">
+    <stripes:param name="managerId" value="${actionBean.name}"/>
     YES
   </stripes:link>
   <stripes:link class="Button" style="font-size:15px"

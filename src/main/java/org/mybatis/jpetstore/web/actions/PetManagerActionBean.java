@@ -265,10 +265,7 @@ public class PetManagerActionBean extends AbstractActionBean {
         petManager.setBird(petType.equals("BIRD"));
         petManagerService.editPetManager(petManager);
         HttpServletRequest request = context.getRequest();
-        String path = "./" + account.getUsername() + "tlqkf.jpeg";
-//        String path = request.getServletContext().getRealPath("images") + "/" + account.getUsername() + ".jpeg";
-//        System.out.println(path);
-//        String path = "../../../../../webapp/images" + petManager.getManagerId() + ".jpeg";
+        String path = request.getServletContext().getRealPath("images") + "/" + account.getUsername() + ".jpeg";
         try {
             photo.save(new File(path));
         } catch (Exception e) {
@@ -276,18 +273,19 @@ public class PetManagerActionBean extends AbstractActionBean {
             setMessage("File Upload Fail");
             return new ForwardResolution(ERROR);
         }
-        return new ForwardResolution(ADMIN_DASHBOARD_CHOOSING);
+        return new RedirectResolution(PetManagerActionBean.class,"allManagerList");
     }
 
     public Resolution deletePetManagerAccount() {
         HttpSession session = context.getRequest().getSession();
         String permission = (String) session.getAttribute("permission");
+        String managerId = context.getRequest().getParameter("managerId");
         if(!permission.equals("admin")){
             setMessage("You don't have permission.");
             return new ForwardResolution(ERROR);
         }
-        petManagerService.deletePetManager(name);
-        accountService.deleteAccountByUserId(name);
+        petManagerService.deletePetManager(managerId);
+        accountService.deleteAccountByUserId(managerId);
         return new RedirectResolution(PetManagerActionBean.class,"allManagerList");
     }
 
@@ -328,9 +326,8 @@ public class PetManagerActionBean extends AbstractActionBean {
         petManager.setRepfish(petType.equals("REPTILE/FISH"));
         petManager.setBird(petType.equals("BIRD"));
         petManagerService.insertPetManager(petManager);
-//        HttpServletRequest request = context.getRequest();
-        String path = "./" + name + "tlqkf.jpeg";
-//        String path = request.getServletContext().getRealPath("images") + "/" + name + ".jpeg";
+        HttpServletRequest request = context.getRequest();
+        String path = request.getServletContext().getRealPath("images") + "/" + name + ".jpeg";
         try {
             photo.save(new File(path));
         } catch (Exception e) {
@@ -338,7 +335,7 @@ public class PetManagerActionBean extends AbstractActionBean {
             setMessage("File Upload Fail");
             return new ForwardResolution(ERROR);
         }
-        return new ForwardResolution(ADMIN_DASHBOARD_CHOOSING);
+        return new RedirectResolution(PetManagerActionBean.class,"allManagerList");
     }
 
 }
