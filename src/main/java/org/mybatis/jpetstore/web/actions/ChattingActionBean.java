@@ -1,14 +1,16 @@
 package org.mybatis.jpetstore.web.actions;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.integration.spring.SpringBean;
+
 import org.mybatis.jpetstore.domain.*;
 import org.mybatis.jpetstore.service.AccountService;
 import org.mybatis.jpetstore.service.ChattingService;
 import org.mybatis.jpetstore.service.PetManagerService;
-
-import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @SessionScope
 public class ChattingActionBean extends AbstractActionBean {

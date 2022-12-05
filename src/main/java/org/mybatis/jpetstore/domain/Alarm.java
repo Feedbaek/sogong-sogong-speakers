@@ -2,7 +2,6 @@ package org.mybatis.jpetstore.domain;
 
 import java.io.Serializable;
 
-
 public class Alarm implements Serializable {
 
     private String senderId;

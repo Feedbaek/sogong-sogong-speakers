@@ -15,9 +15,9 @@
  */
 package org.mybatis.jpetstore.domain;
 
-import net.sourceforge.stripes.validation.Validate;
-
 import java.io.Serializable;
+
+import net.sourceforge.stripes.validation.Validate;
 
 /**
  * The Class Account.

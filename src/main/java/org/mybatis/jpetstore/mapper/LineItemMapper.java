@@ -15,9 +15,9 @@
  */
 package org.mybatis.jpetstore.mapper;
 
-import org.mybatis.jpetstore.domain.LineItem;
-
 import java.util.List;
+
+import org.mybatis.jpetstore.domain.LineItem;
 
 /**
  * The Interface LineItemMapper.

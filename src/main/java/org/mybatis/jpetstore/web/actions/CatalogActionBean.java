@@ -15,19 +15,20 @@
  */
 package org.mybatis.jpetstore.web.actions;
 
+import java.math.BigDecimal;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.SessionScope;
 import net.sourceforge.stripes.integration.spring.SpringBean;
+
 import org.mybatis.jpetstore.domain.Category;
 import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.domain.Product;
 import org.mybatis.jpetstore.service.CatalogService;
-
-import javax.servlet.http.HttpSession;
-import java.math.BigDecimal;
-import java.util.List;
-
 
 /**
  * The Class CatalogActionBean.
@@ -178,6 +179,7 @@ public class CatalogActionBean extends AbstractActionBean {
   public ForwardResolution viewMain() {
     HttpSession session = context.getRequest().getSession();
     setKeyword(null);
+//    session.getAttribute()
     return new ForwardResolution(MAIN);
   }
 

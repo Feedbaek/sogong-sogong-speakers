@@ -123,7 +123,13 @@
 		</c:forEach>
 		<c:choose>
 			<c:when test="${flag}">
-				alarm
+<%--				alarm--%>
+<%--				<img align="middle" src="../images/alarm.png" style="height: 15px; width: 15px"/>--%>
+				<stripes:link
+						beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
+						event="viewChattingRoomForManager">
+					<img align="middle" src="../images/alarm.png"/>
+				</stripes:link>
 			</c:when>
 		</c:choose>
 	</c:if>

@@ -15,11 +15,11 @@
  */
 package org.mybatis.jpetstore.web.actions;
 
+import java.io.Serializable;
+
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.SimpleMessage;
-
-import java.io.Serializable;
 
 /**
  * The Class AbstractActionBean.

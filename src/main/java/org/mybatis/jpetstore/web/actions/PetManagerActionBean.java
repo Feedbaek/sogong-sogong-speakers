@@ -1,23 +1,21 @@
 package org.mybatis.jpetstore.web.actions;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import net.sourceforge.stripes.action.FileBean;
 import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.integration.spring.SpringBean;
+
 import org.mybatis.jpetstore.domain.Account;
 import org.mybatis.jpetstore.domain.PetManager;
 import org.mybatis.jpetstore.service.AccountService;
 import org.mybatis.jpetstore.service.PetManagerService;
-import org.springframework.http.HttpRequest;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class PetManagerActionBean extends AbstractActionBean {
 

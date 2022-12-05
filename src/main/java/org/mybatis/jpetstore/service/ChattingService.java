@@ -1,13 +1,13 @@
 package org.mybatis.jpetstore.service;
 
+import java.util.List;
+
 import org.mybatis.jpetstore.domain.Chatting;
 import org.mybatis.jpetstore.domain.ChattingRoom;
 import org.mybatis.jpetstore.domain.Memo;
 import org.mybatis.jpetstore.mapper.ChattingMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class ChattingService {

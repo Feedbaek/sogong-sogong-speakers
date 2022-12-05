@@ -1,11 +1,10 @@
 package org.mybatis.jpetstore.mapper;
 
-import org.mybatis.jpetstore.domain.Alarm;
+import java.util.List;
+
 import org.mybatis.jpetstore.domain.Chatting;
 import org.mybatis.jpetstore.domain.ChattingRoom;
 import org.mybatis.jpetstore.domain.Memo;
-
-import java.util.List;
 
 public interface ChattingMapper {
 
