@@ -49,6 +49,8 @@ public interface AccountMapper {
 
   void updateSignon(Account account);
 
+  void deleteAccountByUserId(String userId);
+
   List<Alarm> getAlarmById(String id);
   void insertAlarm(Alarm alarm);
 

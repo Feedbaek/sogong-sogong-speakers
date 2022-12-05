@@ -242,6 +242,7 @@ public class PetManagerActionBean extends AbstractActionBean {
     }
     public ForwardResolution allManagerList() {
         petManagerList = petManagerService.getPetMangerList();
+        System.out.println(petManagerList.get(0));
         return new ForwardResolution(VIEW_MANAGER_LIST);
     }
 
@@ -275,9 +276,16 @@ public class PetManagerActionBean extends AbstractActionBean {
     }
 
     public Resolution deletePetManagerAccount() {
+        HttpSession session = context.getRequest().getSession();
+        String permission = (String) session.getAttribute("permission");
+        if(!permission.equals("admin")){
+            setMessage("You don't have permission.");
+            return new ForwardResolution(ERROR);
+        }
         String managerId = context.getRequest().getParameter("managerId");
         petManagerService.deletePetManager(managerId);
-        return new ForwardResolution(ADMIN_DASHBOARD_CHOOSING);
+        accountService.deleteAccountByUserId(managerId);
+        return new RedirectResolution(PetManagerActionBean.class,"allManagerList");
     }
 
     public Resolution newAccount() {

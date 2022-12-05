@@ -205,6 +205,11 @@
       (#{email}, #{firstName}, #{lastName}, #{status}, #{address1},  #{address2,jdbcType=VARCHAR}, #{city}, #{state}, #{zip}, #{country}, #{phone}, #{username}, "petmanager")
   </insert>
 
+  <delete id="deleteAccountByUserId" parameterType="String">
+    DELETE FROM ACCOUNT
+    WHERE userid=#{userId}
+    </delete>
+
   <update id="updateProfile" parameterType="Account">
     <bind name="listOptionValue" value="_parameter.isListOption() ? 1 : 0" />
     <bind name="bannerOptionValue" value="_parameter.isBannerOption() ? 1 : 0" />

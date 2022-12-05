@@ -100,10 +100,10 @@ public class AccountService {
     Optional.ofNullable(account.getPassword()).filter(password -> password.length() > 0)
             .ifPresent(password -> accountMapper.updateSignon(account));
   }
-//  @Transactional
-//  public void deleteAccount(Account account) {
-//    accountMapper.deleteAccount(Account account);
-//  }
+  @Transactional
+  public void deleteAccountByUserId(String userId) {
+    accountMapper.deleteAccountByUserId(userId);
+  }
 
   @Transactional
   public List<Alarm> getAlarmById(String id) {
