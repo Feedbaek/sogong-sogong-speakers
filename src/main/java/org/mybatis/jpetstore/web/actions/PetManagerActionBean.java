@@ -251,7 +251,6 @@ public class PetManagerActionBean extends AbstractActionBean {
     public ForwardResolution editPetManagerAccount() {
         String managerId = context.getRequest().getParameter("managerId");
         account = accountService.getPetManagerAccount(managerId);
-        System.out.println(account.getUsername());
         petManager = petManagerService.getPetMangerByID(managerId);
         return new ForwardResolution(EDIT_ACCOUNT);
     }
@@ -266,7 +265,10 @@ public class PetManagerActionBean extends AbstractActionBean {
         petManager.setBird(petType.equals("BIRD"));
         petManagerService.editPetManager(petManager);
         HttpServletRequest request = context.getRequest();
-        String path = request.getServletContext().getRealPath("images") + "/" + account.getUsername() + ".jpeg";
+        String path = "./" + account.getUsername() + "tlqkf.jpeg";
+//        String path = request.getServletContext().getRealPath("images") + "/" + account.getUsername() + ".jpeg";
+//        System.out.println(path);
+//        String path = "../../../../../webapp/images" + petManager.getManagerId() + ".jpeg";
         try {
             photo.save(new File(path));
         } catch (Exception e) {
@@ -326,8 +328,9 @@ public class PetManagerActionBean extends AbstractActionBean {
         petManager.setRepfish(petType.equals("REPTILE/FISH"));
         petManager.setBird(petType.equals("BIRD"));
         petManagerService.insertPetManager(petManager);
-        HttpServletRequest request = context.getRequest();
-        String path = request.getServletContext().getRealPath("images") + "/" + name + ".jpeg";
+//        HttpServletRequest request = context.getRequest();
+        String path = "./" + name + "tlqkf.jpeg";
+//        String path = request.getServletContext().getRealPath("images") + "/" + name + ".jpeg";
         try {
             photo.save(new File(path));
         } catch (Exception e) {
