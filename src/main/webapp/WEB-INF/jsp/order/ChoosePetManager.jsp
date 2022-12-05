@@ -30,8 +30,7 @@
                 <th>Pick</th>
             </tr>
             <c:forEach var="petManager" items="${actionBean.petManagerList}">
-                <c:if test="${petManager.managerId eq 'manager1' || petManager.managerId eq 'manager4'
-                                || petManager.managerId eq 'manager7'}">
+                <c:if test="${petManager.catdog eq true}">
                     <tr>
                         <td><img src="../images/${petManager.managerId}.jpeg" width="150" height="150" /></td>
                         <td>${petManager.managerId}</td>
@@ -45,8 +44,7 @@
                         <td><input type="radio" name="catDog" value="${petManager.managerId}" checked ></td>
                     </tr>
                 </c:if>
-                <c:if test="${petManager.managerId eq 'manager2' || petManager.managerId eq 'manager5'
-                                || petManager.managerId eq 'manager8'}">
+                <c:if test="${petManager.repfish eq true}">
                     <tr>
                         <td><img src="../images/${petManager.managerId}.jpeg" width="150" height="150" /></td>
                         <td>${petManager.managerId}</td>
@@ -60,8 +58,7 @@
                         <td><input type="radio" name="repFish" value="${petManager.managerId}" checked ></td>
                     </tr>
                 </c:if>
-                <c:if test="${petManager.managerId eq 'manager3' || petManager.managerId eq 'manager6'
-                                || petManager.managerId eq 'manager9'}">
+                <c:if test="${petManager.bird eq true}">
                     <tr>
                         <td><img src="../images/${petManager.managerId}.jpeg" width="150" height="150" /></td>
                         <td>${petManager.managerId}</td>

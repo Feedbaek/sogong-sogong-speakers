@@ -196,16 +196,24 @@ public class AccountActionBean extends AbstractActionBean {
    */
   public Resolution signon() {
 
-    account = accountService.getAccount(getUsername(), getPassword());
+    String username = getUsername();
+    String password = getPassword();
+    account = accountService.getAccount(username, password);
 
     if (account == null) {
-      String value = "Invalid username or password.  Signon failed.";
-      setMessage(value);
-      clear();
-      return new ForwardResolution(SIGNON);
-    } else {
+
+      account = accountService.getPetManagerAccount(username, password);
+      if (account == null)
+      {
+        String value = "Invalid username or password.  Signon failed.";
+        setMessage(value);
+        clear();
+        return new ForwardResolution(SIGNON);
+      }
+    }
+    else
+        myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId());
       account.setPassword(null);
-      myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId());
       authenticated = true;
       HttpSession s = context.getRequest().getSession();
       // this bean is already registered as /actions/Account.action
@@ -214,7 +222,6 @@ public class AccountActionBean extends AbstractActionBean {
       List<Alarm> alarms = accountService.getAlarmById(account.getUsername());
       s.setAttribute("alarms", alarms);
       return new RedirectResolution(CatalogActionBean.class);
-    }
   }
 
   /**

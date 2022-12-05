@@ -46,6 +46,14 @@ public class AccountService {
     return accountMapper.getAccountByUsernameAndPassword(username, password);
   }
 
+  public Account getPetManagerAccount(String username) {
+    return accountMapper.getPetManagerAccountByID(username);
+  }
+
+  public Account getPetManagerAccount(String username, String password) {
+    return accountMapper.getPetManagerAccount(username, password);
+  }
+
   public List<Account> getAccountListByPermission(String permission){return accountMapper.getAccountListByPermission(permission);}
   public List<Account> searchAccountByUserId(String userid){
     return accountMapper.searchAccountByUserId("%"+userid+"%");
@@ -65,6 +73,12 @@ public class AccountService {
     accountMapper.insertSignon(account);
   }
 
+
+  @Transactional
+  public void insertPetManagerAccount(Account account) {
+    accountMapper.insertPetManagerAccount(account);
+    accountMapper.insertSignon(account);
+  }
   /**
    * Update account.
    *
@@ -78,6 +92,13 @@ public class AccountService {
 
     Optional.ofNullable(account.getPassword()).filter(password -> password.length() > 0)
         .ifPresent(password -> accountMapper.updateSignon(account));
+  }
+
+  public void   editPetManagerAccount(Account account) {
+    accountMapper.updateAccount(account);
+
+    Optional.ofNullable(account.getPassword()).filter(password -> password.length() > 0)
+            .ifPresent(password -> accountMapper.updateSignon(account));
   }
   @Transactional
   public List<Alarm> getAlarmById(String id) {

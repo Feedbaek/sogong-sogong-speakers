@@ -232,7 +232,8 @@ public class OrderActionBean extends AbstractActionBean {
         for (int i = 0;i < chattingRoomList.size();i++)
         {
           String managerID = chattingRoomList.get(i).getManagerId();
-          if (managerID.equals("manager1") || managerID.equals("manager4") || managerID.equals("manager7"))
+          PetManager petManager = petManagerService.getPetMangerByID(managerID);
+          if (petManager.getCatdog())
               set_showChooseButton(false);
         }
       }
@@ -241,7 +242,8 @@ public class OrderActionBean extends AbstractActionBean {
         for (int i = 0;i < chattingRoomList.size();i++)
         {
           String managerID = chattingRoomList.get(i).getManagerId();
-          if (managerID.equals("manager2") || managerID.equals("manager5") || managerID.equals("manager8"))
+          PetManager petManager = petManagerService.getPetMangerByID(managerID);
+          if (petManager.getRepfish())
             set_showChooseButton(false);
         }
       }
@@ -250,7 +252,8 @@ public class OrderActionBean extends AbstractActionBean {
         for (int i = 0;i < chattingRoomList.size();i++)
         {
           String managerID = chattingRoomList.get(i).getManagerId();
-          if (managerID.equals("manager3") || managerID.equals("manager6") || managerID.equals("manager9"))
+          PetManager petManager = petManagerService.getPetMangerByID(managerID);
+          if (petManager.getBird())
             set_showChooseButton(false);
         }
       }
@@ -268,7 +271,10 @@ public class OrderActionBean extends AbstractActionBean {
     if (petManagerList != null)
       petManagerList.clear();
     if (order.getCatDog())
+    {
       petManagerList = petManagerService.getCatDogManagerList();
+      System.out.println(petManagerList.get(0).getCatdog());
+    }
     if (order.getRepFish())
     {
       if (petManagerList == null || petManagerList.size() == 0)

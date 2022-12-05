@@ -28,4 +28,6 @@ public class PetManagerService {
     @Transactional
     public void insertPetManager(PetManager petManager) { petManagerMapper.insertPetManager(petManager);}
 
+    @Transactional
+    public void editPetManager(PetManager petManager) { petManagerMapper.editPetManager(petManager);}
 }

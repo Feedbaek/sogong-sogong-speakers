@@ -7,21 +7,20 @@
 --%>
 <%@ include file="../common/IncludeTop.jsp"%>
 <div id="Catalog">
-    <br>
-    <br>
+    <br> <br> <br> <br>
     <div>
-        <stripes:link class="Button" style="font-size:35px;"
+        <stripes:link class="Button" style="font-size:20px;"
                       beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
                       event="adminViewCategory">
-            PRODUCT MANAGEMENT
+            Product Management
         </stripes:link>
     </div>
-    <br><br><br><br><br>
+    <br>
     <div>
-        <stripes:link class="Button" style="font-size:35px;"
+        <stripes:link class="Button" style="font-size:20px;"
                       beanclass="org.mybatis.jpetstore.web.actions.PetManagerActionBean"
                       event="allManagerList">
-            PET MANAGER MANAGEMENT
+            Pet Manager Management
         </stripes:link>
     </div>
 <br>

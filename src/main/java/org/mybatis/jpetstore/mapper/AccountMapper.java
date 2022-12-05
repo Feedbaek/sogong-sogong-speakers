@@ -30,11 +30,14 @@ public interface AccountMapper {
   Account getAccountByUsername(String username);
 
   Account getAccountByUsernameAndPassword(String username, String password);
-
+  Account getPetManagerAccount(String username, String password);
+  Account getPetManagerAccountByID(String username);
   List<Account> searchAccountByUserId(String userId);
   List<Account> getAccountListByPermission(String permission);
 
   void insertAccount(Account account);
+
+  void  insertPetManagerAccount(Account account);
 
   void insertProfile(Account account);
 

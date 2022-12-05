@@ -60,7 +60,7 @@ public class PetManager implements Serializable {
         this.petType = petType;
     }
 
-    public boolean isCatdog() {
+    public boolean getCatdog() {
         return catdog;
     }
 
@@ -68,7 +68,7 @@ public class PetManager implements Serializable {
         this.catdog = catdog;
     }
 
-    public boolean isRepfish() {
+    public boolean getRepfish() {
         return repfish;
     }
 
@@ -76,7 +76,7 @@ public class PetManager implements Serializable {
         this.repfish = repfish;
     }
 
-    public boolean isBird() {
+    public boolean getBird() {
         return bird;
     }
 

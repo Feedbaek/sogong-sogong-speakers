@@ -29,7 +29,8 @@
            name,
            age,
            since,
-           manage
+           manage,
+           catdog
     FROM petmanager
     WHERE catdog=1
  </select>
@@ -40,7 +41,10 @@
                name,
                age,
                since,
-               manage
+               manage,
+               catdog,
+               repfish,
+               bird
         FROM petmanager
         WHERE managerId=#{id}
     </select>
@@ -51,7 +55,8 @@
            name,
            age,
            since,
-           manage
+           manage,
+           repfish
     FROM petmanager
     WHERE repfish=1
   </select>
@@ -62,7 +67,8 @@
            name,
            age,
            since,
-           manage
+           manage,
+           bird
     FROM petmanager
     WHERE bird=1
   </select>
@@ -73,7 +79,10 @@
                name,
                age,
                since,
-               manage
+               manage,
+               catdog,
+               repfish,
+               bird
         FROM petmanager
         ORDER BY managerId
     </select>
@@ -84,5 +93,18 @@
         VALUES
             (#{managerId},#{petType}, #{catdog}, #{repfish}, #{bird}, #{name}, #{age}, #{since}, #{manage})
     </insert>
+
+    <update id="editPetManager" parameterType="PetManager">
+        UPDATE petmanager SET
+        petType = #{petType},
+        catdog = #{catdog},
+        repfish = #{repfish},
+        bird = #{bird},
+        name = #{name},
+        age = #{age},
+        since = #{since},
+        manage = #{manage}
+        WHERE managerId = #{managerId}
+    </update>
 
 </mapper>

@@ -25,12 +25,11 @@
           <th>Category</th>
           <th>Profile</th>
             <c:if test="${sessionScope.permission eq 'admin'}">
+                <th>Edit Account</th>
                 <th>ChattingRoom List</th>
             </c:if>
         </tr>
           <c:forEach var="petManager" items="${actionBean.petManagerList}">
-<%--              <c:if test="${petManager.managerId eq 'manager1' || petManager.managerId eq 'manager4'--%>
-<%--                                || petManager.managerId eq 'manager7'}">--%>
                   <tr>
                       <td><img src="../images/${petManager.managerId}.jpeg" width="150" height="150" /></td>
                       <td>${petManager.managerId}</td>
@@ -42,6 +41,14 @@
                           Manage : ${petManager.manage}
                       </td>
                       <c:if test="${sessionScope.permission eq 'admin'}">
+                          <td>
+                              <stripes:link class="Button"
+                                            beanclass="org.mybatis.jpetstore.web.actions.PetManagerActionBean"
+                                            event="editPetManagerAccount">
+                                  <stripes:param name="managerId" value="${petManager.managerId}"/>
+                                  Edit
+                              </stripes:link>
+                          </td>
                           <td><stripes:link class="Button" style="font-size:20px;"
                                             beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
                                             event="viewChattingRoom">
@@ -50,37 +57,14 @@
                           </stripes:link></td>
                       </c:if>
                   </tr>
-<%--              </c:if>--%>
-              <%--<c:if test="${petManager.managerId eq 'manager2' || petManager.managerId eq 'manager5'
-                                || petManager.managerId eq 'manager8'}">
-                  <tr>
-                      <td><img src="../images/${petManager.managerId}.jpeg" width="150" height="150" /></td>
-                      <td>${petManager.managerId}</td>
-                      <td>${petManager.petType}</td>
-                      <td>
-                          Name  : ${petManager.name}<br>
-                          Age   : ${petManager.age}<br>
-                          Career : ${petManager.since} years<br>
-                          Manage : ${petManager.manage}
-                      </td>
-                  </tr>
-              </c:if>
-              <c:if test="${petManager.managerId eq 'manager3' || petManager.managerId eq 'manager6'
-                                || petManager.managerId eq 'manager9'}">
-                  <tr>
-                      <td><img src="../images/${petManager.managerId}.jpeg" width="150" height="150" /></td>
-                      <td>${petManager.managerId}</td>
-                      <td>${petManager.petType}</td>
-                      <td>
-                          Name  : ${petManager.name}<br>
-                          Age   : ${petManager.age}<br>
-                          Career : ${petManager.since} years<br>
-                          Manage : ${petManager.manage}
-                      </td>
-                  </tr>
-              </c:if>--%>
           </c:forEach>
       </table>
   </div>
+    <c:if test="${sessionScope.permission eq 'admin'}">
+        <stripes:form
+                beanclass="org.mybatis.jpetstore.web.actions.PetManagerActionBean">
+            <stripes:submit name="newAccountForm" value="Add Pet Manager" />
+        </stripes:form>
+    </c:if>
 </div>
 <%@ include file="../common/IncludeBottom.jsp"%>
