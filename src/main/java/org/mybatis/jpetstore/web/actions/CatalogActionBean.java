@@ -24,7 +24,6 @@ import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.SessionScope;
 import net.sourceforge.stripes.integration.spring.SpringBean;
-
 import org.mybatis.jpetstore.domain.Category;
 import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.domain.Product;
@@ -179,7 +178,6 @@ public class CatalogActionBean extends AbstractActionBean {
   public ForwardResolution viewMain() {
     HttpSession session = context.getRequest().getSession();
     setKeyword(null);
-//    session.getAttribute()
     return new ForwardResolution(MAIN);
   }
 
@@ -188,6 +186,51 @@ public class CatalogActionBean extends AbstractActionBean {
    *
    * @return the forward resolution
    */
+  private boolean Checkpermission() {
+    String permission = (String) context.getRequest().getSession().getAttribute("permission");
+    if (permission == null || permission.equals("admin") == false) {
+      setMessage("You do not have permission.");
+      return false;
+    }
+    else
+      return true;
+  }
+  private boolean CheckError(boolean isadd)
+  {
+    boolean result = false;
+      if (item == null)
+        setMessage("item ERROR");
+      else if (item != null) {
+          if (isadd && itemId == null)
+            setMessage("There no itemId, write itemId please");
+          else if (isadd && itemId.length() > 10)
+            setMessage("itemId is too long, Please re-enter itemId");
+          else if (isadd && catalogService.getItem(itemId) != null)
+            setMessage("An itemId already exists. Please enter another itemId");
+        else if (getAttribute1() == null)
+          setMessage("No Description. Please fill in the description");
+        else if (getAttribute1().length() > 80)
+          setMessage("Description is too long. Please re-enter description");
+        else if (getListPrice() == null)
+          setMessage("No ListPrice. Please fill in the ListPrice");
+        else if (getListPrice().compareTo(new BigDecimal("0")) < 0)
+          setMessage("ListPrice is negative. Please re-enter ListPrice");
+        else if (getListPrice().toString().split("\\.")[0] != null && getListPrice().toString().split("\\.")[0].length() > 8)
+          setMessage("ListPrice is out of range. Please re-enter the ListPrice in units of xxxxxxxxxx.xx ");
+        else if (getListPrice().toString().split("\\.").length >= 2 &&
+                getListPrice().toString().split("\\.")[1] != null &&
+                getListPrice().toString().split("\\.")[1].length() > 2)
+          setMessage("ListPrice is out of range. Please re-enter the ListPrice in units of xxxxxxxxxx.xx ");
+        else if (getQuantity() < 0)
+          setMessage("Quantity is negative. Please re-enter Quantity");
+        else
+          result = true;
+    }
+    else
+      result = true;
+    return result;
+  }
+
 
   // =========================================================================================
   public ForwardResolution viewItem() {
@@ -220,33 +263,23 @@ public class CatalogActionBean extends AbstractActionBean {
 
   // =========================================================================================
   public ForwardResolution adminViewCategory() {
-    String permission = (String) context.getRequest().getSession().getAttribute("permission");
-    if (categoryId == null) {
-      if (permission == null || !permission.equals("admin")) {
-        setMessage("You do not have permission.");
-        return new ForwardResolution(ERROR);
-      }
-      productList = catalogService.getProductList();
-    }
+    if (Checkpermission() == false)
+      return new ForwardResolution(ERROR);
+
+    productList = catalogService.getProductList();
     return new ForwardResolution(ADMIN_VIEW_CATEGORY);
   }
 
   public ForwardResolution viewAdminDashboardChoose() {
-    String permission = (String) context.getRequest().getSession().getAttribute("permission");
-    if (categoryId == null) {
-      if (permission == null || !permission.equals("admin")) {
-        setMessage("You do not have permission.");
-        return new ForwardResolution(ERROR);
-      }
-    }
+    if (Checkpermission() == false)
+      return new ForwardResolution(ERROR);
+
     return new ForwardResolution(VIEW_ADMIN_DASHBOARD);
   }
   public ForwardResolution adminViewProduct() {
-    String permission = (String) context.getRequest().getSession().getAttribute("permission");
-    if (permission == null || permission.equals("admin") == false) {
-      setMessage("You do not have permission.");
+    if (Checkpermission() == false)
       return new ForwardResolution(ERROR);
-    }
+
     itemList = catalogService.getItemListByProduct(productId);
     product = catalogService.getProduct(productId);
     return new ForwardResolution(ADMIN_VIEW_PRODUCT);
@@ -255,50 +288,28 @@ public class CatalogActionBean extends AbstractActionBean {
 
   ////////////////////////// ITEMUPDATE
   public ForwardResolution ItemUpdatePage() {
-    String permission = (String) context.getRequest().getSession().getAttribute("permission");
-    if (permission == null || permission.equals("admin") == false) {
-      setMessage("You do not have permission.");
+    if (Checkpermission() == false)
       return new ForwardResolution(ERROR);
-    }
+
     item = catalogService.getItem(itemId);
     return new ForwardResolution(ITEM_UPDATE_PAGE);
   }
   public ForwardResolution DBItemUpdate() {
-    String permission = (String) context.getRequest().getSession().getAttribute("permission");
-    if (permission == null || permission.equals("admin") == false) {
-      setMessage("You do not have permission.");
-      return new ForwardResolution(ERROR);
-    }
     String resulturl = ERROR;
-
-    if (item == null)
-      setMessage("item ERROR");
-    else if (item != null) {
-      if (getAttribute1() == null)
-        setMessage("No Description. Please fill in the description");
-      else if (getListPrice() == null)
-        setMessage("No ListPrice. Please fill in the ListPrice");
-      else if (getListPrice().compareTo(new BigDecimal("0")) < 0 )
-        setMessage("ListPrice is negative. Please re-enter ListPrice");
-      else if (getQuantity() < 0)
-        setMessage("Quantity is negative. Please re-enter Quantity");
-      else {
-        catalogService.UpdateItem(itemId, getAttribute1(), getListPrice(), getQuantity());
-        itemList = catalogService.getItemListByProduct(productId);
-        product = catalogService.getProduct(productId);
-        resulturl = ADMIN_VIEW_PRODUCT;
-      }
+    if (Checkpermission() && CheckError(false)) {
+      catalogService.UpdateItem(itemId, getAttribute1(), getListPrice(), getQuantity());
+      itemList = catalogService.getItemListByProduct(productId);
+      product = catalogService.getProduct(productId);
+      resulturl = ADMIN_VIEW_PRODUCT;
     }
     return new ForwardResolution(resulturl);
   }
 
   /////////////////////////// ITEMADD
   public ForwardResolution ItemAddPage() {
-    String permission = (String) context.getRequest().getSession().getAttribute("permission");
-    if (permission == null || permission.equals("admin") == false) {
-      setMessage("You do not have permission.");
+    if (Checkpermission() == false)
       return new ForwardResolution(ERROR);
-    }
+
     item = new Item();
     item.setProductId(productId);
     itemId = null;
@@ -306,43 +317,21 @@ public class CatalogActionBean extends AbstractActionBean {
   }
 
   public ForwardResolution DBItemAdd() {
-    String permission = (String) context.getRequest().getSession().getAttribute("permission");
     String resulturl = ERROR;
-    if (permission == null || permission.equals("admin") == false)
-      setMessage("You do not have permission.");
-    else if (itemId == null)
-      setMessage("There no itemId, write itemId please");
-    else {
-      Item tempitem = catalogService.getItem(itemId);
-      if (tempitem != null)
-        setMessage("An itemId already exists. Please enter another itemId");
-      else {
-        if (getAttribute1() == null)
-          setMessage("No Description. Please fill in the description");
-        else if (getListPrice() == null)
-          setMessage("No ListPrice. Please fill in the ListPrice");
-        else if (getListPrice().compareTo(new BigDecimal("0")) < 0 )
-          setMessage("ListPrice is negative. Please re-enter ListPrice");
-        else if (getQuantity() < 0)
-          setMessage("Quantity is negative. Please re-enter Quantity");
-        else {
-          catalogService.AddItem(itemId, getProductId(), getListPrice(), getAttribute1(), getQuantity());
-          itemList = catalogService.getItemListByProduct(productId);
-          product = catalogService.getProduct(productId);
-          resulturl = ADMIN_VIEW_PRODUCT;
-        }
-      }
+    if (Checkpermission() && CheckError(true)) {
+      catalogService.AddItem(itemId, getProductId(), getListPrice(), getAttribute1(), getQuantity());
+      itemList = catalogService.getItemListByProduct(productId);
+      product = catalogService.getProduct(productId);
+      resulturl = ADMIN_VIEW_PRODUCT;
     }
     return new ForwardResolution(resulturl);
   }
 
   /////////////////////// // ITEM DELETE
   public ForwardResolution ItemDelete() {
-    String permission = (String) context.getRequest().getSession().getAttribute("permission");
-    if (permission == null || permission.equals("admin") == false) {
-      setMessage("You do not have permission.");
+    if (Checkpermission() == false)
       return new ForwardResolution(ERROR);
-    }
+
     Item tempitem = catalogService.getItem(itemId);
     if (tempitem != null)
       catalogService.DeleteItem(productId, itemId);
