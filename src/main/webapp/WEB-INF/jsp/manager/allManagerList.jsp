@@ -25,7 +25,7 @@
           <th>Category</th>
           <th>Profile</th>
             <c:if test="${sessionScope.permission eq 'admin'}">
-                <th>Edit Account</th>
+                <th>Edit</th>
                 <th>Status</th>
             </c:if>
         </tr>
@@ -46,10 +46,16 @@
                                             beanclass="org.mybatis.jpetstore.web.actions.PetManagerActionBean"
                                             event="editPetManagerAccount">
                                   <stripes:param name="managerId" value="${petManager.managerId}"/>
-                                  Edit
+                                  Update
+                              </stripes:link>
+                              <stripes:link class="Button"
+                                            beanclass="org.mybatis.jpetstore.web.actions.PetManagerActionBean"
+                                            event="deletePetManagerAccount">
+                                  <stripes:param name="managerId" value="${petManager.managerId}"/>
+                                  Delete
                               </stripes:link>
                           </td>
-                          <td colspan="2"><stripes:link class="Button"
+                          <td><stripes:link class="Button"
                                             beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
                                             event="viewChattingRoom">
                               <stripes:param name="managerId" value="${petManager.managerId}"/>

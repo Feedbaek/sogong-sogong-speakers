@@ -12,7 +12,7 @@
     <table>
       <tr>
         <td>User ID:</td>
-        <td><stripes:text name="account.username"/></td>
+        <td><stripes:text name="account.username" readonly="true"/></td>
       </tr>
       <tr>
         <td>New password:</td>

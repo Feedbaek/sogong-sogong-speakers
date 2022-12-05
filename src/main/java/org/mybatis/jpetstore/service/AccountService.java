@@ -93,13 +93,18 @@ public class AccountService {
     Optional.ofNullable(account.getPassword()).filter(password -> password.length() > 0)
         .ifPresent(password -> accountMapper.updateSignon(account));
   }
-
+  @Transactional
   public void   editPetManagerAccount(Account account) {
     accountMapper.updateAccount(account);
 
     Optional.ofNullable(account.getPassword()).filter(password -> password.length() > 0)
             .ifPresent(password -> accountMapper.updateSignon(account));
   }
+//  @Transactional
+//  public void deleteAccount(Account account) {
+//    accountMapper.deleteAccount(Account account);
+//  }
+
   @Transactional
   public List<Alarm> getAlarmById(String id) {
     return accountMapper.getAlarmById(id);

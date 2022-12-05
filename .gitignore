@@ -1,4 +1,5 @@
 /target
+src/.DS_Store
 /.settings
 /.classpath
 /.project

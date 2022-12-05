@@ -263,7 +263,7 @@ public class PetManagerActionBean extends AbstractActionBean {
         petManager.setBird(petType.equals("BIRD"));
         petManagerService.editPetManager(petManager);
         HttpServletRequest request = context.getRequest();
-        String path = request.getServletContext().getRealPath("images") + "/" + petManager.getName() + ".jpeg";
+        String path = request.getServletContext().getRealPath("images") + "/" + account.getUsername() + ".jpeg";
         try {
             photo.save(new File(path));
         } catch (Exception e) {
@@ -273,6 +273,10 @@ public class PetManagerActionBean extends AbstractActionBean {
         }
         return new ForwardResolution(ADMIN_DASHBOARD_CHOOSING);
     }
+
+//    public Resolution deletePetManagerAccount() {
+//
+//    }
 
     public Resolution newAccount() {
         account = new Account();

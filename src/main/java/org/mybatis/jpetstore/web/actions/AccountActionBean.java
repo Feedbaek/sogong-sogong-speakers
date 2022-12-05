@@ -221,6 +221,7 @@ public class AccountActionBean extends AbstractActionBean {
       s.setAttribute("permission", account.getPermission());
       List<Alarm> alarms = accountService.getAlarmById(account.getUsername());
       s.setAttribute("alarms", alarms);
+      s.setAttribute("path", context.getRequest().getServletContext().getRealPath("images") + "/");
       return new RedirectResolution(CatalogActionBean.class);
   }
 
