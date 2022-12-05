@@ -26,7 +26,7 @@
           <th>Profile</th>
             <c:if test="${sessionScope.permission eq 'admin'}">
                 <th>Edit Account</th>
-                <th>ChattingRoom List</th>
+                <th>Status</th>
             </c:if>
         </tr>
           <c:forEach var="petManager" items="${actionBean.petManagerList}">
@@ -49,11 +49,11 @@
                                   Edit
                               </stripes:link>
                           </td>
-                          <td><stripes:link class="Button" style="font-size:20px;"
+                          <td colspan="2"><stripes:link class="Button"
                                             beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
                                             event="viewChattingRoom">
                               <stripes:param name="managerId" value="${petManager.managerId}"/>
-                            Show
+                            View
                           </stripes:link></td>
                       </c:if>
                   </tr>

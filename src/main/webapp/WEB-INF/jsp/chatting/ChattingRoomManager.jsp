@@ -20,15 +20,15 @@
 </div>
 
 <div id="Catalog">
-  <h2>Pet Manager Management</h2>
-  <div style="border:1px solid #000000">
+    <p>    </p>
+    <h2>Pet Manager Messenger Management</h2>
+    <br>
           <table>
               <tr>
-                <th>Manager ID</th>
-                <th>User ID</th>
-                <th>Memo</th>
-                  <th>Chatting</th>
-<%--                  <th>Chatting</th>--%>
+                  <th>Manager ID</th>
+                  <th>User ID</th>
+                  <th>Memo</th>
+                  <th>Change</th>
               </tr>
               <c:forEach var="managerChatList" items="${actionBean.chattingRoomList}">
                   <tr>
@@ -58,7 +58,6 @@
                   </tr>
               </c:forEach>
           </table>
-  </div>
 </div>
 
 <%@ include file="../common/IncludeBottom.jsp"%>

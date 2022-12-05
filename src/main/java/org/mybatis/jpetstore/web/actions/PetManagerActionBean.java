@@ -248,38 +248,22 @@ public class PetManagerActionBean extends AbstractActionBean {
     public ForwardResolution editPetManagerAccount() {
         String managerId = context.getRequest().getParameter("managerId");
         account = accountService.getPetManagerAccount(managerId);
-        System.out.println(account.getCountry());
+        System.out.println(account.getUsername());
         petManager = petManagerService.getPetMangerByID(managerId);
         return new ForwardResolution(EDIT_ACCOUNT);
     }
 
     public Resolution editAccount() {
-        Account e_account = new Account();
-        e_account.setPassword(password);
-        e_account.setCity(city);
-        e_account.setEmail(email);
-        e_account.setFirstName(firstName);
-        e_account.setLastName(lastName);
-        e_account.setAddress1(address1);
-        e_account.setAddress2(address2);
-        e_account.setState(state);
-        e_account.setZip(zip);
-        e_account.setCountry(country);
-        e_account.setPhone(phone);
-        accountService.editPetManagerAccount(e_account);
-        PetManager pm = new PetManager();
-        pm.setManagerId(name);
-        pm.setPetType(petType);
-        pm.setName(firstName);
-        pm.setAge(age);
-        pm.setSince(since);
-        pm.setManage(manage);
-        pm.setCatdog(petType.equals("CAT/DOG"));
-        pm.setRepfish(petType.equals("REPTILE/FISH"));
-        pm.setBird(petType.equals("BIRD"));
-        petManagerService.editPetManager(pm);
+        accountService.editPetManagerAccount(account);
+        petManager.setPetType(petType);
+        petManager.setName(account.getFirstName());
+        petManager.setManagerId(account.getUsername());
+        petManager.setCatdog(petType.equals("CAT/DOG"));
+        petManager.setRepfish(petType.equals("REPTILE/FISH"));
+        petManager.setBird(petType.equals("BIRD"));
+        petManagerService.editPetManager(petManager);
         HttpServletRequest request = context.getRequest();
-        String path = request.getServletContext().getRealPath("images") + "/" + name + ".jpeg";
+        String path = request.getServletContext().getRealPath("images") + "/" + petManager.getName() + ".jpeg";
         try {
             photo.save(new File(path));
         } catch (Exception e) {

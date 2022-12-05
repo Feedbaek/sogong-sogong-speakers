@@ -12,7 +12,7 @@
     <table>
       <tr>
         <td>User ID:</td>
-        <td><stripes:text name="name" value="${actionBean.account.username}" /></td>
+        <td><stripes:text name="account.username"/></td>
       </tr>
       <tr>
         <td>New password:</td>
@@ -29,62 +29,49 @@
       <tr>
         <td>First name:</td>
         <td>
-          <stripes:text
-            name="firstName"
-            value="${actionBean.account.firstName}"
-          />
+          <stripes:text name="account.firstName" value="${account.firstName}"/>
         </td>
       </tr>
       <tr>
         <td>Last name:</td>
         <td>
-          <stripes:text
-            name="lastName"
-            value="${actionBean.account.lastName}"
-          />
+          <stripes:text name="account.lastName" />
         </td>
       </tr>
       <tr>
         <td>Email:</td>
         <td>
-          <stripes:text name="email" value="${actionBean.account.email}" />
+          <stripes:text name="account.email" />
         </td>
       </tr>
       <tr>
         <td>Phone:</td>
         <td>
-          <stripes:text name="phone" value="${actionBean.account.phone}" />
+          <stripes:text name="account.phone" />
         </td>
       </tr>
       <tr>
         <td>Address 1:</td>
         <td>
-          <stripes:text
-            name="address1"
-            value="${actionBean.account.address1}"
-          />
+          <stripes:text name="account.address1"/>
         </td>
       </tr>
       <tr>
         <td>Address 2:</td>
         <td>
-          <stripes:text
-            name="address2"
-            value="${actionBean.account.address2}"
-          />
+          <stripes:text name="account.address2" />
         </td>
       </tr>
       <tr>
         <td>City:</td>
-        <td><stripes:text name="city" value="${actionBean.account.city}" /></td>
+        <td><stripes:text name="account.city" /></td>
       </tr>
       <tr>
         <td>State:</td>
         <td>
           <stripes:text
-            name="state"
+            name="account.state"
             size="4"
-            value="${actionBean.account.state}"
           />
         </td>
       </tr>
@@ -92,9 +79,8 @@
         <td>Zip:</td>
         <td>
           <stripes:text
-            name="zip"
+            name="account.zip"
             size="10"
-            value="${actionBean.account.zip}"
           />
         </td>
       </tr>
@@ -102,9 +88,8 @@
         <td>Country:</td>
         <td>
           <stripes:text
-            name="country"
+            name="account.country"
             size="15"
-            value="${actionBean.account.country}"
           />
         </td>
       </tr>
@@ -134,8 +119,7 @@
         <td>
           <stripes:text
             size="4"
-            name="age"
-            value="${actionBean.petManager.age}"
+            name="petManager.age"
           />
         </td>
       </tr>
@@ -144,8 +128,7 @@
         <td>
           <stripes:text
             size="4"
-            name="since"
-            value="${actionBean.petManager.since}"
+            name="petManager.since"
           />
         </td>
       </tr>
@@ -154,8 +137,7 @@
         <td>
           <stripes:text
             size="40"
-            name="manage"
-            value="${actionBean.petManager.manage}"
+            name="petManager.manage"
           />
         </td>
       </tr>

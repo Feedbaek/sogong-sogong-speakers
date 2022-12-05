@@ -29,5 +29,10 @@ public class PetManagerService {
     public void insertPetManager(PetManager petManager) { petManagerMapper.insertPetManager(petManager);}
 
     @Transactional
-    public void editPetManager(PetManager petManager) { petManagerMapper.editPetManager(petManager);}
+    public void editPetManager(PetManager petManager) {
+        System.out.println(petManager.getSince());
+        System.out.println(petManager.getName());
+        System.out.println(petManager.getManagerId());
+        petManagerMapper.editPetManager(petManager);
+    }
 }
