@@ -36,10 +36,10 @@
                         <td>${petManager.managerId}</td>
                         <td>${petManager.petType}</td>
                         <td>
-                            NAME  : ${petManager.name}<br>
-                            AGE   : ${petManager.age}<br>
-                            CAREER : ${petManager.since} years<br>
-                            MANAGE : ${petManager.manage}
+                            Name  : ${petManager.name}<br>
+                            Age   : ${petManager.age}<br>
+                            Career : ${petManager.since} years<br>
+                            Manage : ${petManager.manage}
                         </td>
                         <td><input type="radio" name="catDog" value="${petManager.managerId}" checked ></td>
                     </tr>
@@ -50,10 +50,10 @@
                         <td>${petManager.managerId}</td>
                         <td>${petManager.petType}</td>
                         <td>
-                            NAME  : ${petManager.name}<br>
-                            AGE   : ${petManager.age}<br>
-                            CAREER : ${petManager.since} years<br>
-                            MANAGE : ${petManager.manage}
+                            Name  : ${petManager.name}<br>
+                            Age   : ${petManager.age}<br>
+                            Career : ${petManager.since} years<br>
+                            Manage : ${petManager.manage}
                         </td>
                         <td><input type="radio" name="repFish" value="${petManager.managerId}" checked ></td>
                     </tr>
@@ -64,10 +64,10 @@
                         <td>${petManager.managerId}</td>
                         <td>${petManager.petType}</td>
                         <td>
-                            NAME  : ${petManager.name}<br>
-                            AGE   : ${petManager.age}<br>
-                            CAREER : ${petManager.since} years<br>
-                            MANAGE : ${petManager.manage}
+                            Name  : ${petManager.name}<br>
+                            Age   : ${petManager.age}<br>
+                            Career : ${petManager.since} years<br>
+                            Manage : ${petManager.manage}
                         </td>
                         <td><input type="radio" name="bird" value="${petManager.managerId}" checked></td>
                     </tr>
