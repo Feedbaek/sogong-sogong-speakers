@@ -50,7 +50,7 @@
                               </stripes:link><br><br>
                               <stripes:link class="Button"
                                             beanclass="org.mybatis.jpetstore.web.actions.PetManagerActionBean"
-                                            event="deletePetManagerAccount">
+                                            event="viewDeletionCheck">
                                   <stripes:param name="managerId" value="${petManager.managerId}"/>
                                   Delete
                               </stripes:link>
