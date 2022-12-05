@@ -11,7 +11,7 @@
              class="org.mybatis.jpetstore.web.actions.ChattingActionBean"/>
 
 <div id="Catalog">
-  <h2>UPDATE CHATTING ROOM</h2>
+  <h2>Update Messenger</h2>
   <stripes:form beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean">
   <table>
     <tr>
