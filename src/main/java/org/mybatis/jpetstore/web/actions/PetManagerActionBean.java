@@ -274,9 +274,11 @@ public class PetManagerActionBean extends AbstractActionBean {
         return new ForwardResolution(ADMIN_DASHBOARD_CHOOSING);
     }
 
-//    public Resolution deletePetManagerAccount() {
-//
-//    }
+    public Resolution deletePetManagerAccount() {
+        String managerId = context.getRequest().getParameter("managerId");
+        petManagerService.deletePetManager(managerId);
+        return new ForwardResolution(ADMIN_DASHBOARD_CHOOSING);
+    }
 
     public Resolution newAccount() {
         account = new Account();

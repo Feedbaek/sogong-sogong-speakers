@@ -31,6 +31,6 @@ public class PetManagerService {
     @Transactional
     public void editPetManager(PetManager petManager) { petManagerMapper.editPetManager(petManager);}
 
-//    @Transactional
-//    public void deletePatManager(PetManager petManager) { petManagerMapper.deletePetManager(petManager); }
+    @Transactional
+    public void deletePetManager(String petManagerId) { petManagerMapper.deletePetManager(petManagerId); }
 }

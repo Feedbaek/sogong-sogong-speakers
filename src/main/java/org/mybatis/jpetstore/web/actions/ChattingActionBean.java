@@ -66,7 +66,7 @@ public class ChattingActionBean extends AbstractActionBean {
     private static final String VIEW_CHATTING_MEMO_READONLY = "/WEB-INF/jsp/chatting/memoChattingOnlyView.jsp";
     private static final String VIEW_UPDATE_CHATTING_ROOM_FORM = "/WEB-INF/jsp/chatting/UpdateChattingRoomForm.jsp";
 
-//    private static final String VIEW_DELETION_CHECK = "/WEB-INF/jsp/chatting/ChattingRoomDeletionCheck.jsp";
+    private static final String VIEW_DELETION_CHECK = "/WEB-INF/jsp/chatting/ChattingRoomDeletionCheck.jsp";
 
     //------------------------getter & setter ---------------------------------//
     public List<Alarm> getAlarms() {
@@ -402,7 +402,7 @@ public class ChattingActionBean extends AbstractActionBean {
         return new RedirectResolution(ChattingActionBean.class,"viewChattingRoom");
     }
 
-/*    public ForwardResolution viewDeletionCheck(){
+public ForwardResolution viewDeletionCheck(){
         HttpSession session = context.getRequest().getSession();
         String permission = (String) session.getAttribute("permission");
         if(!permission.equals("admin")){
@@ -422,8 +422,6 @@ public class ChattingActionBean extends AbstractActionBean {
         chattingRoom = new ChattingRoom(customerId,managerId);
         chattingService.destroyChattingRoom(chattingRoom);
         return new RedirectResolution(ChattingActionBean.class,"viewChattingRoom");
-    }*/
-
-
+    }
 }
 

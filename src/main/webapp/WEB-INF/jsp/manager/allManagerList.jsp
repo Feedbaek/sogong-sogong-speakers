@@ -47,7 +47,7 @@
                                             event="editPetManagerAccount">
                                   <stripes:param name="managerId" value="${petManager.managerId}"/>
                                   Update
-                              </stripes:link>
+                              </stripes:link><br><br>
                               <stripes:link class="Button"
                                             beanclass="org.mybatis.jpetstore.web.actions.PetManagerActionBean"
                                             event="deletePetManagerAccount">

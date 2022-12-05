@@ -107,4 +107,9 @@
         WHERE managerId = #{managerId}
     </update>
 
+    <delete id="deletePetManager">
+        delete from petManager
+        where managerId = #{petManagerId}
+    </delete>
+
 </mapper>

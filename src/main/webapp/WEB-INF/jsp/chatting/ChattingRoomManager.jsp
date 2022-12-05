@@ -29,6 +29,7 @@
                   <th>User ID</th>
                   <th>Memo</th>
                   <th>Change</th>
+                  <th>Remove</th>
               </tr>
               <c:forEach var="managerChatList" items="${actionBean.chattingRoomList}">
                   <tr>
@@ -48,13 +49,13 @@
                           <stripes:param name="managerId" value="${managerChatList.managerId}"/>
                           Update
                       </stripes:link></td>
-                      <%--<td><stripes:link class="Button" style="font-size:14px;"
+                      <td><stripes:link class="Button" style="font-size:14px;"
                                         beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
                                         event="viewDeletionCheck">
                           <stripes:param name="customerId" value="${managerChatList.customerId}"/>
                           <stripes:param name="managerId" value="${managerChatList.managerId}"/>
                           Delete
-                      </stripes:link></td>--%>
+                      </stripes:link></td>
                   </tr>
               </c:forEach>
           </table>

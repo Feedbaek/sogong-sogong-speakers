@@ -13,4 +13,5 @@ public interface PetManagerMapper {
     PetManager getPetMangerByID(String id);
     void insertPetManager(PetManager petManager);
     void editPetManager(PetManager petManager);
+    void deletePetManager(String petManagerId);
 }
