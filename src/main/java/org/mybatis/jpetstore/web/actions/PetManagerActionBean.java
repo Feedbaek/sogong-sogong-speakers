@@ -314,7 +314,6 @@ public class PetManagerActionBean extends AbstractActionBean {
         account.setZip(zip);
         account.setCountry(country);
         account.setPhone(phone);
-        accountService.insertPetManagerAccount(account);
         petManager = new PetManager();
         petManager.setManagerId(name);
         petManager.setPetType(petType);
@@ -325,7 +324,15 @@ public class PetManagerActionBean extends AbstractActionBean {
         petManager.setCatdog(petType.equals("CAT/DOG"));
         petManager.setRepfish(petType.equals("REPTILE/FISH"));
         petManager.setBird(petType.equals("BIRD"));
-        petManagerService.insertPetManager(petManager);
+
+        try{
+            accountService.insertPetManagerAccount(account);
+            petManagerService.insertPetManager(petManager);
+        }catch (Exception e){
+            setMessage("The ID is duplicated. Try again with another value.");
+            return new ForwardResolution(NEW_ACCOUNT);
+        }
+
         HttpServletRequest request = context.getRequest();
         String path = request.getServletContext().getRealPath("images") + "/" + name + ".jpeg";
         try {

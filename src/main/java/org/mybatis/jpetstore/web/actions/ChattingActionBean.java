@@ -391,20 +391,17 @@ public class ChattingActionBean extends AbstractActionBean {
             setMessage("You don't have permission to access");
             return new ForwardResolution(ERROR);
         }
-        chattingRoomList = chattingService.getAllChatRoom();
-        for(ChattingRoom chatroom : chattingRoomList){
-            if(chatroom.getManagerId().equals(updatedChattingRoom.getManagerId())&&
-                    chatroom.getCustomerId().equals(updatedChattingRoom.getCustomerId())) {
-                setMessage("The ChattingRoom is duplicated. Try again with another value.");
-                return new RedirectResolution(ChattingActionBean.class,"viewUpdateChattingRoom");
-            }
-        }
         chattingRoom = new ChattingRoom(customerId,managerId);
-        chattingService.updateChattingRoom(chattingRoom,updatedChattingRoom);
-        return new RedirectResolution(ChattingActionBean.class,"viewChattingRoom");
+        try {
+            chattingService.updateChattingRoom(chattingRoom, updatedChattingRoom);
+            return new RedirectResolution(ChattingActionBean.class,"viewChattingRoom");
+        }catch(Exception e){
+            setMessage("The ChattingRoom is duplicated. Try again with another value.");
+            return new RedirectResolution(ChattingActionBean.class,"viewUpdateChattingRoom");
+        }
     }
 
-public ForwardResolution viewDeletionCheck(){
+    public ForwardResolution viewDeletionCheck(){
         HttpSession session = context.getRequest().getSession();
         String permission = (String) session.getAttribute("permission");
         if(!permission.equals("admin")){

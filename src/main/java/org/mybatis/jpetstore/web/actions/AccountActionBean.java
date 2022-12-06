@@ -142,7 +142,12 @@ public class AccountActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution newAccount() {
-    accountService.insertAccount(account);
+    try {
+      accountService.insertAccount(account);
+    }catch (Exception e){
+      setMessage("The ID is duplicated. Try again with another value.");
+      return new RedirectResolution(AccountActionBean.class,"newAccountForm");
+    }
     account = accountService.getAccount(account.getUsername());
     myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId());
     authenticated = true;
