@@ -363,6 +363,10 @@ public class ChattingActionBean extends AbstractActionBean {
             setMessage("잘못된 접근입니다.");
             return new ForwardResolution(ERROR);
         }
+        if(Integer.parseInt(memo.getPetAge())<=0){
+            setMessage("ERROR: Age is negative.");
+            return new ForwardResolution(VIEW_CHATTING_MEMO);
+        }
         chattingService.updateMemo(memo);
         return new RedirectResolution(ChattingActionBean.class, "memoChatting");
     }

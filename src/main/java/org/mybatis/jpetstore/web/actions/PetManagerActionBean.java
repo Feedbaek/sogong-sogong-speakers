@@ -264,6 +264,10 @@ public class PetManagerActionBean extends AbstractActionBean {
         petManager.setCatdog(petType.equals("CAT/DOG"));
         petManager.setRepfish(petType.equals("REPTILE/FISH"));
         petManager.setBird(petType.equals("BIRD"));
+        if(Integer.parseInt(petManager.getAge())<=0 || Integer.parseInt(petManager.getSince())<0){
+            setMessage("ERROR: Value is negative.");
+            return new ForwardResolution(EDIT_ACCOUNT);
+        }
         try {
             accountService.editPetManagerAccount(account);
             petManagerService.editPetManager(petManager);
@@ -271,7 +275,7 @@ public class PetManagerActionBean extends AbstractActionBean {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             setMessage("ERROR: Fill in the blank or Submit your photo");
-            return new RedirectResolution(PetManagerActionBean.class,"editPetManagerAccount");
+            return new ForwardResolution(EDIT_ACCOUNT);
         }
         return new RedirectResolution(PetManagerActionBean.class,"allManagerList");
     }
@@ -339,6 +343,10 @@ public class PetManagerActionBean extends AbstractActionBean {
         petManager.setCatdog(petType.equals("CAT/DOG"));
         petManager.setRepfish(petType.equals("REPTILE/FISH"));
         petManager.setBird(petType.equals("BIRD"));
+        if(Integer.parseInt(age)<=0 || Integer.parseInt(since)<0){
+            setMessage("ERROR: Value is negative.");
+            return new ForwardResolution(NEW_ACCOUNT);
+        }
         try{
             accountService.insertPetManagerAccount(account);
             petManagerService.insertPetManager(petManager);

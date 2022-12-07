@@ -146,7 +146,7 @@ public class AccountActionBean extends AbstractActionBean {
       accountService.insertAccount(account);
     }catch (Exception e){
       setMessage("ERROR: Fill in the blank or your ID is duplicated.");
-      return new RedirectResolution(AccountActionBean.class,"newAccountForm");
+      return new ForwardResolution(NEW_ACCOUNT);
     }
     account = accountService.getAccount(account.getUsername());
     myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId());
@@ -169,7 +169,12 @@ public class AccountActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution editAccount() {
-    accountService.updateAccount(account);
+    try {
+      accountService.updateAccount(account);
+    }catch (Exception e){
+      setMessage("ERROR: Fill in the blank Or You ID is Duplicated.");
+      return new ForwardResolution(EDIT_ACCOUNT);
+    }
     account = accountService.getAccount(account.getUsername());
     myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId());
     return new RedirectResolution(CatalogActionBean.class);
