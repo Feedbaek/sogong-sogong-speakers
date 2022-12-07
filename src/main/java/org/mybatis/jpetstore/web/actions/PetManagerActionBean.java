@@ -258,21 +258,21 @@ public class PetManagerActionBean extends AbstractActionBean {
     public Resolution editAccount() {
         HttpServletRequest request = context.getRequest();
         String path = request.getServletContext().getRealPath("images") + "/" + account.getUsername() + ".jpeg";
-        try {
-            photo.save(new File(path));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            setMessage("File Upload Fail");
-            return new ForwardResolution(ERROR);
-        }
-        accountService.editPetManagerAccount(account);
         petManager.setPetType(petType);
         petManager.setName(account.getFirstName());
         petManager.setManagerId(account.getUsername());
         petManager.setCatdog(petType.equals("CAT/DOG"));
         petManager.setRepfish(petType.equals("REPTILE/FISH"));
         petManager.setBird(petType.equals("BIRD"));
-        petManagerService.editPetManager(petManager);
+        try {
+            accountService.editPetManagerAccount(account);
+            petManagerService.editPetManager(petManager);
+            photo.save(new File(path));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            setMessage("ERROR: Fill in the blank or Submit your photo");
+            return new RedirectResolution(PetManagerActionBean.class,"editPetManagerAccount");
+        }
         return new RedirectResolution(PetManagerActionBean.class,"allManagerList");
     }
 
@@ -324,7 +324,9 @@ public class PetManagerActionBean extends AbstractActionBean {
         account.setCountry(country);
         account.setPhone(phone);
         petManager = new PetManager();
-        if (name == null || firstName == null || age == null || since == null || manage == null) {
+        if (name == null || password==null || firstName == null || age == null || since == null ||
+                manage == null||email==null||address1==null||address2==null||state==null||
+                zip==null||country==null||phone==null) {
             setMessage("Fill in the Blank.");
             return new ForwardResolution(NEW_ACCOUNT);
         }
@@ -341,7 +343,7 @@ public class PetManagerActionBean extends AbstractActionBean {
             accountService.insertPetManagerAccount(account);
             petManagerService.insertPetManager(petManager);
         }catch (Exception e){
-            setMessage("The ID is duplicated. Try again with another value.");
+            setMessage("ERROR: fill in the blank OR your ID is duplicated.");
             return new ForwardResolution(NEW_ACCOUNT);
         }
         return new RedirectResolution(PetManagerActionBean.class,"allManagerList");

@@ -145,7 +145,7 @@ public class AccountActionBean extends AbstractActionBean {
     try {
       accountService.insertAccount(account);
     }catch (Exception e){
-      setMessage("The ID is duplicated. Try again with another value.");
+      setMessage("ERROR: Fill in the blank or your ID is duplicated.");
       return new RedirectResolution(AccountActionBean.class,"newAccountForm");
     }
     account = accountService.getAccount(account.getUsername());

@@ -223,11 +223,6 @@ public class ChattingActionBean extends AbstractActionBean {
             setMessage("로그인이 필요합니다.");
             return new ForwardResolution(ERROR);
         }
-
-        chattingRoom = new ChattingRoom();
-        chattingRoom.setCustomerId(customerId);
-        chattingRoom.setManagerId(managerId);
-        chattingLog = chattingService.getChatLog(chattingRoom);
         Alarm alarm = new Alarm();
         alarm.setAlarm("off");
         if (accountBean.getUsername().equals(customerId)) {
@@ -396,7 +391,7 @@ public class ChattingActionBean extends AbstractActionBean {
             chattingService.updateChattingRoom(chattingRoom, updatedChattingRoom);
             return new RedirectResolution(ChattingActionBean.class,"viewChattingRoom");
         }catch(Exception e){
-            setMessage("The ChattingRoom is duplicated. Try again with another value.");
+            setMessage("ERROR: ChattingRoom is duplicated");
             return new RedirectResolution(ChattingActionBean.class,"viewUpdateChattingRoom");
         }
     }
