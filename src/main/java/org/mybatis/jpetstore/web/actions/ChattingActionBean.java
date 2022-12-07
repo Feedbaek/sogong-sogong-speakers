@@ -364,7 +364,7 @@ public class ChattingActionBean extends AbstractActionBean {
             return new ForwardResolution(ERROR);
         }
         if(Integer.parseInt(memo.getPetAge())<=0){
-            setMessage("ERROR: Age is negative.");
+            setMessage("ERROR: Age is not right form. Try again.");
             return new ForwardResolution(VIEW_CHATTING_MEMO);
         }
         chattingService.updateMemo(memo);
