@@ -315,6 +315,10 @@ public class PetManagerActionBean extends AbstractActionBean {
         account.setCountry(country);
         account.setPhone(phone);
         petManager = new PetManager();
+        if (name == null || firstName == null || age == null || since == null || manage == null) {
+            setMessage("Fill in the Blank.");
+            return new ForwardResolution(NEW_ACCOUNT);
+        }
         petManager.setManagerId(name);
         petManager.setPetType(petType);
         petManager.setName(firstName);
@@ -324,7 +328,6 @@ public class PetManagerActionBean extends AbstractActionBean {
         petManager.setCatdog(petType.equals("CAT/DOG"));
         petManager.setRepfish(petType.equals("REPTILE/FISH"));
         petManager.setBird(petType.equals("BIRD"));
-
         try{
             accountService.insertPetManagerAccount(account);
             petManagerService.insertPetManager(petManager);
