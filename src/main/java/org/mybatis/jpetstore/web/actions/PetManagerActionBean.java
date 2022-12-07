@@ -256,14 +256,6 @@ public class PetManagerActionBean extends AbstractActionBean {
     }
 
     public Resolution editAccount() {
-        accountService.editPetManagerAccount(account);
-        petManager.setPetType(petType);
-        petManager.setName(account.getFirstName());
-        petManager.setManagerId(account.getUsername());
-        petManager.setCatdog(petType.equals("CAT/DOG"));
-        petManager.setRepfish(petType.equals("REPTILE/FISH"));
-        petManager.setBird(petType.equals("BIRD"));
-        petManagerService.editPetManager(petManager);
         HttpServletRequest request = context.getRequest();
         String path = request.getServletContext().getRealPath("images") + "/" + account.getUsername() + ".jpeg";
         try {
@@ -273,6 +265,14 @@ public class PetManagerActionBean extends AbstractActionBean {
             setMessage("File Upload Fail");
             return new ForwardResolution(ERROR);
         }
+        accountService.editPetManagerAccount(account);
+        petManager.setPetType(petType);
+        petManager.setName(account.getFirstName());
+        petManager.setManagerId(account.getUsername());
+        petManager.setCatdog(petType.equals("CAT/DOG"));
+        petManager.setRepfish(petType.equals("REPTILE/FISH"));
+        petManager.setBird(petType.equals("BIRD"));
+        petManagerService.editPetManager(petManager);
         return new RedirectResolution(PetManagerActionBean.class,"allManagerList");
     }
 
@@ -301,6 +301,15 @@ public class PetManagerActionBean extends AbstractActionBean {
     }
 
     public Resolution newAccount() {
+        HttpServletRequest request = context.getRequest();
+        String path = request.getServletContext().getRealPath("images") + "/" + name + ".jpeg";
+        try {
+            photo.save(new File(path));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            setMessage("File Upload Fail");
+            return new ForwardResolution(ERROR);
+        }
         account = new Account();
         account.setUsername(name);
         account.setPassword(password);
@@ -334,16 +343,6 @@ public class PetManagerActionBean extends AbstractActionBean {
         }catch (Exception e){
             setMessage("The ID is duplicated. Try again with another value.");
             return new ForwardResolution(NEW_ACCOUNT);
-        }
-
-        HttpServletRequest request = context.getRequest();
-        String path = request.getServletContext().getRealPath("images") + "/" + name + ".jpeg";
-        try {
-            photo.save(new File(path));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            setMessage("File Upload Fail");
-            return new ForwardResolution(ERROR);
         }
         return new RedirectResolution(PetManagerActionBean.class,"allManagerList");
     }
