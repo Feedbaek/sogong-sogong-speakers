@@ -94,7 +94,7 @@
 			<c:when test="${sessionScope.permission eq 'user'}">
 				<stripes:link
 						beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
-						event="viewChattingRoomForManager">
+						event="viewChattingRoom">
 					<img align="middle" src="../images/chat.png">
 				</stripes:link>
 			</c:when>
@@ -110,7 +110,7 @@
 				<!--펫 매니저 채팅방-->
 				<stripes:link
 						beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
-						event="viewChattingRoomForManager">
+						event="viewChattingRoom">
 					<img align="middle" src="../images/chat.png">
 				</stripes:link>
 			</c:otherwise>
@@ -125,11 +125,22 @@
 			<c:when test="${flag}">
 <%--				alarm--%>
 <%--				<img align="middle" src="../images/alarm.png" style="height: 15px; width: 15px"/>--%>
-				<stripes:link
-						beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
-						event="viewChattingRoomForManager">
-					<img align="middle" src="../images/alarm.png"/>
-				</stripes:link>
+				<c:choose>
+					<c:when test="${sessionScope.permission eq 'admin'}">
+						<stripes:link
+								beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
+								event="viewAllAccountExceptManager">
+							<img align="middle" src="../images/alarm.png"/>
+						</stripes:link>
+					</c:when>
+					<c:otherwise>
+						<stripes:link
+								beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
+								event="viewChattingRoom">
+							<img align="middle" src="../images/alarm.png"/>
+						</stripes:link>
+					</c:otherwise>
+				</c:choose>
 			</c:when>
 		</c:choose>
 	</c:if>
