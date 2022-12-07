@@ -264,8 +264,14 @@ public class PetManagerActionBean extends AbstractActionBean {
         petManager.setCatdog(petType.equals("CAT/DOG"));
         petManager.setRepfish(petType.equals("REPTILE/FISH"));
         petManager.setBird(petType.equals("BIRD"));
-        if(Integer.parseInt(petManager.getAge())<=0 || Integer.parseInt(petManager.getSince())<0){
-            setMessage("ERROR: age or since is not correct form. try with positive Integer.");
+        try {
+            if (Integer.parseInt(petManager.getAge()) <= 0 || Integer.parseInt(petManager.getSince()) < 0) {
+                setMessage("ERROR: age or since is not correct form. try with positive Integer.");
+                return new ForwardResolution(EDIT_ACCOUNT);
+            }
+        }
+        catch (Exception e){
+            setMessage("ERROR: Age or Since is not right form. Try again with Positive Integer.");
             return new ForwardResolution(EDIT_ACCOUNT);
         }
         try {
@@ -343,8 +349,14 @@ public class PetManagerActionBean extends AbstractActionBean {
         petManager.setCatdog(petType.equals("CAT/DOG"));
         petManager.setRepfish(petType.equals("REPTILE/FISH"));
         petManager.setBird(petType.equals("BIRD"));
-        if(Integer.parseInt(age)<=0 || Integer.parseInt(since)<0){
-            setMessage("ERROR: age or since is not correct form. try with positive Integer.");
+        try {
+            if (Integer.parseInt(age) <= 0 || Integer.parseInt(since) < 0) {
+                setMessage("ERROR: age or since is not correct form. try with positive Integer.");
+                return new ForwardResolution(NEW_ACCOUNT);
+            }
+        }
+        catch (Exception e){
+            setMessage("ERROR: Age or Since is not right form. Try again with Positive Integer.");
             return new ForwardResolution(NEW_ACCOUNT);
         }
         try{
