@@ -183,11 +183,12 @@ public class AccountActionBean extends AbstractActionBean {
   public ForwardResolution viewAllAccountExceptManager(){
     HttpSession session = context.getRequest().getSession();
     String permission = (String) session.getAttribute("permission");
-    if(permission.equals("admin")) {
-      accountList = accountService.getAccountListByPermission("user");
-      return new ForwardResolution(ALL_ACCOUNT_VIEW);
+    if(permission == null || permission.equals("admin") == false) {
+      setMessage("권한이 없습니다.");
+      return new ForwardResolution(ERROR);
     }
-    return new ForwardResolution(ERROR);
+    accountList = accountService.getAccountListByPermission("user");
+    return new ForwardResolution(ALL_ACCOUNT_VIEW);
   }
 
   /**

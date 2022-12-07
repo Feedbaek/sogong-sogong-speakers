@@ -290,7 +290,7 @@ public class PetManagerActionBean extends AbstractActionBean {
         HttpSession session = context.getRequest().getSession();
         String permission = (String) session.getAttribute("permission");
         String managerId = context.getRequest().getParameter("managerId");
-        if(!permission.equals("admin")){
+        if(permission == null || !permission.equals("admin")){
             setMessage("You don't have permission.");
             return new ForwardResolution(ERROR);
         }
@@ -303,7 +303,7 @@ public class PetManagerActionBean extends AbstractActionBean {
         HttpSession session = context.getRequest().getSession();
         String permission = (String) session.getAttribute("permission");
         name = context.getRequest().getParameter("managerId");
-        if(!permission.equals("admin")){
+        if(permission == null || !permission.equals("admin")){
             setMessage("You don't have permission to access");
             return new ForwardResolution(ERROR);
         }

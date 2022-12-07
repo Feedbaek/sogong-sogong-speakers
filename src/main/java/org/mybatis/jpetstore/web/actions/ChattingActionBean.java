@@ -359,7 +359,7 @@ public class ChattingActionBean extends AbstractActionBean {
     public Resolution saveMemo() {
         HttpSession session = context.getRequest().getSession();
         String permission = (String) session.getAttribute("permission");
-        if (permission == null || permission.isEmpty() || permission.equals("petmanager") == false) {
+        if (permission == null || permission.equals("petmanager") == false) {
             setMessage("잘못된 접근입니다.");
             return new ForwardResolution(ERROR);
         }
@@ -380,7 +380,7 @@ public class ChattingActionBean extends AbstractActionBean {
     public ForwardResolution viewUpdateChattingRoom(){
         HttpSession session = context.getRequest().getSession();
         String permission = (String) session.getAttribute("permission");
-        if(!permission.equals("admin")){
+        if(permission == null || !permission.equals("admin")){
             setMessage("You don't have permission to access");
             return new ForwardResolution(ERROR);
         }
@@ -392,7 +392,7 @@ public class ChattingActionBean extends AbstractActionBean {
     public Resolution updateChattingRoom(){
         HttpSession session = context.getRequest().getSession();
         String permission = (String) session.getAttribute("permission");
-        if(!permission.equals("admin")){
+        if(permission == null || !permission.equals("admin")){
             setMessage("You don't have permission to access");
             return new ForwardResolution(ERROR);
         }
@@ -409,7 +409,7 @@ public class ChattingActionBean extends AbstractActionBean {
     public ForwardResolution viewDeletionCheck(){
         HttpSession session = context.getRequest().getSession();
         String permission = (String) session.getAttribute("permission");
-        if(!permission.equals("admin")){
+        if(permission == null || !permission.equals("admin")){
             setMessage("You don't have permission to access");
             return new ForwardResolution(ERROR);
         }
@@ -419,7 +419,7 @@ public class ChattingActionBean extends AbstractActionBean {
     public Resolution deleteChattingRoom(){
         HttpSession session = context.getRequest().getSession();
         String permission = (String) session.getAttribute("permission");
-        if(!permission.equals("admin")){
+        if(permission == null || !permission.equals("admin")){
             setMessage("You don't have permission to access");
             return new ForwardResolution(ERROR);
         }
