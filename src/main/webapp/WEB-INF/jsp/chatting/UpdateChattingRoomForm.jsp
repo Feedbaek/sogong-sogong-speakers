@@ -29,7 +29,7 @@
           </c:if>
         </c:forEach>
       </sdyn:select></td>
-      <td><sdyn:text name="updatedChattingRoom.customerId">"${actionBean.customerId}"</sdyn:text></td>
+      <td><sdyn:text name="updatedChattingRoom.customerId" readonly="true">"${actionBean.customerId}"</sdyn:text></td>
     </tr>
   </table>
     <stripes:submit name="updateChattingRoom"  value="update"/>
