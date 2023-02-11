@@ -73,6 +73,11 @@
       <version>${spring.version}</version>
     </dependency>
     <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.3.3</version>
+    </dependency>
+    <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
       <version>${spring.version}</version>
@@ -210,6 +215,12 @@
       <version>${spring.version}</version>
       <scope>test</scope>
     </dependency>
+      <dependency>
+          <groupId>org.jetbrains</groupId>
+          <artifactId>annotations</artifactId>
+          <version>RELEASE</version>
+          <scope>compile</scope>
+      </dependency>
   </dependencies>
 
   <build>
