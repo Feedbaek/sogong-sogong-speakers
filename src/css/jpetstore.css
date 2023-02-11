@@ -343,18 +343,6 @@
   }
   
   #Chat div{
-	width:20%;
+	width:25%;
 	box-sizing: border-box;
   }
-
-  #grayChattingBox{
-	  background-color:#eeeeee; border:#c1c1c1 1px solid;padding: 10px;
-  }
-
-#RoundBox{
-	background-color: #eeeeee;
-	border:#c1c1c1 1px solid;
-	padding: 10px;margin-left: 20%;margin-right: 20%;
-	overflow-y:scroll;
-	width: 60%;height: 350px;
-}

@@ -223,22 +223,6 @@
 	voice-family: "\"}\"";
 	voice-family: inherit;
   }
-
- #Clients {
-	width: 25%;
-	height: 4ex;
-	margin: 0ex 0ex 0ex 0ex;
-	padding: 0ex 0ex 0ex 0ex;
-	border-width: .3ex 0ex .3ex 0px;
-	border-style: solid;
-	border-color: #ccc;
-	float: right;
-	background-color: #000;
-	color: #fff;
-	line-height: 9ex;
-	voice-family: "\"}\"";
-	voice-family: inherit;
-}
   
   body>#PoweredBy {
 	height: 9ex;
@@ -359,10 +343,6 @@
   }
   
   #Chat div{
-	width:20%;
+	width:25%;
 	box-sizing: border-box;
-  }
-
-  #grayChattingBox{
-	background-color:#eeeeee; border:#c1c1c1 1px solid;padding: 10px;
   }

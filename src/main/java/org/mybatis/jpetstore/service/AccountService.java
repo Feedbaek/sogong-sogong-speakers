@@ -15,14 +15,12 @@
  */
 package org.mybatis.jpetstore.service;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.mybatis.jpetstore.domain.Account;
-import org.mybatis.jpetstore.domain.Alarm;
 import org.mybatis.jpetstore.mapper.AccountMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 /**
  * The Class AccountService.
@@ -46,20 +44,6 @@ public class AccountService {
     return accountMapper.getAccountByUsernameAndPassword(username, password);
   }
 
-  public Account getPetManagerAccount(String username) {
-    return accountMapper.getPetManagerAccountByID(username);
-  }
-
-  public Account getPetManagerAccount(String username, String password) {
-    return accountMapper.getPetManagerAccount(username, password);
-  }
-
-  public List<Account> getAccountListByPermission(String permission){return accountMapper.getAccountListByPermission(permission);}
-  public List<Account> searchAccountByUserId(String userid){
-    return accountMapper.searchAccountByUserId("%"+userid+"%");
-  }
-
-
   /**
    * Insert account.
    *
@@ -73,12 +57,6 @@ public class AccountService {
     accountMapper.insertSignon(account);
   }
 
-
-  @Transactional
-  public void insertPetManagerAccount(Account account) {
-    accountMapper.insertPetManagerAccount(account);
-    accountMapper.insertSignon(account);
-  }
   /**
    * Update account.
    *
@@ -92,30 +70,6 @@ public class AccountService {
 
     Optional.ofNullable(account.getPassword()).filter(password -> password.length() > 0)
         .ifPresent(password -> accountMapper.updateSignon(account));
-  }
-  @Transactional
-  public void   editPetManagerAccount(Account account) {
-    accountMapper.updateAccount(account);
-
-    Optional.ofNullable(account.getPassword()).filter(password -> password.length() > 0)
-            .ifPresent(password -> accountMapper.updateSignon(account));
-  }
-  @Transactional
-  public void deleteAccountByUserId(String userId) {
-    accountMapper.deleteAccountByUserId(userId);
-  }
-
-  @Transactional
-  public List<Alarm> getAlarmById(String id) {
-    return accountMapper.getAlarmById(id);
-  }
-  @Transactional
-  public void insertAlarm(Alarm alarm) {
-    accountMapper.insertAlarm(alarm);
-  }
-  @Transactional
-  public void updateAlarm(Alarm alarm) {
-    accountMapper.updateAlarm(alarm);
   }
 
 }

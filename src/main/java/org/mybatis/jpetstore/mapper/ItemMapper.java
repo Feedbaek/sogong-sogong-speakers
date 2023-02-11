@@ -15,11 +15,11 @@
  */
 package org.mybatis.jpetstore.mapper;
 
+import org.mybatis.jpetstore.domain.Item;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
-
-import org.mybatis.jpetstore.domain.Item;
 
 /**
  * The Interface ItemMapper.

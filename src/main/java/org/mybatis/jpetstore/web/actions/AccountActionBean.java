@@ -15,22 +15,18 @@
  */
 package org.mybatis.jpetstore.web.actions;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import javax.servlet.http.HttpSession;
-
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import net.sourceforge.stripes.validation.Validate;
-
 import org.mybatis.jpetstore.domain.Account;
-import org.mybatis.jpetstore.domain.Alarm;
 import org.mybatis.jpetstore.domain.Product;
 import org.mybatis.jpetstore.service.AccountService;
 import org.mybatis.jpetstore.service.CatalogService;
-import org.mybatis.jpetstore.service.ChattingService;
+
+import javax.servlet.http.HttpSession;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * The Class AccountActionBean.
@@ -46,8 +42,6 @@ public class AccountActionBean extends AbstractActionBean {
   private static final String EDIT_ACCOUNT = "/WEB-INF/jsp/account/EditAccountForm.jsp";
   private static final String SIGNON = "/WEB-INF/jsp/account/SignonForm.jsp";
 
-  private static final String ALL_ACCOUNT_VIEW = "/WEB-INF/jsp/chatting/adminChattingRoom.jsp";
-
   private static final List<String> LANGUAGE_LIST;
   private static final List<String> CATEGORY_LIST;
 
@@ -56,17 +50,9 @@ public class AccountActionBean extends AbstractActionBean {
   @SpringBean
   private transient CatalogService catalogService;
 
-  @SpringBean
-  private transient ChattingService chattingService;
-
   private Account account = new Account();
-
-  private List<Account> accountList;
   private List<Product> myList;
-
-  private String keyword;
   private boolean authenticated;
-
 
   static {
     LANGUAGE_LIST = Collections.unmodifiableList(Arrays.asList("english", "japanese"));
@@ -79,14 +65,6 @@ public class AccountActionBean extends AbstractActionBean {
 
   public String getUsername() {
     return account.getUsername();
-  }
-
-  public String getKeyword() {
-    return keyword;
-  }
-
-  public void setKeyword(String keyword) {
-    this.keyword = keyword;
   }
 
   @Validate(required = true, on = { "signon", "newAccount", "editAccount" })
@@ -119,19 +97,6 @@ public class AccountActionBean extends AbstractActionBean {
     return CATEGORY_LIST;
   }
 
-  public List<Account> getAccountList() {return accountList;}
-
-  public void setAccountList(List<Account> accountList) {this.accountList = accountList;}
-
-  public String getAdminName(){return accountService.getAccountListByPermission("admin").get(0).getFirstName()+
-          " "+
-          accountService.getAccountListByPermission("admin").get(0).getLastName();}
-  public String getAdminId(){return accountService.getAccountListByPermission("admin").get(0).getUsername();}
-
-  public List<Account> searchAccountByUserId(String userId){
-    return accountService.searchAccountByUserId(userId);
-  }
-
   public Resolution newAccountForm() {
     return new ForwardResolution(NEW_ACCOUNT);
   }
@@ -142,12 +107,7 @@ public class AccountActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution newAccount() {
-    try {
-      accountService.insertAccount(account);
-    }catch (Exception e){
-      setMessage("ERROR: Fill in the blank or your ID is duplicated.");
-      return new ForwardResolution(NEW_ACCOUNT);
-    }
+    accountService.insertAccount(account);
     account = accountService.getAccount(account.getUsername());
     myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId());
     authenticated = true;
@@ -169,26 +129,10 @@ public class AccountActionBean extends AbstractActionBean {
    * @return the resolution
    */
   public Resolution editAccount() {
-    try {
-      accountService.updateAccount(account);
-    }catch (Exception e){
-      setMessage("ERROR: Fill in the blank Or You ID is Duplicated.");
-      return new ForwardResolution(EDIT_ACCOUNT);
-    }
+    accountService.updateAccount(account);
     account = accountService.getAccount(account.getUsername());
     myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId());
     return new RedirectResolution(CatalogActionBean.class);
-  }
-
-  public ForwardResolution viewAllAccountExceptManager(){
-    HttpSession session = context.getRequest().getSession();
-    String permission = (String) session.getAttribute("permission");
-    if(permission == null || permission.equals("admin") == false) {
-      setMessage("권한이 없습니다.");
-      return new ForwardResolution(ERROR);
-    }
-    accountList = accountService.getAccountListByPermission("user");
-    return new ForwardResolution(ALL_ACCOUNT_VIEW);
   }
 
   /**
@@ -208,33 +152,23 @@ public class AccountActionBean extends AbstractActionBean {
    */
   public Resolution signon() {
 
-    String username = getUsername();
-    String password = getPassword();
-    account = accountService.getAccount(username, password);
+    account = accountService.getAccount(getUsername(), getPassword());
 
     if (account == null) {
-
-      account = accountService.getPetManagerAccount(username, password);
-      if (account == null)
-      {
-        String value = "Invalid username or password.  Signon failed.";
-        setMessage(value);
-        clear();
-        return new ForwardResolution(SIGNON);
-      }
-    }
-    else
-        myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId());
+      String value = "Invalid username or password.  Signon failed.";
+      setMessage(value);
+      clear();
+      return new ForwardResolution(SIGNON);
+    } else {
       account.setPassword(null);
+      myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId());
       authenticated = true;
       HttpSession s = context.getRequest().getSession();
       // this bean is already registered as /actions/Account.action
       s.setAttribute("accountBean", this);
       s.setAttribute("permission", account.getPermission());
-      List<Alarm> alarms = accountService.getAlarmById(account.getUsername());
-      s.setAttribute("alarms", alarms);
-      s.setAttribute("path", context.getRequest().getServletContext().getRealPath("images") + "/");
       return new RedirectResolution(CatalogActionBean.class);
+    }
   }
 
   /**

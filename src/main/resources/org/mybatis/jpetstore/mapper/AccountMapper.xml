@@ -78,103 +78,6 @@
       AND PROFILE.FAVCATEGORY = BANNERDATA.FAVCATEGORY
   </select>
 
-  <select id="getPetManagerAccount" resultType="Account">
-    SELECT
-      SIGNON.USERNAME,
-      ACCOUNT.EMAIL,
-      ACCOUNT.FIRSTNAME,
-      ACCOUNT.LASTNAME,
-      ACCOUNT.STATUS,
-      ACCOUNT.ADDR1 AS address1,
-      ACCOUNT.ADDR2 AS address2,
-      ACCOUNT.CITY,
-      ACCOUNT.STATE,
-      ACCOUNT.ZIP,
-      ACCOUNT.COUNTRY,
-      ACCOUNT.PHONE,
-      ACCOUNT.PERMISSION
-    FROM ACCOUNT, SIGNON
-    WHERE ACCOUNT.USERID = #{param1}
-      AND SIGNON.PASSWORD = #{param2}
-      AND SIGNON.USERNAME = ACCOUNT.USERID
-  </select>
-
-  <select id="getPetManagerAccountByID" resultType="Account">
-    SELECT
-      SIGNON.USERNAME,
-      ACCOUNT.EMAIL,
-      ACCOUNT.FIRSTNAME,
-      ACCOUNT.LASTNAME,
-      ACCOUNT.STATUS,
-      ACCOUNT.ADDR1 AS address1,
-      ACCOUNT.ADDR2 AS address2,
-      ACCOUNT.CITY,
-      ACCOUNT.STATE,
-      ACCOUNT.ZIP,
-      ACCOUNT.COUNTRY,
-      ACCOUNT.PHONE,
-      ACCOUNT.PERMISSION
-    FROM ACCOUNT, SIGNON
-    WHERE ACCOUNT.USERID = #{username}
-      AND SIGNON.USERNAME = ACCOUNT.USERID
-  </select>
-
-  <select id="getAccountListByPermission" resultType="Account">
-    SELECT
-      SIGNON.USERNAME,
-      ACCOUNT.EMAIL,
-      ACCOUNT.FIRSTNAME,
-      ACCOUNT.LASTNAME,
-      ACCOUNT.STATUS,
-      ACCOUNT.ADDR1 AS address1,
-      ACCOUNT.ADDR2 AS address2,
-      ACCOUNT.CITY,
-      ACCOUNT.STATE,
-      ACCOUNT.ZIP,
-      ACCOUNT.COUNTRY,
-      ACCOUNT.PHONE,
-      ACCOUNT.PERMISSION,
-      PROFILE.LANGPREF AS languagePreference,
-      PROFILE.FAVCATEGORY AS favouriteCategoryId,
-      PROFILE.MYLISTOPT AS listOption,
-      PROFILE.BANNEROPT AS bannerOption,
-      BANNERDATA.BANNERNAME
-    FROM ACCOUNT, PROFILE, SIGNON, BANNERDATA
-    WHERE ACCOUNT.PERMISSION = #{permission}
-      AND SIGNON.USERNAME = ACCOUNT.USERID
-      AND PROFILE.USERID = ACCOUNT.USERID
-      AND PROFILE.FAVCATEGORY = BANNERDATA.FAVCATEGORY
-  </select>
-
-  <select id="searchAccountByUserId" resultType="Account">
-    SELECT
-      SIGNON.USERNAME,
-      ACCOUNT.EMAIL,
-      ACCOUNT.FIRSTNAME,
-      ACCOUNT.LASTNAME,
-      ACCOUNT.STATUS,
-      ACCOUNT.ADDR1 AS address1,
-      ACCOUNT.ADDR2 AS address2,
-      ACCOUNT.CITY,
-      ACCOUNT.STATE,
-      ACCOUNT.ZIP,
-      ACCOUNT.COUNTRY,
-      ACCOUNT.PHONE,
-      ACCOUNT.PERMISSION,
-      PROFILE.LANGPREF AS languagePreference,
-      PROFILE.FAVCATEGORY AS favouriteCategoryId,
-      PROFILE.MYLISTOPT AS listOption,
-      PROFILE.BANNEROPT AS bannerOption,
-      BANNERDATA.BANNERNAME
-    FROM ACCOUNT, PROFILE, SIGNON, BANNERDATA
-    WHERE ACCOUNT.USERID LIKE #{userId}
-      AND ACCOUNT.PERMISSION="user"
-      AND SIGNON.USERNAME = ACCOUNT.USERID
-      AND PROFILE.USERID = ACCOUNT.USERID
-      AND PROFILE.FAVCATEGORY = BANNERDATA.FAVCATEGORY
-  </select>
-
-
   <update id="updateAccount" parameterType="Account">
     UPDATE ACCOUNT SET
       EMAIL = #{email},
@@ -197,18 +100,6 @@
     VALUES
       (#{email}, #{firstName}, #{lastName}, #{status}, #{address1},  #{address2,jdbcType=VARCHAR}, #{city}, #{state}, #{zip}, #{country}, #{phone}, #{username}, "user")
   </insert>
-
-  <insert id="insertPetManagerAccount" parameterType="Account">
-    INSERT INTO ACCOUNT
-        (EMAIL, FIRSTNAME, LASTNAME, STATUS, ADDR1, ADDR2, CITY, STATE, ZIP, COUNTRY, PHONE, USERID, PERMISSION)
-    VALUES
-      (#{email}, #{firstName}, #{lastName}, #{status}, #{address1},  #{address2,jdbcType=VARCHAR}, #{city}, #{state}, #{zip}, #{country}, #{phone}, #{username}, "petmanager")
-  </insert>
-
-  <delete id="deleteAccountByUserId" parameterType="String">
-    DELETE FROM ACCOUNT
-    WHERE userid=#{userId}
-    </delete>
 
   <update id="updateProfile" parameterType="Account">
     <bind name="listOptionValue" value="_parameter.isListOption() ? 1 : 0" />
@@ -239,24 +130,5 @@
     INSERT INTO SIGNON (PASSWORD,USERNAME)
     VALUES (#{password}, #{username})
   </insert>
-
-<!--  List<Alarm> getAlarmById(String id);-->
-  <select id="getAlarmById" resultType="Alarm">
-    SELECT * from chattingalarm
-    WHERE receiverid=#{receiverId}
-  </select>
-
-  <insert id="insertAlarm" parameterType="Alarm">
-    INSERT INTO chattingalarm
-    (senderid, receiverid, alarm)
-    VALUES (#{senderId}, #{receiverId}, #{alarm})
-    ON DUPLICATE KEY UPDATE alarm=#{alarm};
-  </insert>
-
-  <update id="updateAlarm" parameterType="Alarm">
-    UPDATE chattingalarm
-    SET alarm=#{alarm}
-    WHERE senderid=#{senderId} and receiverId=#{receiverId}
-  </update>
 
 </mapper>

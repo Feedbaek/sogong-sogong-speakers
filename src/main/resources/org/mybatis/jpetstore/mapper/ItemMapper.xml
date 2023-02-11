@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2010-2022 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          https://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.mybatis.jpetstore.mapper.ItemMapper">
+
+  <cache />
+
+  <select id="getItemListByProduct" resultType="Item">
+    SELECT
+      I.ITEMID,
+      LISTPRICE,
+      UNITCOST,
+      SUPPLIER AS supplierId,
+      I.PRODUCTID AS "product.productId",
+      NAME AS "product.name",
+      DESCN AS "product.description",
+      CATEGORY AS "product.categoryId",
+      STATUS,
+      ATTR1 AS attribute1,
+      ATTR2 AS attribute2,
+      ATTR3 AS attribute3,
+      ATTR4 AS attribute4,
+      ATTR5 AS attribute5
+    FROM ITEM I, PRODUCT P
+    WHERE P.PRODUCTID = I.PRODUCTID
+      AND I.PRODUCTID = #{value}
+  </select>
+
+  <select id="getItemListByProducts" resultType="Item">
+    SELECT
+      PRODUCTID AS "product.productId",
+      NAME AS "product.name",
+    FROM ITEM
+  </select>
+
+  <select id="getCategoryName" resultType="String">
+    select
+      category
+    from  PRODUCT P
+    where P.PRODUCTID =  #{arg0}
+  </select>
+
+  <select id="getItem" resultType="Item">
+    select
+      I.ITEMID,
+      LISTPRICE,
+      UNITCOST,
+      SUPPLIER AS supplierId,
+      I.PRODUCTID AS "product.productId",
+      NAME AS "product.name",
+      DESCN AS "product.description",
+      CATEGORY AS "product.categoryId",
+      STATUS,
+      ATTR1 AS attribute1,
+      ATTR2 AS attribute2,
+      ATTR3 AS attribute3,
+      ATTR4 AS attribute4,
+      ATTR5 AS attribute5,
+      QTY AS quantity
+    from ITEM I, INVENTORY V, PRODUCT P
+    where P.PRODUCTID = I.PRODUCTID
+      and I.ITEMID = V.ITEMID
+      and I.ITEMID = #{arg0};
+  </select>
+
+  <select id="getInventoryQuantity" resultType="int">
+    SELECT QTY AS value
+    FROM INVENTORY
+    WHERE ITEMID = #{itemId}
+  </select>
+
+  <update id="updateInventoryQuantity">
+    UPDATE INVENTORY SET
+      QTY = QTY - #{increment}
+    WHERE ITEMID = #{itemId}
+  </update>
+
+  <select id="getItemList" resultType="Item">
+    SELECT DISTINCT
+      I.PRODUCTID AS "product.productId",
+      NAME AS "product.name"
+    FROM ITEM I, PRODUCT P
+  </select>
+
+
+  <update id="UpdateItem">
+    UPDATE ITEM SET
+                  attr1 =  #{arg1},
+                  listprice =  #{arg2}
+    WHERE ITEMID = #{arg0};
+
+
+  </update>
+
+  <update id="UpdateQTY">
+    UPDATE INVENTORY SET
+      QTY =  #{arg1}
+    WHERE ITEMID = #{arg0};
+  </update>
+
+
+
+
+  <insert id="AddItem">
+    INSERT INTO
+      item (itemid, productid, listprice, unitcost, supplier, status, attr1)
+    VALUES
+      (#{arg0},#{arg1},#{arg2},0.00,1,'P',#{arg3});
+  </insert>
+
+  <insert id="AddInventory">
+    INSERT
+    INTO inventory
+      (itemid, qty)
+    VALUES (#{arg0}, #{arg1});
+  </insert>
+
+  <delete id="DeleteItem">
+    DELETE FROM item
+           WHERE itemid = #{arg1} and
+                 ProductId = #{arg0};
+  </delete>
+  <select id="getInventory" resultType="String">
+    SELECT
+      itemId
+    FROM INVENTORY
+    WHERE ITEMID = #{arg0}
+  </select>
+
+  <delete id="DeleteInventory">
+    DELETE FROM INVENTORY
+           WHERE ITEMID = #{arg0};
+  </delete>
+</mapper>

@@ -15,22 +15,17 @@
  */
 package org.mybatis.jpetstore.web.actions;
 
-import java.util.Iterator;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SessionScope;
 import net.sourceforge.stripes.integration.spring.SpringBean;
-
-import org.mybatis.jpetstore.domain.*;
+import org.mybatis.jpetstore.domain.Cart;
+import org.mybatis.jpetstore.domain.CartItem;
+import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.service.CatalogService;
-import org.mybatis.jpetstore.service.ChattingService;
-import org.mybatis.jpetstore.service.OrderService;
-import org.mybatis.jpetstore.service.PetManagerService;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Iterator;
 
 /**
  * The Class CartActionBean.
@@ -47,61 +42,13 @@ public class CartActionBean extends AbstractActionBean {
 
   @SpringBean
   private transient CatalogService catalogService;
-
-  @SpringBean
-  private transient OrderService orderService;
-
-  @SpringBean
-  private transient ChattingService chattingService;
-
-  @SpringBean
-  private transient PetManagerService petManagerService;
   //추가
 
   private Cart cart = new Cart();
-
-  private List<ChattingRoom> chattingRoomList;
   private String workingItemId;
 
-  private  String catdog;
-
-  private  String repfish;
-
-  private  String bird;
   public Cart getCart() {
     return cart;
-  }
-
-  public String getCatdog() {
-    return catdog;
-  }
-
-  public void setCatdog(String catdog) {
-    this.catdog = catdog;
-  }
-
-  public String getRepfish() {
-    return repfish;
-  }
-
-  public void setRepfish(String repfish) {
-    this.repfish = repfish;
-  }
-
-  public String getBird() {
-    return bird;
-  }
-
-  public void setBird(String bird) {
-    this.bird = bird;
-  }
-
-  public List<ChattingRoom> getChattingRoomList() {
-    return chattingRoomList;
-  }
-
-  public void setChattingRoomList(List<ChattingRoom> chattingRoomList) {
-    this.chattingRoomList = chattingRoomList;
   }
 
   public void setCart(Cart cart) {
@@ -128,7 +75,7 @@ public class CartActionBean extends AbstractActionBean {
       Item item = catalogService.getItem(workingItemId);
       cart.addItem(item, isInStock);
     }
-    handle_duplicate();
+
     return new ForwardResolution(VIEW_CART);
   }
 
@@ -145,7 +92,6 @@ public class CartActionBean extends AbstractActionBean {
       setMessage("Attempted to remove null CartItem from Cart.");
       return new ForwardResolution(ERROR);
     } else {
-      handle_duplicate();
       return new ForwardResolution(VIEW_CART);
     }
   }
@@ -184,12 +130,10 @@ public class CartActionBean extends AbstractActionBean {
         // ignore parse exceptions on purpose
       }
     }
-    handle_duplicate();
-    return new ForwardResolution(VIEW_CART);
+      return new ForwardResolution(VIEW_CART);
   }
 
   public ForwardResolution viewCart() {
-    handle_duplicate();
     return new ForwardResolution(VIEW_CART);
   }
 
@@ -200,52 +144,6 @@ public class CartActionBean extends AbstractActionBean {
   public void clear() {
     cart = new Cart();
     workingItemId = null;
-  }
-
-  public void handle_duplicate()
-  {
-    HttpSession session = context.getRequest().getSession();
-    String permission = (String) session.getAttribute("permission");
-    if (permission == null)
-      return ;
-    if (permission.equals("user"))
-    {
-      AccountActionBean accountBean = (AccountActionBean) session.getAttribute("/actions/Account.action");
-      String userId = accountBean.getUsername();
-      String managerId;
-      chattingRoomList = chattingService.getChatRoomListForUser(userId);
-      for (int i = 0;i < chattingRoomList.size();i++)
-      {
-        managerId = chattingRoomList.get(i).getManagerId();
-        PetManager petManager= petManagerService.getPetMangerByID(managerId);
-        if (petManager.getPetType().equals("CAT/DOG"))
-          setCatdog("catdog");
-        else if (petManager.getPetType().equals("REPTILE/FISH"))
-          setRepfish("repfish");
-        else if (petManager.getPetType().equals("BIRD"))
-          setBird("bird");
-      }
-      List<Order> orderList = orderService.getOrdersByUsername(userId);
-      if (orderList != null && orderList.size() > 0)
-      {
-        for (int i = 0;i < orderList.size();i++)
-        {
-          Order order = orderList.get(i);
-          if (order.getCatDog())
-            setCatdog("catdog");
-          else if (order.getRepFish())
-            setRepfish("repfish");
-          else if (order.getBird())
-            setBird("bird");
-        }
-      }
-    }
-    else
-    {
-      setCatdog("catdog");
-      setRepfish("repfish");
-      setBird("bird");
-    }
   }
 
 }

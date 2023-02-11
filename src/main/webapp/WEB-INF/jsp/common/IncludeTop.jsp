@@ -29,6 +29,7 @@
 <head>
 	<link rel="StyleSheet" href="../css/jpetstore.css" type="text/css"
 		  media="screen" />
+
 	<meta name="generator"
 		  content="HTML Tidy for Linux/x86 (vers 1st November 2002), see www.w3.org" />
 	<title>JPetStore Demo</title>
@@ -39,7 +40,6 @@
 	<meta http-equiv="expires" content="0" />
 	<meta http-equiv="Expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
 	<meta http-equiv="Pragma" content="no-cache" />
-
 </head>
 
 <body>
@@ -80,29 +80,27 @@
 			event="signoff">
             Sign Out
 		</stripes:link>
-		<c:if test="${sessionScope.permission eq 'user'}">
-			<img align="middle" src="../images/separator.gif" />
-			<stripes:link
-					beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
-					event="editAccountForm">
-				My Account
-			</stripes:link>
-		</c:if>
+		<img align="middle" src="../images/separator.gif" />
+		<stripes:link
+			beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
+			event="editAccountForm">
+            My Account
+		</stripes:link>
 		<img align="middle" src="../images/separator.gif" />
 		<c:choose>
 <%--			사용자 채팅방--%>
 			<c:when test="${sessionScope.permission eq 'user'}">
 				<stripes:link
 						beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
-						event="viewChattingRoom">
+						event="viewChattingRoomForManager">
 					<img align="middle" src="../images/chat.png">
 				</stripes:link>
 			</c:when>
 			<c:when test="${sessionScope.permission eq 'admin'}">
 <%--				관리자 채팅방--%>
 				<stripes:link
-						beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
-						event="viewAllAccountExceptManager">
+						beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
+						event="viewChattingRoomForManager">
 					<img align="middle" src="../images/chat.png">
 				</stripes:link>
 			</c:when>
@@ -110,38 +108,10 @@
 				<!--펫 매니저 채팅방-->
 				<stripes:link
 						beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
-						event="viewChattingRoom">
+						event="viewChattingRoomForManager">
 					<img align="middle" src="../images/chat.png">
 				</stripes:link>
 			</c:otherwise>
-		</c:choose>
-		<c:set var="flag" value="false"/>
-		<c:forEach var="alarm" items="${sessionScope.alarms}">
-			<c:if test="${alarm.alarm eq 'on'}">
-				<c:set var="flag" value="true"/>
-			</c:if>
-		</c:forEach>
-		<c:choose>
-			<c:when test="${flag}">
-<%--				alarm--%>
-<%--				<img align="middle" src="../images/alarm.png" style="height: 15px; width: 15px"/>--%>
-				<c:choose>
-					<c:when test="${sessionScope.permission eq 'admin'}">
-						<stripes:link
-								beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
-								event="viewAllAccountExceptManager">
-							<img align="middle" src="../images/alarm.png"/>
-						</stripes:link>
-					</c:when>
-					<c:otherwise>
-						<stripes:link
-								beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
-								event="viewChattingRoom">
-							<img align="middle" src="../images/alarm.png"/>
-						</stripes:link>
-					</c:otherwise>
-				</c:choose>
-			</c:when>
 		</c:choose>
 	</c:if>
 </c:if> <img align="middle" src="../images/separator.gif" />
@@ -152,8 +122,8 @@
 				<img align="middle" src="../images/separator.gif" />
 				<stripes:link
 						beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
-						event="viewAdminDashboardChoose">
-<%--					<stripes:param name="categoryId" value= "" />--%>
+						event="adminViewCategory">
+					<stripes:param name="categoryId" value= "" />
 					Admin Dashboard
 				</stripes:link>
 			</c:when>

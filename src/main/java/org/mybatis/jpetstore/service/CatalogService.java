@@ -15,11 +15,6 @@
  */
 package org.mybatis.jpetstore.service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
 import org.mybatis.jpetstore.domain.Category;
 import org.mybatis.jpetstore.domain.Item;
 import org.mybatis.jpetstore.domain.Product;
@@ -27,6 +22,10 @@ import org.mybatis.jpetstore.mapper.CategoryMapper;
 import org.mybatis.jpetstore.mapper.ItemMapper;
 import org.mybatis.jpetstore.mapper.ProductMapper;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Class CatalogService.
@@ -58,7 +57,7 @@ public class CatalogService {
     return productMapper.getProductList();
   }
 
-  public List<Product> searchProductList(@NotNull String keywords) {
+  public List<Product> searchProductList(String keywords) {
     List<Product> products = new ArrayList<>();
     for (String keyword : keywords.split("\\s+")) {
       products.addAll(productMapper.searchProductList("%" + keyword.toLowerCase() + "%"));

@@ -20,101 +20,34 @@
 </head>
 
 <div id="BackLink">
-    <stripes:link beanclass="org.mybatis.jpetstore.web.actions.PetManagerActionBean"
-                  event="allManagerList">
-        View Pet Manager List
+    <stripes:link beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean">
+        Return to Main Menu
     </stripes:link>
 </div>
 
 <div id="Catalog">
-    <div align="left"><p>         </p></div>
-    <c:choose>
-        <c:when test="${actionBean.chattingRoomList.size() eq 0}">
-            <h2>Why don't you register for JPetstore's Pet Manager Messenger Service?</h2>
-            <br>
-            <p>
-                When purchasing JPetstore's pet, you can register for this service on the shopping cart page :)
-            </p>
-        </c:when>
-        <c:otherwise>
-            <h2>My Pet Manager Messenger</h2>
-            <br>
-            <table>
-                <tr>
-                    <th>User ID</th>
-                    <th>Manager ID</th>
-                    <th>Notification</th>
-                    <th></th>
-                </tr>
-                <c:forEach var="ChattingRoom" items="${actionBean.chattingRoomList}">
-                    <tr>
-                        <td>${ChattingRoom.customerId}</td>
-                        <td>${ChattingRoom.managerId}</td>
-                        <td>
-                            <c:set var="flag" value="false"/>
-                            <c:forEach var="alarm" items="${actionBean.alarms}">
-                                <c:if test="${alarm.senderId eq ChattingRoom.managerId}">
-                                    <c:if test="${alarm.alarm eq 'on'}">
-                                        <c:set var="flag" value="true"/>
-                                    </c:if>
-                                </c:if>
-                            </c:forEach>
-                            <c:choose>
-                                <c:when test="${flag}">
-                                    <b>Not Read</b>
-                                </c:when>
-                                <c:otherwise>
-                                    Read
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
-                        <td><stripes:link class="Button"
-                                          beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
-                                          event="joinChatting">
-                            <stripes:param name="customerId" value="${ChattingRoom.customerId}"/>
-                            <stripes:param name="managerId" value="${ChattingRoom.managerId}"/>
-                            join
-                        </stripes:link></td>
-                    </tr>
-                </c:forEach>
-            </table>
-        </c:otherwise>
-    </c:choose>
-    <br/>
-    <br/>
-    <br/>
+
+    <h2>Pet Manager Chatting List</h2>
+    <br>
     <table>
-        <th>Admin</th>
-        <th>Notification</th>
-        <th></th>
         <tr>
-            <td>ACID</td>
-            <td>
-                <c:set var="flag" value="false"/>
-                <c:forEach var="alarm" items="${actionBean.alarms}">
-                    <c:if test="${alarm.senderId eq 'ACID'}">
-                        <c:if test="${alarm.alarm eq 'on'}">
-                            <c:set var="flag" value="true"/>
-                        </c:if>
-                    </c:if>
-                </c:forEach>
-                <c:choose>
-                    <c:when test="${flag}">
-                        <b>Not Read</b>
-                    </c:when>
-                    <c:otherwise>
-                        Read
-                    </c:otherwise>
-                </c:choose>
-            </td>
-            <td><stripes:link class="Button"
-                              beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
-                              event="joinChatting">
-                <stripes:param name="customerId" value="${sessionScope.accountBean.username}"/>
-                <stripes:param name="managerId" value="${actionBean.adminId}"/>
-                join
-            </stripes:link></td>
+            <th>User ID</th>
+            <th>Manager ID</th>
+            <th></th>
         </tr>
+        <c:forEach var="ChattingRoom" items="${actionBean.chattingRoomList}">
+            <tr>
+                <td>${ChattingRoom.customerId}</td>
+                <td>${ChattingRoom.managerId}</td>
+                <td><stripes:link class="Button"
+                                  beanclass="org.mybatis.jpetstore.web.actions.ChattingActionBean"
+                                  event="joinChatting">
+                    <stripes:param name="customerId" value="${ChattingRoom.customerId}"/>
+                    <stripes:param name="managerId" value="${ChattingRoom.managerId}"/>
+                    join
+                </stripes:link></td>
+            </tr>
+        </c:forEach>
     </table>
 </div>
 

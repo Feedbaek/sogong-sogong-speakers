@@ -15,10 +15,7 @@
  */
 package org.mybatis.jpetstore.mapper;
 
-import java.util.List;
-
 import org.mybatis.jpetstore.domain.Account;
-import org.mybatis.jpetstore.domain.Alarm;
 
 /**
  * The Interface AccountMapper.
@@ -30,14 +27,8 @@ public interface AccountMapper {
   Account getAccountByUsername(String username);
 
   Account getAccountByUsernameAndPassword(String username, String password);
-  Account getPetManagerAccount(String username, String password);
-  Account getPetManagerAccountByID(String username);
-  List<Account> searchAccountByUserId(String userId);
-  List<Account> getAccountListByPermission(String permission);
 
   void insertAccount(Account account);
-
-  void  insertPetManagerAccount(Account account);
 
   void insertProfile(Account account);
 
@@ -49,10 +40,4 @@ public interface AccountMapper {
 
   void updateSignon(Account account);
 
-  void deleteAccountByUserId(String userId);
-
-  List<Alarm> getAlarmById(String id);
-  void insertAlarm(Alarm alarm);
-
-  void updateAlarm(Alarm alarm);
 }

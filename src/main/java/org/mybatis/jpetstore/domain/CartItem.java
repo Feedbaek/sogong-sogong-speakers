@@ -35,7 +35,7 @@ public class CartItem implements Serializable {
 
   public boolean isInStock() {
     return inStock;
-  }
+  } 
 
   public void setInStock(boolean inStock) {
     this.inStock = inStock;

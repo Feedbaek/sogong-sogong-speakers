@@ -15,20 +15,10 @@ public class Chatting implements Serializable {
     private String managerId;
 
     private String chattingLog;
-    private String senderId;
-
-    private String timeTable;
 
 
     //-------------------------getter & setter------------------------------------//
 
-    public String getSenderId() {
-        return senderId;
-    }
-
-    public void setSenderId(String senderId) {
-        this.senderId = senderId;
-    }
     public String getCustomerId() {
         return customerId;
     }
@@ -42,6 +32,4 @@ public class Chatting implements Serializable {
     public String getChattingLog() {return chattingLog;}
     public void setChattingLog(String chattingLog) {this.chattingLog = chattingLog;}
 
-    public String getTimeTable() {return timeTable;}
-    public void setTimeTable(String timeTable) {this.timeTable = timeTable;}
 }
